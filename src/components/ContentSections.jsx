@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import image1 from "../assets/images/d1.png";
+
 
 export default function ContentSections() {
   return (
@@ -21,7 +23,7 @@ export default function ContentSections() {
       <div className="open01">
         <img
           className="grid1img"
-          src="/src/assets/images/d1.webp"
+          src={image1}
           width="200px"
           height="133px"
           alt="image"
