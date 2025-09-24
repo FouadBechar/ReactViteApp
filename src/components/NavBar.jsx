@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import logo from "../assets/images/incon01.png";
-import pages from "../assets/";
 
 
 export default function NavBar() {
@@ -434,7 +433,7 @@ export default function NavBar() {
   }
   const MAX_HISTORY = 6;
 
-  fetch("pages.json")
+  fetch("../../assets/pages.json")
     .then((r) => (r.ok ? r.json() : []))
     .then((data) => {
       if (Array.isArray(data)) siteIndex = data;
