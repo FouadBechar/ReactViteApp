@@ -426,6 +426,63 @@ export default function ContentSections() {
     "</center>";
     
   }, []);
+
+
+  useEffect(() => {
+  const messages = {
+    ar: {
+      text: "يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك.",
+      accept: "أوافق",
+      decline: "أرفض",
+    },
+    en: {
+      text: "This site uses cookies to enhance your experience.",
+      accept: "Accept",
+      decline: "Decline",
+    },
+  };
+
+  const lang = document.documentElement.lang.startsWith("ar") ? "ar" : "en";
+  const cookieConsent = document.getElementById("cookie-consent");
+  const msg = messages[lang];
+
+  document.getElementById("cookie-message").textContent = msg.text;
+  document.getElementById("accept").textContent = msg.accept;
+  document.getElementById("decline").textContent = msg.decline;
+
+  function getCookie(name) {
+    return document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(name + "="))
+      ?.split("=")[1];
+  }
+
+  function setCookie(name, value, days) {
+    const maxAge = days * 24 * 60 * 60;
+    document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; SameSite=Lax; Secure`;
+  }
+
+  if (!getCookie("consent")) {
+    cookieConsent.style.display = "block";
+    cookieConsent.classList.add("show2");
+  }
+
+  document.getElementById("accept").addEventListener("click", () => {
+    setCookie("consent", "accepted", 30);
+    closeConsent();
+  });
+
+  document.getElementById("decline").addEventListener("click", () => {
+    setCookie("consent", "declined", 30);
+    closeConsent();
+  });
+
+  function closeConsent() {
+    cookieConsent.classList.remove("show2");
+    cookieConsent.classList.add("hide");
+    setTimeout(() => cookieConsent.remove(), 500);
+  }
+  }, []);
   
   return (
     <main>
