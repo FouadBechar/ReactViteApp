@@ -433,7 +433,7 @@ export default function NavBar() {
   }
   const MAX_HISTORY = 6;
 
-  fetch("/src/assets/pages.json")
+  fetch("/pages.json")
     .then((r) => (r.ok ? r.json() : []))
     .then((data) => {
       if (Array.isArray(data)) siteIndex = data;
