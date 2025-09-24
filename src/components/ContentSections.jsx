@@ -3,6 +3,430 @@ import image1 from "/src/assets/images/d1.webp";
 
 
 export default function ContentSections() {
+ const contentRef = useRef(null);
+
+  useEffect(() => {
+
+
+  const text1 = document.getElementById("text1");
+  text1.innerHTML =
+    "<section>" +
+    "<h1 class='bb7'>" +
+    "<a class='loadicon010101' href='https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment' target='_parent'>" +
+    "12 ways you can protect the environment" +
+    "</a>" +
+    "</h1>" +
+    "<img class='iiim' src='https://fouadbechar.x10.mx/p/m/image4.webp' alt='image' width='400px' height='224px'/>" +
+    "<p class='b3'>" +
+    "Most of the damage to our environment stems from consumption: what we consume, how much we consume and how often. Whether it’s gas,food, clothing, cars, furniture, water, toys, electronics, knick-knacks or other goods, we are all consumers. The key is not to stop consuming, but to start being mindful of our consumption habits and how each purchase or action affects the ecosystem. The good news is that it’s often not too difficult, expensive, or inconvenient to become more environmentally friendly. It can even be a fun challenge to implement among your family or coworkers. And though small changes at the individual level may seem trivial, just think how much cleaner the planet would be If everyone adopts behavior modification." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment' target='_parent'>" +
+    "(continued..)" +
+    "</a>" +
+    "</i>" +
+    "</p>" +
+    "</section>";
+
+  const text2 = document.getElementById("text2");
+  text2.innerHTML =
+    "<section>" +
+    "<h2 class='bb7'>" +
+    "<a class='loadicon010101' href='https://www.un.org/en/climatechange/raising-ambition/renewable-energy' target='_parent'>" +
+    "Renewable energy" +
+    "</a>" +
+    "</h2>" +
+    "<img class='iiim' src='https://fouadbechar.x10.mx/p/m/enrg.webp' alt='image' width='400px' height='224px'/>" +
+    "<p class='b3'>" +
+    "Renewable energy is energy derived from natural sources that are replenished at a higher rate than they are consumed. Sunlight and wind, for example, are such sources that are constantly being replenished. Renewable energy sources are plentiful and all around us. Fossil fuels - coal, oil and gas - on the other hand, are non-renewable resources that take hundreds of millions of years to form. Fossil fuels, when burned to produce energy, cause harmful greenhouse gas emissions, such as carbon dioxide. Generating renewable energy creates far lower emissions than burning fossil fuels. Transitioning from fossil fuels, which currently account for the lion’s share of emissions, to renewable energy is key to addressing the climate crisis. Renewables are now cheaper in most countries, and generate three times more jobs than fossil fuels." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://www.un.org/en/climatechange/raising-ambition/renewable-energy' target='_parent'> (continued..) </a>" +
+    "</i>" +
+    "</p>" +
+    "</section>";
+
+  const text3 = document.getElementById("text3");
+  text3.innerHTML =
+    "<section>" +
+    "<h1 class='bb7'>" +
+    "<a class='loadicon010101' href='https://www.aroundrobin.com/importance-of-social-justice/' target='_parent'>" +
+    "The importance of social justice" +
+    "</a>" +
+    "</h1>" +
+    "<img class='iim' src='https://fouadbechar.x10.mx/p/m/image5.webp' alt='image' width='300px' height='192px'/>" +
+    "<p class='b3'>" +
+    "We are living in an era of contradictions. While we should focus on building a unified approach towards fighting a global pandemic, we are more divided than ever. We are more connected than ever before in human history, yet are unable to understand the plight of others. We see an evolution of human rights, but see no end to conflict. We are more willing to accept differences, yet discrimination is on the rise. We are living in an era where we have greater freedoms than ever before, yet we see no end to injustice. So where do we go from here? Is there a way to heal the world? Social justice may be the answer." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://www.aroundrobin.com/importance-of-social-justice/' target='_parent'>" +
+    "(continued..)" +
+    "</a>" +
+    "</i>" +
+    "</p>" +
+    "</section>" +
+    "<section>" +
+    "<h2 class='bb7 animate0110'>" +
+    "<a class='loadicon010101' href='https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children' target='_parent'>" +
+    "Effects of domestic violence on children" +
+    "</a>" +
+    "</h2>" +
+    "<img class='iim animate0110' src='https://fouadbechar.x10.mx/p/m/image06.webp' alt='image' width='300px' height='200px'/>" +
+    "<p  class='b3 animate0110'>" +
+    "Many children exposed to violence in the home are also victims of physical abuse.One: Children who witness domestic violence or are victims of abuse themselves are at serious risk for long-term physical and mental health problems.two: Children who witness violence between parents may also be at greater risk of being violent in their future relationships. If you are a parent who is experiencing abuse, it can be difficult to know how to protect your child." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children' target='_parent'> (continued..) </a>" +
+    "</i>" +
+    "</p>" +
+    "</section>";
+
+  const text4 = document.getElementById("text4");
+  text4.innerHTML =
+    "<section>" +
+    "<h1 class='bb7'>" +
+    "<a class='loadicon010101' href='https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents.' target='_parent'>" +
+    "What are the 5 stages of child development" +
+    "</a>" +
+    "</h1>" +
+    "<img class='iim' src='https://fouadbechar.x10.mx/p/m/image7.webp' alt='image' width='300px' height='142px'/>" +
+    "<p class='b3'>" +
+    "Children change rapidly as they grow. Many of these changes are physical. Other changes are cognitive, which means the changes affect the way children think and learn. Child development often occurs in stages, with the majority of children hitting specific developmental landmarks by the time they reach a certain age." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents.' target='_parent'>" +
+    "(continued..)" +
+    "</a>" +
+    "</i>" +
+    "</p>" +
+    "</section>" +
+    "<section>" +
+    "<h2 class='bb7 animate0110'>" +
+    "<a class='loadicon010101' href='https://caringforkids.cps.ca/handouts/mentalhealth/mental_health' target='_parent' >" +
+    "Your child’s mental health" +
+    "</a>" +
+    "</h2>" +
+    "<img class='iim animate0110' src='https://fouadbechar.x10.mx/p/m/image8.webp'  alt='image' width='300px' height='200px' />" +
+    "<p class='b3 animate0110'>" +
+    "Mental health affects the way people think, feel and act. Taking care of our mental health is just as important as having a healthy body. As a parent, you play an important role in your child's mental health. You can promote good mental health by the things you say and do, and through the environment you create at home. You can also learn about the early signs of mental health problems and know where to go for help." +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://caringforkids.cps.ca/handouts/mentalhealth/mental_health' target='_parent'>" +
+    "(continued..)" +
+    "</a>" +
+    "</i>" +
+    "</p>" +
+    "</section>";
+
+  const text5 = document.getElementById("text5");
+  text5.innerHTML =
+    "<a class='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent' >" +
+    "<img src='https://fouadbechar.x10.mx/p/m/book.webp' alt='Description of Image' class='image208 animate0110' width='100px' height='160px'/>" +
+    "</a>" +
+    "<div class='text208 animate0110'>" +
+    "<h2 class='h208'>" +
+    "<a class='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent'>" +
+    "Quantum computing" +
+    "</a>" +
+    "</h2>" +
+    "<p class='p208'>A short book about quantum computing." +
+    "</p>" +
+    "</div>";
+
+  const text6 = document.getElementById("text6");
+  text6.innerHTML =
+    "<section>" +
+    "<h2 class='bb7 animate0110'>" +
+    "<a class='loadicon010101' href='https://x10hosting.com/' target='_parent'>" +
+    "Free Web hosting" +
+    "</a>" +
+    "</h2>" +
+    "<img class='iiim0 animate0110' src='https://fouadbechar.x10.mx/p/m/x10.webp' alt='image' width='400px' height='100px'/>" +
+    "<p class='b3 animate0110'> 10+ Years Industry Veteran We've been around for a long time and we're here to stay. Rest assured that we know how to provide a stable, high-performance web hosting service that isn't going to close overnight. We believe that hosting should be accessible to all, and that's precisely why we offer free hosting for everyone. We even give you unmetered bandwidth and disk space? allowing your site to grow without fear of ridiculously low limits like our other free hosting competitors! You won't find many companies doing that free of charge." +
+    "<i>" +
+    "to visit the official website click here" +
+    "</i>" +
+    "<i class='i0i1'>" +
+    "<a class='loadicon010101' href='https://x10hosting.com/' title='https://x10hosting.com/' target='_parent'>" +
+    "x10hosting" +
+    "</a>" +
+    "</i>" +
+    "</p>" +
+    "</section>";
+
+  const text7 = document.getElementById("text7");
+  text7.innerHTML =
+    "<section>" +
+    "<h2 class='bb7'>" +
+    "<a class='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
+    "Artificial Intelligence" +
+    "</a>" +
+    "</h2>" +
+    "<a class='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
+    "<img class='iiim' src='https://fouadbechar.x10.mx/p/m/AI.webp' alt='image' width='400px' height='224px'/>" +
+    "</a>" +
+    "<div class='container010101 loadicon010101'>" +
+    "<h2 class='h2010101'>" +
+    "Defining Artificial Intelligence" +
+    "</h2>" +
+    "<p class='p010101'>" +
+    "Artificial intelligence (AI) is a broad field of computer science that aims to create systems capable of performing tasks that typically require human intelligence. This includes activities like:" +
+    "</p>" +
+    "<ul class='ul010101'>" +
+    "<li>" +
+    "<strong>Learning:" +
+    "</strong>" +
+    "Acquiring new information and rules for using it." +
+    "</li>" +
+    "<li>" +
+    "<strong>Reasoning:" +
+    "</strong>" +
+    "Using rules to reach approximate or definite conclusions." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Problem-solving:" +
+    "</strong>" +
+    "Finding solutions to complex challenges." +
+    "</li>" +
+    "<li>" +
+    "<strong>Perception:" +
+    "</strong>" +
+    "Interpreting sensory information (like images or sound)." +
+    "</li>" +
+    "<li>" +
+    "<strong>Natural language understanding:" +
+    "</strong>" +
+    "Communicating and interacting with humans through language." +
+    "</li>" +
+    "</ul>" +
+    "<h2 class='h20101012'>" +
+    "Key Concepts in AI" +
+    "</h2>" +
+    "<ul class='ul010101'>" +
+    "<li>" +
+    "<strong>" +
+    "Machine Learning:" +
+    "</strong>" +
+    "A subset of AI that focuses on algorithms that allow computers to learn from data without explicit programming. This includes techniques like:" +
+    "<ul>" +
+    "<li>" +
+    "<strong>" +
+    "Supervised learning:" +
+    "</strong>" +
+    "Training models on labeled data (e.g., classifying images)." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Unsupervised learning:" +
+    "</strong>" +
+    "Finding patterns and structures in unlabeled data (e.g., customer segmentation)." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Reinforcement learning:" +
+    "</strong>" +
+    "Training agents to make decisions by rewarding desired behaviors." +
+    "</li>" +
+    "</ul>" +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Deep Learning: " +
+    "</strong>" +
+    "A type of machine learning that uses artificial neural networks with multiple layers to analyze complex patterns in data. Deep learning has revolutionized fields like image recognition, natural language processing, and speech recognition." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Natural Language Processing (NLP):" +
+    "</strong>" +
+    "The ability of computers to understand, interpret, and generate human language. This includes tasks like:" +
+    "<ul>" +
+    "<li>" +
+    "<strong>" +
+    "Translation:" +
+    "</strong>" +
+    "Converting text from one language to another." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Sentiment analysis:" +
+    "</strong>" +
+    "Determining the emotional tone of text." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Chatbots:" +
+    "</strong>" +
+    "Interacting with users through conversation." +
+    "</li>" +
+    "</ul>" +
+    "</li>" +
+    "</ul>" +
+    "<h2 class='h20101012'>" +
+    "Applications of AI" +
+    "</h2>" +
+    "<p class='p010101'>" +
+    "AI is rapidly transforming various sectors:" +
+    "</p>" +
+    "<ul class='ul010101'>" +
+    "<li>" +
+    "<strong>" +
+    "Healthcare:" +
+    "</strong>" +
+    "Diagnosing diseases, developing new drugs, personalizing treatment plans." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Finance:" +
+    "</strong>" +
+    "Fraud detection, algorithmic trading, credit scoring." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Transportation:" +
+    "</strong>" +
+    "Self-driving cars, traffic optimization, logistics." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Customer service:" +
+    "</strong>" +
+    "Chatbots, virtual assistants, personalized recommendations." +
+    "</li>" +
+    "<li>" +
+    "<strong>" +
+    "Entertainment:" +
+    "</strong>" +
+    "Game development, content creation, personalized streaming." +
+    "</li>" +
+    "</ul>" +
+    "<h2 class='h20101012 animate0110'>" +
+    "The Future of AI" +
+    "</h2>" +
+    "<p class='p010101'>" +
+    "AI is an evolving field with significant potential. Continued research and development will likely lead to even more sophisticated AI systems with broader applications. However, it's crucial to address ethical considerations, such as bias, job displacement, and the responsible use of AI." +
+    "</p>" +
+    "</div>" +
+    "</section>";
+
+  const text8 = document.getElementById("text8");
+  text8.innerHTML =
+    "<div class='mySlides fade'>" +
+    "<div class='numbertext'>" +
+    "1 / 3" +
+    "</div>" +
+    "<img class='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image1ss.webp' alt='image' />" +
+    "<div class='text'>" +
+    "<p>" +
+    "<a class='i0i2 loadicon010101' href='https://breathingtravel.com/best-islands-to-visit-in-indonesia/' target='_parent'>" +
+    "Bali Island" +
+    "</a>" +
+    "is one of the most beautiful tourist places in Indonesia, because of its rich natural beauty and ancient history and heritage that makes it one of the best cities in the world." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "<div class='mySlides fade'>" +
+    "<div class='numbertext'>" +
+    "2 / 3" +
+    "</div>" +
+    "<img class='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image2ss.webp' alt='image' />" +
+    "<div class='text'>" +
+    "<p>" +
+    "<a class='i0i2 loadicon010101' href='https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html' target='_parent'>" +
+    "Osaka" +
+    "</a>" +
+    "the second largest and richest city in Japan, and one of the most beautiful tourism cities in Japan and in the world as a whole, due to its long history that extends back to before the 16th century." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "<div class='mySlides fade'>" +
+    "<div class='numbertext'>" +
+    "3 / 3" +
+    "</div>" +
+    "<img class='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image3ss.webp' alt='image' />" +
+    "<div class='text'>" +
+    "<p>" +
+    "<a class='i0i2 loadicon010101' href='https://www.routard.com/guide/code_dest/new_york.htm' target='_parent'>" +
+    "New York" +
+    "</a>" +
+    "is famous for its world-renowned shopping and fine restaurants around the most important tourist places such as the Statue of Liberty, its historical neighborhoods and museums." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "<span class='prev'>" +
+    " &lt;" +
+    "</span>" +
+    "<span class='next'>" +
+    " &gt; " +
+    "</span>";
+
+  const text9 = document.getElementById("text9");
+  text9.innerHTML =
+    "<span class='dot' onclick='currentSlide(1)'>" +
+    "</span>" +
+    "<span class='dot' onclick='currentSlide(2)'>" +
+    "</span>" +
+    "<span class='dot' onclick='currentSlide(3)'>" +
+    "</span>";
+
+  const text10 = document.getElementById("text10");
+  text10.innerHTML =
+    "<div class='ai-card'>" +
+    "<img src='https://fouadbechar.x10.mx/p/m/gpt01.webp' alt='ChatGPT Logo' width='50px' height='50px'/>" +
+    "<h3>" +
+    "ChatGPT" +
+    "</h3>" +
+    "<p>" +
+    "Smart assistant for programming, writing, and imaginative ideas." +
+    "</p>" +
+    "<a href='https://chat.openai.com/' target='_parent'>" +
+    "Try it now" +
+    "</a>" +
+    "</div>" +
+    "<div class='ai-card'>" +
+    "<img src='https://fouadbechar.x10.mx/p/m/gemini01.webp' alt='Gemini Logo' width='50px' height='50px'/>" +
+    "<h3>" +
+    "Gemini" +
+    "</h3>" +
+    "<p>" +
+    "Artificial intelligence for creativity, search, and images from Google." +
+    "</p>" +
+    "<a href='https://gemini.google.com/' target='_parent'>" +
+    "Try it now" +
+    "</a>" +
+    "</div>" +
+    "<div class='ai-card'>" +
+    "<img src='https://fouadbechar.x10.mx/p/m/copilot01.webp' alt='Copilot Logo' width='50px' height='50px'/>" +
+    "<h3>" +
+    "Copilot" +
+    "</h3>" +
+    "<p>" +
+    "Intelligent assistant in Windows and Office, from Microsoft." +
+    "</p>" +
+    "<a href='https://copilot.microsoft.com/' target='_parent'>" +
+    "Try it now" +
+    "</a>" +
+    "</div>";
+
+  const text11 = document.getElementById("text11");
+  text11.innerHTML =
+    "<center>" +
+    "<span>" +
+    "<a class='loadicon010101' href='https://www.facebook.com/FouadBechar2' target='_parent'>" +
+    "<img class='img321' src='https://fouadbechar.x10.mx/p/m/image0104.webp' alt='image0102' width='30px' height='30px'/>" +
+    "</a>" +
+    "<a class='loadicon010101' href='https://x.com/FouadBechar' target='_parent'>" +
+    "<img class='im0im1' src='https://fouadbechar.x10.mx/p/m/image0105.webp' alt='image0105' width='30px' height='30px' />" +
+    "</a>" +
+    "<a class='loadicon010101' href='https://www.youtube.com/channel/UCi3RVanUvgW2o1Ld5lt7EjA' target='_parent'>" +
+    "<img class='im0im2' src='https://fouadbechar.x10.mx/p/m/youtb.webp' alt='image0105' width='43px' height='30px' />" +
+    "</a>" +
+    "<img  id='open-btn' src='https://fouadbechar.x10.mx/p/m/ml.webp' alt='email' width='30px' height='30px' />" +
+    "</span>" +
+    "<div class='pr0101'>" +
+    "<a href='p/v/pr' target='_parent'>" +
+    "Privacy Policy" +
+    "</a>" +
+    "</div>" +
+    "</center>";
+    
+  }, []);
+  
   return (
     <main>
       <div className="overlay" id="overlay" aria-hidden="true"></div>
