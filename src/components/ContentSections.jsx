@@ -3,7 +3,7 @@ import image1 from "/src/assets/images/d1.webp";
 
 
 export default function ContentSections() {
- const contentRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
 
@@ -11,11 +11,11 @@ export default function ContentSections() {
   const text1 = document.getElementById("text1");
   text1.innerHTML =
     "<section>" +
-    "<h1 className='bb7'>" +
+    "<h1 class='bb7'>" +
     "<a className='loadicon010101' href='https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment' target='_parent'>" +
     "12 ways you can protect the environment" +
     "</a>" +
-    "</h1>" +
+  "</h1>" +
     "<img className='iiim' src='https://fouadbechar.x10.mx/p/m/image4.webp' alt='image' width='400px' height='224px'/>" +
     "<p className='b3'>" +
     "Most of the damage to our environment stems from consumption: what we consume, how much we consume and how often. Whether it’s gas,food, clothing, cars, furniture, water, toys, electronics, knick-knacks or other goods, we are all consumers. The key is not to stop consuming, but to start being mindful of our consumption habits and how each purchase or action affects the ecosystem. The good news is that it’s often not too difficult, expensive, or inconvenient to become more environmentally friendly. It can even be a fun challenge to implement among your family or coworkers. And though small changes at the individual level may seem trivial, just think how much cleaner the planet would be If everyone adopts behavior modification." +
@@ -30,7 +30,7 @@ export default function ContentSections() {
   const text2 = document.getElementById("text2");
   text2.innerHTML =
     "<section>" +
-    "<h2 className='bb7'>" +
+    "<h2 class='bb7'>" +
     "<a className='loadicon010101' href='https://www.un.org/en/climatechange/raising-ambition/renewable-energy' target='_parent'>" +
     "Renewable energy" +
     "</a>" +
@@ -47,7 +47,7 @@ export default function ContentSections() {
   const text3 = document.getElementById("text3");
   text3.innerHTML =
     "<section>" +
-    "<h1 className='bb7'>" +
+    "<h1 class='bb7'>" +
     "<a className='loadicon010101' href='https://www.aroundrobin.com/importance-of-social-justice/' target='_parent'>" +
     "The importance of social justice" +
     "</a>" +
@@ -61,9 +61,9 @@ export default function ContentSections() {
     "</a>" +
     "</i>" +
     "</p>" +
-    "</section>" +
-    "<section>" +
-    "<h2 className='bb7 animate0110'>" +
+  "</section>" +
+  "<section>" +
+  "<h2 class='bb7 animate0110'>" +
     "<a className='loadicon010101' href='https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children' target='_parent'>" +
     "Effects of domestic violence on children" +
     "</a>" +
@@ -80,7 +80,7 @@ export default function ContentSections() {
   const text4 = document.getElementById("text4");
   text4.innerHTML =
     "<section>" +
-    "<h1 className='bb7'>" +
+    "<h1 class='bb7'>" +
     "<a className='loadicon010101' href='https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents.' target='_parent'>" +
     "What are the 5 stages of child development" +
     "</a>" +
@@ -94,9 +94,9 @@ export default function ContentSections() {
     "</a>" +
     "</i>" +
     "</p>" +
-    "</section>" +
-    "<section>" +
-    "<h2 className='bb7 animate0110'>" +
+  "</section>" +
+  "<section>" +
+  "<h2 class='bb7 animate0110'>" +
     "<a className='loadicon010101' href='https://caringforkids.cps.ca/handouts/mentalhealth/mental_health' target='_parent' >" +
     "Your child’s mental health" +
     "</a>" +
@@ -114,7 +114,7 @@ export default function ContentSections() {
 
   const text5 = document.getElementById("text5");
   text5.innerHTML =
-    "<a className='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent' >" +
+    "<a class='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent' >" +
     "<img src='https://fouadbechar.x10.mx/p/m/book.webp' alt='Description of Image' className='image208 animate0110' width='100px' height='160px'/>" +
     "</a>" +
     "<div className='text208 animate0110'>" +
@@ -130,7 +130,7 @@ export default function ContentSections() {
   const text6 = document.getElementById("text6");
   text6.innerHTML =
     "<section>" +
-    "<h2 className='bb7 animate0110'>" +
+    "<h2 class='bb7 animate0110'>" +
     "<a className='loadicon010101' href='https://x10hosting.com/' target='_parent'>" +
     "Free Web hosting" +
     "</a>" +
@@ -151,7 +151,7 @@ export default function ContentSections() {
   const text7 = document.getElementById("text7");
   text7.innerHTML =
     "<section>" +
-    "<h2 className='bb7'>" +
+    "<h2 class='bb7'>" +
     "<a className='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
     "Artificial Intelligence" +
     "</a>" +
@@ -159,14 +159,14 @@ export default function ContentSections() {
     "<a className='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
     "<img className='iiim' src='https://fouadbechar.x10.mx/p/m/AI.webp' alt='image' width='400px' height='224px'/>" +
     "</a>" +
-    "<div className='container010101 loadicon010101'>" +
-    "<h2 className='h2010101'>" +
+  "<div class='container010101 loadicon010101'>" +
+  "<h2 class='h2010101'>" +
     "Defining Artificial Intelligence" +
     "</h2>" +
-    "<p className='p010101'>" +
+  "<p class='p010101'>" +
     "Artificial intelligence (AI) is a broad field of computer science that aims to create systems capable of performing tasks that typically require human intelligence. This includes activities like:" +
     "</p>" +
-    "<ul className='ul010101'>" +
+  "<ul class='ul010101'>" +
     "<li>" +
     "<strong>Learning:" +
     "</strong>" +
@@ -194,10 +194,10 @@ export default function ContentSections() {
     "Communicating and interacting with humans through language." +
     "</li>" +
     "</ul>" +
-    "<h2 className='h20101012'>" +
+  "<h2 class='h20101012'>" +
     "Key Concepts in AI" +
     "</h2>" +
-    "<ul className='ul010101'>" +
+  "<ul class='ul010101'>" +
     "<li>" +
     "<strong>" +
     "Machine Learning:" +
@@ -295,7 +295,7 @@ export default function ContentSections() {
     "Game development, content creation, personalized streaming." +
     "</li>" +
     "</ul>" +
-    "<h2 className='h20101012 animate0110'>" +
+  "<h2 class='h20101012 animate0110'>" +
     "The Future of AI" +
     "</h2>" +
     "<p className='p010101'>" +
@@ -306,11 +306,11 @@ export default function ContentSections() {
 
   const text8 = document.getElementById("text8");
   text8.innerHTML =
-    "<div className='mySlides fade'>" +
+    "<div class='mySlides fade'>" +
     "<div className='numbertext'>" +
     "1 / 3" +
     "</div>" +
-    "<img className='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image1ss.webp' alt='image' />" +
+  "<img class='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image1ss.webp' alt='image' />" +
     "<div className='text'>" +
     "<p>" +
     "<a className='i0i2 loadicon010101' href='https://breathingtravel.com/best-islands-to-visit-in-indonesia/' target='_parent'>" +
@@ -357,7 +357,7 @@ export default function ContentSections() {
 
   const text9 = document.getElementById("text9");
   text9.innerHTML =
-    "<span className='dot' onclick='currentSlide(1)'>" +
+    "<span class='dot' onclick='currentSlide(1)'>" +
     "</span>" +
     "<span className='dot' onclick='currentSlide(2)'>" +
     "</span>" +
@@ -366,7 +366,7 @@ export default function ContentSections() {
 
   const text10 = document.getElementById("text10");
   text10.innerHTML =
-    "<div className='ai-card'>" +
+    "<div class='ai-card'>" +
     "<img src='https://fouadbechar.x10.mx/p/m/gpt01.webp' alt='ChatGPT Logo' width='50px' height='50px'/>" +
     "<h3>" +
     "ChatGPT" +
@@ -407,7 +407,7 @@ export default function ContentSections() {
   text11.innerHTML =
     "<center>" +
     "<span>" +
-    "<a className='loadicon010101' href='https://www.facebook.com/FouadBechar2' target='_parent'>" +
+    "<a class='loadicon010101' href='https://www.facebook.com/FouadBechar2' target='_parent'>" +
     "<img className='img321' src='https://fouadbechar.x10.mx/p/m/image0104.webp' alt='image0102' width='30px' height='30px'/>" +
     "</a>" +
     "<a className='loadicon010101' href='https://x.com/FouadBechar' target='_parent'>" +
@@ -416,7 +416,7 @@ export default function ContentSections() {
     "<a className='loadicon010101' href='https://www.youtube.com/channel/UCi3RVanUvgW2o1Ld5lt7EjA' target='_parent'>" +
     "<img className='im0im2' src='https://fouadbechar.x10.mx/p/m/youtb.webp' alt='image0105' width='43px' height='30px' />" +
     "</a>" +
-    "<img  id='open-btn' src='https://fouadbechar.x10.mx/p/m/ml.webp' alt='email' width='30px' height='30px' />" +
+  "<img  id='open-btn' src='https://fouadbechar.x10.mx/p/m/ml.webp' alt='email' width='30px' height='30px' />" +
     "</span>" +
     "<div className='pr0101'>" +
     "<a href='p/v/pr' target='_parent'>" +
@@ -464,46 +464,51 @@ export default function ContentSections() {
 
   if (!getCookie("consent")) {
     cookieConsent.style.display = "block";
-    cookieConsent.classNameList.add("show2");
+    cookieConsent.classList.add("show2");
   }
 
-  document.getElementById("accept").addEventListener("click", () => {
-    setCookie("consent", "accepted", 30);
-    closeConsent();
-  });
-
-  document.getElementById("decline").addEventListener("click", () => {
-    setCookie("consent", "declined", 30);
-    closeConsent();
-  });
+  const acceptBtn = document.getElementById("accept");
+  const declineBtn = document.getElementById("decline");
+  if (acceptBtn) {
+    acceptBtn.addEventListener("click", () => {
+      setCookie("consent", "accepted", 30);
+      closeConsent();
+    });
+  }
+  if (declineBtn) {
+    declineBtn.addEventListener("click", () => {
+      setCookie("consent", "declined", 30);
+      closeConsent();
+    });
+  }
 
   function closeConsent() {
-    cookieConsent.classNameList.remove("show2");
-    cookieConsent.classNameList.add("hide");
+    cookieConsent.classList.remove("show2");
+    cookieConsent.classList.add("hide");
     setTimeout(() => cookieConsent.remove(), 500);
   }
   }, []);
   
   return (
     <main>
-      <div classNameName="overlay" id="overlay" aria-hidden="true"></div>
+      <div className="overlay" id="overlay" aria-hidden="true"></div>
 
-      <div id="loading-icon010101" classNameName="hidden010101">
-        <div classNameName="loader010"></div>
+      <div id="loading-icon010101" className="hidden010101">
+        <div className="loader010"></div>
       </div>
 
       <div id="loadingSpinner1">
-        <div classNameName="loader010"></div>
+        <div className="loader010"></div>
       </div>
 
       <div id="loadingIcon01010">
-        <div classNameName="loader010"></div>
+        <div className="loader010"></div>
       </div>
 
-      <div classNameName="wrapper010"></div>
-      <div classNameName="open01">
+      <div className="wrapper010"></div>
+      <div className="open01">
         <img
-          classNameName="grid1img"
+          className="grid1img"
           src={image1}
           width="200px"
           height="133px"
@@ -511,17 +516,17 @@ export default function ContentSections() {
         />
       </div>
 
-      <div classNameName="wrapper">
+      <div className="wrapper">
         <video
-          classNameName="vividd"
+          className="vividd"
           src=""
           preload="auto"
           controls
           autoPlay
         ></video>
-        <div classNameName="close">
+        <div className="close">
           <a href="https://www.worldwildlife.org/" target="_parent">
-            <button type="button" classNameName="lien">
+            <button type="button" className="lien">
               WWF
             </button>
           </a>
@@ -529,45 +534,45 @@ export default function ContentSections() {
         </div>
       </div>
 
-      <div classNameName="container">
-        <div classNameName="text1">
+      <div className="container">
+        <div className="text1">
           <a
-            classNameName="b6"
+            className="b6"
             href="https://www.worldwildlife.org/"
             target="_parent"
           >
             World Wide Fund for Nature
           </a>
 
-          <span id="p010101" classNameName="p1">
+          <span id="p010101" className="p1">
             {" "}
           </span>
         </div>
       </div>
-      <div classNameName="f13">
-        <div id="text1" classNameName="ff13"></div>
-        <div id="text2" classNameName="ff14"></div>
+      <div className="f13">
+        <div id="text1" className="ff13"></div>
+        <div id="text2" className="ff14"></div>
       </div>
 
-      <div classNameName="f13">
-        <div id="text3" classNameName="ff13 animate0110"></div>
-        <div id="text4" classNameName="ff14 animate0110"></div>
+      <div className="f13">
+        <div id="text3" className="ff13 animate0110"></div>
+        <div id="text4" className="ff14 animate0110"></div>
       </div>
-      <div id="text5" classNameName="container208 animate0110"></div>
+      <div id="text5" className="container208 animate0110"></div>
 
-      <div classNameName="f113">
-        <div id="text6" classNameName="ff113 animate0110"></div>
-      </div>
-
-      <div classNameName="f113">
-        <div id="text7" classNameName="ff113 animate0110"></div>
+      <div className="f113">
+        <div id="text6" className="ff113 animate0110"></div>
       </div>
 
-      <div id="text8" classNameName="slideshow-container animate0110"></div>
+      <div className="f113">
+        <div id="text7" className="ff113 animate0110"></div>
+      </div>
 
-  <div id="text9" classNameName="animate0110" style={{ textAlign: 'center' }}></div>
+      <div id="text8" className="slideshow-container animate0110"></div>
 
-      <div id="text10" classNameName="ai-card-grid"></div>
+  <div id="text9" className="animate0110" style={{ textAlign: 'center' }}></div>
+
+      <div id="text10" className="ai-card-grid"></div>
 
       <div id="cookie-consent" role="dialog" aria-live="polite">
         <p id="cookie-message"></p>
@@ -589,13 +594,13 @@ export default function ContentSections() {
       <div id="chat-box">
         <div id="chat-header">
           <span>
-            <img classNameName="img707" src="/src/assets/images/icons03.svg" alt="icons03" />
+            <img className="img707" src="/src/assets/images/icons03.svg" alt="icons03" />
           </span>
           <button id="clear-btn" title="Clear Chat">
-            <img classNameName="img708" src="/src/assets/images/icons1.svg" alt="icons1" />
+            <img className="img708" src="/src/assets/images/icons1.svg" alt="icons1" />
           </button>
           <button id="close-btn" title="Close">
-            <img classNameName="img709" src="/src/assets/images/icons2.svg" alt="icons2" />
+            <img className="img709" src="/src/assets/images/icons2.svg" alt="icons2" />
           </button>
         </div>
         <div id="chat-messages"></div>
@@ -608,7 +613,7 @@ export default function ContentSections() {
           <button type="button" id="send-btn" title="send-btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              classNameName="svg-icon"
+              className="svg-icon"
               style={{ width: '1em', height: '1em', verticalAlign: 'middle', fill: 'currentColor', overflow: 'hidden' }}
               viewBox="0 0 1024 1024"
               version="1.1"
@@ -622,7 +627,7 @@ export default function ContentSections() {
       <div id="form-container">
         <form
           id="my-form"
-          classNameName="animated"
+          className="animated"
           encType="multipart/form-data"
           method="POST"
         >
@@ -658,42 +663,42 @@ export default function ContentSections() {
             </svg>
           </button>
           <h2>Contact Form</h2>
-          <p id="responseMessage" classNameName="pp00"></p>
+          <p id="responseMessage" className="pp00"></p>
           <input
-            classNameName="input02"
+            className="input02"
             type="text"
             name="prenom"
             placeholder="First Name"
             required
           />
           <input
-            classNameName="input02"
+            className="input02"
             type="text"
             name="nom"
             placeholder="Last Name"
             required
           />
           <input
-            classNameName="input02"
+            className="input02"
             type="email"
             name="email"
             placeholder="Email Address"
             required
           />
           <textarea
-            classNameName="textarea02"
+            className="textarea02"
             name="textarea"
             placeholder="Your message"
           ></textarea>
           <input
-            classNameName="input002"
+            className="input002"
             type="file"
             name="file"
             id="file-input"
             placeholder="selet file"
           />
-          <div id="file-preview" classNameName="preview"></div>
-          <button classNameName="button2" type="submit">
+          <div id="file-preview" className="preview"></div>
+          <button className="button2" type="submit">
             Send
           </button>
         </form>
