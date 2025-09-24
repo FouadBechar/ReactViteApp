@@ -1,494 +1,561 @@
 import React, { useEffect, useRef } from "react";
 import image1 from "/src/assets/images/d1.webp";
 
-
 export default function ContentSections() {
   const contentRef = useRef(null);
+  const section1 = (
+    <section>
+      <h1 className="bb7">
+        <a
+          className="loadicon010101"
+          href="https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment"
+          target="_parent"
+          rel="noreferrer"
+        >
+          12 ways you can protect the environment
+        </a>
+      </h1>
+      <img
+        className="iiim"
+        src="https://fouadbechar.x10.mx/p/m/enrg.webp"
+        alt="image"
+        width={400}
+        height={224}
+      />
+      <p className="b3">
+        We are all consumers — what we buy, how much we consume and how often.
+        Whether it’s gas, food, clothing, cars, furniture, water, toys,
+        electronics or knick-knacks, we are all consumers. The key is not to
+        stop consuming but to start being mindful of our consumption habits and
+        how each purchase or action affects the ecosystem. Small changes can
+        make a big difference.
+      </p>
+    </section>
+  );
+
+  const section2 = (
+    <section>
+      <h2 className="bb7">
+        <a
+          className="loadicon010101"
+          href="https://www.un.org/en/climatechange/raising-ambition/renewable-energy"
+          target="_parent"
+          rel="noreferrer"
+        >
+          Renewable energy
+        </a>
+      </h2>
+      <img
+        className="iiim"
+        src="https://fouadbechar.x10.mx/p/m/enrg.webp"
+        alt="image"
+        width={400}
+        height={224}
+      />
+      <p className="b3">
+        Renewable energy is energy derived from natural sources that are
+        replenished at a higher rate than they are consumed. Sunlight and wind
+        are examples of renewable sources that are constantly replenished.
+      </p>
+    </section>
+  );
+
+  const section3 = (
+    <>
+      <section>
+        <h1 className="bb7">
+          <a
+            className="loadicon010101"
+            href="https://www.aroundrobin.com/importance-of-social-justice/"
+            target="_parent"
+            rel="noreferrer"
+          >
+            The importance of social justice
+          </a>
+        </h1>
+        <img
+          className="iim"
+          src="https://fouadbechar.x10.mx/p/m/image5.webp"
+          alt="image"
+          width={300}
+          height={192}
+        />
+        <p className="b3">
+          We are living in an era of contradictions. Social justice may be a
+          powerful way to address inequality and heal communities.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="bb7 animate0110">
+          <a
+            className="loadicon010101"
+            href="https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children"
+            target="_parent"
+            rel="noreferrer"
+          >
+            Effects of domestic violence on children
+          </a>
+        </h2>
+        <img
+          className="iim animate0110"
+          src="https://fouadbechar.x10.mx/p/m/image06.webp"
+          alt="image"
+          width={300}
+          height={200}
+        />
+        <p className="b3 animate0110">
+          Children exposed to violence may face long-term physical and mental
+          health issues. Support and early intervention are critical.
+        </p>
+      </section>
+    </>
+  );
+
+  const section4 = (
+    <>
+      <section>
+        <h1 className="bb7">
+          <a
+            className="loadicon010101"
+            href="https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents."
+            target="_parent"
+            rel="noreferrer"
+          >
+            What are the 5 stages of child development
+          </a>
+        </h1>
+        <img
+          className="iim"
+          src="https://fouadbechar.x10.mx/p/m/image7.webp"
+          alt="image"
+          width={300}
+          height={142}
+        />
+        <p className="b3">
+          Child development often occurs in stages; understanding those stages
+          helps caregivers support growth.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="bb7 animate0110">
+          <a
+            className="loadicon010101"
+            href="https://caringforkids.cps.ca/handouts/mentalhealth/mental_health"
+            target="_parent"
+            rel="noreferrer"
+          >
+            Your child’s mental health
+          </a>
+        </h2>
+        <img
+          className="iim animate0110"
+          src="https://fouadbechar.x10.mx/p/m/image8.webp"
+          alt="image"
+          width={300}
+          height={200}
+        />
+        <p className="b3 animate0110">
+          Mental health affects the way people think, feel and act. Taking care
+          of our mental health is just as important as having a healthy body.
+        </p>
+      </section>
+    </>
+  );
+
+  const section5 = (
+    <>
+      <a
+        className="loadicon010101"
+        href="https://a.co/d/b9zan5D"
+        target="_parent"
+        rel="noreferrer"
+      >
+        <img
+          src="https://fouadbechar.x10.mx/p/m/book.webp"
+          alt="Description of Image"
+          className="image208 animate0110"
+          width={100}
+          height={160}
+        />
+      </a>
+      <div className="text208 animate0110">
+        <h2 className="h208">
+          <a
+            className="loadicon010101"
+            href="https://a.co/d/b9zan5D"
+            target="_parent"
+            rel="noreferrer"
+          >
+            Quantum computing
+          </a>
+        </h2>
+        <p className="p208">A short book about quantum computing.</p>
+      </div>
+    </>
+  );
+
+  const section6 = (
+    <section>
+      <h2 className="bb7 animate0110">
+        <a
+          className="loadicon010101"
+          href="https://x10hosting.com/"
+          target="_parent"
+          rel="noreferrer"
+        >
+          Free Web hosting
+        </a>
+      </h2>
+      <img
+        className="iiim0 animate0110"
+        src="https://fouadbechar.x10.mx/p/m/x10.webp"
+        alt="image"
+        width={400}
+        height={100}
+      />
+      <p className="b3 animate0110">
+        10+ Years Industry Veteran We've been around for a long time and we're
+        here to stay. Rest assured that we know how to provide a stable,
+        high-performance web hosting service that isn't going to close
+        overnight. We believe that hosting should be accessible to all.
+      </p>
+    </section>
+  );
+
+  const section7 = (
+    <>
+      <section>
+        <h2 className="bb7">
+          <a
+            className="loadicon010101"
+            href="https://youtu.be/nWkAatonIdk"
+            target="_parent"
+            rel="noreferrer"
+          >
+            Artificial Intelligence
+          </a>
+        </h2>
+        <a
+          className="loadicon010101"
+          href="https://youtu.be/nWkAatonIdk"
+          target="_parent"
+          rel="noreferrer"
+        >
+          <img
+            className="iiim"
+            src="https://fouadbechar.x10.mx/p/m/AI.webp"
+            alt="image"
+            width={400}
+            height={224}
+          />
+        </a>
+        <div className="container010101 loadicon010101">
+          <h2 className="h2010101">Defining Artificial Intelligence</h2>
+          <p className="p010101">
+            Artificial intelligence (AI) is a broad field of computer science
+            that aims to create systems capable of performing tasks that
+            typically require human intelligence.
+          </p>
+        </div>
+      </section>
+    </>
+  );
+
+  const section8 = (
+    <>
+      <div className="mySlides fade">
+        <div className="numbertext">1 / 3</div>
+        <img
+          className="imgslideshow"
+          src="https://fouadbechar.x10.mx/p/m/image1ss.webp"
+          alt="image"
+        />
+        <div className="text">
+          <p>
+            <a
+              className="i0i2 loadicon010101"
+              href="https://breathingtravel.com/best-islands-to-visit-in-indonesia/"
+              target="_parent"
+              rel="noreferrer"
+            >
+              Bali Island
+            </a>
+            is one of the most beautiful tourist places in Indonesia.
+          </p>
+        </div>
+      </div>
+
+      <div className="mySlides fade">
+        <div className="numbertext">2 / 3</div>
+        <img
+          className="imgslideshow"
+          src="https://fouadbechar.x10.mx/p/m/image2ss.webp"
+          alt="image"
+        />
+        <div className="text">
+          <p>
+            <a
+              className="i0i2 loadicon010101"
+              href="https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html"
+              target="_parent"
+              rel="noreferrer"
+            >
+              Osaka
+            </a>
+            the second largest and richest city in Japan.
+          </p>
+        </div>
+      </div>
+
+      <div className="mySlides fade">
+        <div className="numbertext">3 / 3</div>
+        <img
+          className="imgslideshow"
+          src="https://fouadbechar.x10.mx/p/m/image3ss.webp"
+          alt="image"
+        />
+        <div className="text">
+          <p>
+            <a
+              className="i0i2 loadicon010101"
+              href="https://www.routard.com/guide/code_dest/new_york.htm"
+              target="_parent"
+              rel="noreferrer"
+            >
+              New York
+            </a>
+            is famous for its world-renowned shopping and fine restaurants.
+          </p>
+        </div>
+      </div>
+
+      <span className="prev"> &lt; </span>
+      <span className="next"> &gt; </span>
+    </>
+  );
+
+  const section9 = (
+    <>
+      <span
+        className="dot"
+        onClick={() => window.currentSlide && window.currentSlide(1)}
+      />
+      <span
+        className="dot"
+        onClick={() => window.currentSlide && window.currentSlide(2)}
+      />
+      <span
+        className="dot"
+        onClick={() => window.currentSlide && window.currentSlide(3)}
+      />
+    </>
+  );
+
+  const section10 = (
+    <>
+      <div className="ai-card">
+        <img
+          src="https://fouadbechar.x10.mx/p/m/gpt01.webp"
+          alt="ChatGPT Logo"
+          width={50}
+          height={50}
+        />
+        <h3>ChatGPT</h3>
+        <p>Smart assistant for programming, writing, and imaginative ideas.</p>
+        <a href="https://chat.openai.com/" target="_parent" rel="noreferrer">
+          Try it now
+        </a>
+      </div>
+      <div className="ai-card">
+        <img
+          src="https://fouadbechar.x10.mx/p/m/gemini01.webp"
+          alt="Gemini Logo"
+          width={50}
+          height={50}
+        />
+        <h3>Gemini</h3>
+        <p>
+          Artificial intelligence for creativity, search, and images from
+          Google.
+        </p>
+        <a href="https://gemini.google.com/" target="_parent" rel="noreferrer">
+          Try it now
+        </a>
+      </div>
+      <div className="ai-card">
+        <img
+          src="https://fouadbechar.x10.mx/p/m/copilot01.webp"
+          alt="Copilot Logo"
+          width={50}
+          height={50}
+        />
+        <h3>Copilot</h3>
+        <p>Intelligent assistant in Windows and Office, from Microsoft.</p>
+        <a
+          href="https://copilot.microsoft.com/"
+          target="_parent"
+          rel="noreferrer"
+        >
+          Try it now
+        </a>
+      </div>
+    </>
+  );
+
+  const section11 = (
+    <div className="social-center">
+      <span>
+        <a
+          className="loadicon010101"
+          href="https://www.facebook.com/FouadBechar2"
+          target="_parent"
+          rel="noreferrer"
+        >
+          <img
+            className="img321"
+            src="https://fouadbechar.x10.mx/p/m/image0104.webp"
+            alt="image0102"
+            width={30}
+            height={30}
+          />
+        </a>
+        <a
+          className="loadicon010101"
+          href="https://x.com/FouadBechar"
+          target="_parent"
+          rel="noreferrer"
+        >
+          <img
+            className="im0im1"
+            src="https://fouadbechar.x10.mx/p/m/image0105.webp"
+            alt="image0105"
+            width={30}
+            height={30}
+          />
+        </a>
+        <a
+          className="loadicon010101"
+          href="https://www.youtube.com/channel/UCi3RVanUvgW2o1Ld5lt7EjA"
+          target="_parent"
+          rel="noreferrer"
+        >
+          <img
+            className="im0im2"
+            src="https://fouadbechar.x10.mx/p/m/youtb.webp"
+            alt="image0105"
+            width={43}
+            height={30}
+          />
+        </a>
+        <img
+          id="open-btn"
+          src="https://fouadbechar.x10.mx/p/m/ml.webp"
+          alt="email"
+          width={30}
+          height={30}
+        />
+      </span>
+      <div className="pr0101">
+        <a href="p/v/pr" target="_parent">
+          Privacy Policy
+        </a>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
+    const messages = {
+      ar: {
+        text: "يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك.",
+        accept: "أوافق",
+        decline: "أرفض",
+      },
+      en: {
+        text: "This site uses cookies to enhance your experience.",
+        accept: "Accept",
+        decline: "Decline",
+      },
+    };
 
+    const lang =
+      document.documentElement.lang &&
+      document.documentElement.lang.startsWith("ar")
+        ? "ar"
+        : "en";
+    const cookieConsent = document.getElementById("cookie-consent");
+    const msg = messages[lang];
 
-  const text1 = document.getElementById("text1");
-  text1.innerHTML =
-    "<section>" +
-    "<h1 class='bb7'>" +
-    "<a className='loadicon010101' href='https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment' target='_parent'>" +
-    "12 ways you can protect the environment" +
-    "</a>" +
-  "</h1>" +
-    "<img className='iiim' src='https://fouadbechar.x10.mx/p/m/image4.webp' alt='image' width='400px' height='224px'/>" +
-    "<p className='b3'>" +
-    "Most of the damage to our environment stems from consumption: what we consume, how much we consume and how often. Whether it’s gas,food, clothing, cars, furniture, water, toys, electronics, knick-knacks or other goods, we are all consumers. The key is not to stop consuming, but to start being mindful of our consumption habits and how each purchase or action affects the ecosystem. The good news is that it’s often not too difficult, expensive, or inconvenient to become more environmentally friendly. It can even be a fun challenge to implement among your family or coworkers. And though small changes at the individual level may seem trivial, just think how much cleaner the planet would be If everyone adopts behavior modification." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment' target='_parent'>" +
-    "(continued..)" +
-    "</a>" +
-    "</i>" +
-    "</p>" +
-    "</section>";
+    if (document.getElementById("cookie-message")) {
+      document.getElementById("cookie-message").textContent = msg.text;
+    }
+    if (document.getElementById("accept")) {
+      document.getElementById("accept").textContent = msg.accept;
+    }
+    if (document.getElementById("decline")) {
+      document.getElementById("decline").textContent = msg.decline;
+    }
 
-  const text2 = document.getElementById("text2");
-  text2.innerHTML =
-    "<section>" +
-    "<h2 class='bb7'>" +
-    "<a className='loadicon010101' href='https://www.un.org/en/climatechange/raising-ambition/renewable-energy' target='_parent'>" +
-    "Renewable energy" +
-    "</a>" +
-    "</h2>" +
-    "<img className='iiim' src='https://fouadbechar.x10.mx/p/m/enrg.webp' alt='image' width='400px' height='224px'/>" +
-    "<p className='b3'>" +
-    "Renewable energy is energy derived from natural sources that are replenished at a higher rate than they are consumed. Sunlight and wind, for example, are such sources that are constantly being replenished. Renewable energy sources are plentiful and all around us. Fossil fuels - coal, oil and gas - on the other hand, are non-renewable resources that take hundreds of millions of years to form. Fossil fuels, when burned to produce energy, cause harmful greenhouse gas emissions, such as carbon dioxide. Generating renewable energy creates far lower emissions than burning fossil fuels. Transitioning from fossil fuels, which currently account for the lion’s share of emissions, to renewable energy is key to addressing the climate crisis. Renewables are now cheaper in most countries, and generate three times more jobs than fossil fuels." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://www.un.org/en/climatechange/raising-ambition/renewable-energy' target='_parent'> (continued..) </a>" +
-    "</i>" +
-    "</p>" +
-    "</section>";
+    function getCookie(name) {
+      return document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(name + "="))
+        ?.split("=")[1];
+    }
 
-  const text3 = document.getElementById("text3");
-  text3.innerHTML =
-    "<section>" +
-    "<h1 class='bb7'>" +
-    "<a className='loadicon010101' href='https://www.aroundrobin.com/importance-of-social-justice/' target='_parent'>" +
-    "The importance of social justice" +
-    "</a>" +
-    "</h1>" +
-    "<img className='iim' src='https://fouadbechar.x10.mx/p/m/image5.webp' alt='image' width='300px' height='192px'/>" +
-    "<p className='b3'>" +
-    "We are living in an era of contradictions. While we should focus on building a unified approach towards fighting a global pandemic, we are more divided than ever. We are more connected than ever before in human history, yet are unable to understand the plight of others. We see an evolution of human rights, but see no end to conflict. We are more willing to accept differences, yet discrimination is on the rise. We are living in an era where we have greater freedoms than ever before, yet we see no end to injustice. So where do we go from here? Is there a way to heal the world? Social justice may be the answer." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://www.aroundrobin.com/importance-of-social-justice/' target='_parent'>" +
-    "(continued..)" +
-    "</a>" +
-    "</i>" +
-    "</p>" +
-  "</section>" +
-  "<section>" +
-  "<h2 class='bb7 animate0110'>" +
-    "<a className='loadicon010101' href='https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children' target='_parent'>" +
-    "Effects of domestic violence on children" +
-    "</a>" +
-    "</h2>" +
-    "<img className='iim animate0110' src='https://fouadbechar.x10.mx/p/m/image06.webp' alt='image' width='300px' height='200px'/>" +
-    "<p  className='b3 animate0110'>" +
-    "Many children exposed to violence in the home are also victims of physical abuse.One: Children who witness domestic violence or are victims of abuse themselves are at serious risk for long-term physical and mental health problems.two: Children who witness violence between parents may also be at greater risk of being violent in their future relationships. If you are a parent who is experiencing abuse, it can be difficult to know how to protect your child." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children' target='_parent'> (continued..) </a>" +
-    "</i>" +
-    "</p>" +
-    "</section>";
+    function setCookie(name, value, days) {
+      const maxAge = days * 24 * 60 * 60;
+      document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; SameSite=Lax; Secure`;
+    }
 
-  const text4 = document.getElementById("text4");
-  text4.innerHTML =
-    "<section>" +
-    "<h1 class='bb7'>" +
-    "<a className='loadicon010101' href='https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents.' target='_parent'>" +
-    "What are the 5 stages of child development" +
-    "</a>" +
-    "</h1>" +
-    "<img className='iim' src='https://fouadbechar.x10.mx/p/m/image7.webp' alt='image' width='300px' height='142px'/>" +
-    "<p className='b3'>" +
-    "Children change rapidly as they grow. Many of these changes are physical. Other changes are cognitive, which means the changes affect the way children think and learn. Child development often occurs in stages, with the majority of children hitting specific developmental landmarks by the time they reach a certain age." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents.' target='_parent'>" +
-    "(continued..)" +
-    "</a>" +
-    "</i>" +
-    "</p>" +
-  "</section>" +
-  "<section>" +
-  "<h2 class='bb7 animate0110'>" +
-    "<a className='loadicon010101' href='https://caringforkids.cps.ca/handouts/mentalhealth/mental_health' target='_parent' >" +
-    "Your child’s mental health" +
-    "</a>" +
-    "</h2>" +
-    "<img className='iim animate0110' src='https://fouadbechar.x10.mx/p/m/image8.webp'  alt='image' width='300px' height='200px' />" +
-    "<p className='b3 animate0110'>" +
-    "Mental health affects the way people think, feel and act. Taking care of our mental health is just as important as having a healthy body. As a parent, you play an important role in your child's mental health. You can promote good mental health by the things you say and do, and through the environment you create at home. You can also learn about the early signs of mental health problems and know where to go for help." +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://caringforkids.cps.ca/handouts/mentalhealth/mental_health' target='_parent'>" +
-    "(continued..)" +
-    "</a>" +
-    "</i>" +
-    "</p>" +
-    "</section>";
+    if (cookieConsent && !getCookie("consent")) {
+      cookieConsent.style.display = "block";
+      cookieConsent.classList.add("show2");
+    }
 
-  const text5 = document.getElementById("text5");
-  text5.innerHTML =
-    "<a class='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent' >" +
-    "<img src='https://fouadbechar.x10.mx/p/m/book.webp' alt='Description of Image' className='image208 animate0110' width='100px' height='160px'/>" +
-    "</a>" +
-    "<div className='text208 animate0110'>" +
-    "<h2 className='h208'>" +
-    "<a className='loadicon010101' href='https://a.co/d/b9zan5D' target='_parent'>" +
-    "Quantum computing" +
-    "</a>" +
-    "</h2>" +
-    "<p className='p208'>A short book about quantum computing." +
-    "</p>" +
-    "</div>";
+    const acceptBtn = document.getElementById("accept");
+    const declineBtn = document.getElementById("decline");
+    if (acceptBtn) {
+      const onAccept = () => {
+        setCookie("consent", "accepted", 30);
+        closeConsent();
+      };
+      acceptBtn.addEventListener("click", onAccept);
+    }
+    if (declineBtn) {
+      const onDecline = () => {
+        setCookie("consent", "declined", 30);
+        closeConsent();
+      };
+      declineBtn.addEventListener("click", onDecline);
+    }
 
-  const text6 = document.getElementById("text6");
-  text6.innerHTML =
-    "<section>" +
-    "<h2 class='bb7 animate0110'>" +
-    "<a className='loadicon010101' href='https://x10hosting.com/' target='_parent'>" +
-    "Free Web hosting" +
-    "</a>" +
-    "</h2>" +
-    "<img className='iiim0 animate0110' src='https://fouadbechar.x10.mx/p/m/x10.webp' alt='image' width='400px' height='100px'/>" +
-    "<p className='b3 animate0110'> 10+ Years Industry Veteran We've been around for a long time and we're here to stay. Rest assured that we know how to provide a stable, high-performance web hosting service that isn't going to close overnight. We believe that hosting should be accessible to all, and that's precisely why we offer free hosting for everyone. We even give you unmetered bandwidth and disk space? allowing your site to grow without fear of ridiculously low limits like our other free hosting competitors! You won't find many companies doing that free of charge." +
-    "<i>" +
-    "to visit the official website click here" +
-    "</i>" +
-    "<i className='i0i1'>" +
-    "<a className='loadicon010101' href='https://x10hosting.com/' title='https://x10hosting.com/' target='_parent'>" +
-    "x10hosting" +
-    "</a>" +
-    "</i>" +
-    "</p>" +
-    "</section>";
-
-  const text7 = document.getElementById("text7");
-  text7.innerHTML =
-    "<section>" +
-    "<h2 class='bb7'>" +
-    "<a className='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
-    "Artificial Intelligence" +
-    "</a>" +
-    "</h2>" +
-    "<a className='loadicon010101' href='https://youtu.be/nWkAatonIdk' target='_parent'>" +
-    "<img className='iiim' src='https://fouadbechar.x10.mx/p/m/AI.webp' alt='image' width='400px' height='224px'/>" +
-    "</a>" +
-  "<div class='container010101 loadicon010101'>" +
-  "<h2 class='h2010101'>" +
-    "Defining Artificial Intelligence" +
-    "</h2>" +
-  "<p class='p010101'>" +
-    "Artificial intelligence (AI) is a broad field of computer science that aims to create systems capable of performing tasks that typically require human intelligence. This includes activities like:" +
-    "</p>" +
-  "<ul class='ul010101'>" +
-    "<li>" +
-    "<strong>Learning:" +
-    "</strong>" +
-    "Acquiring new information and rules for using it." +
-    "</li>" +
-    "<li>" +
-    "<strong>Reasoning:" +
-    "</strong>" +
-    "Using rules to reach approximate or definite conclusions." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Problem-solving:" +
-    "</strong>" +
-    "Finding solutions to complex challenges." +
-    "</li>" +
-    "<li>" +
-    "<strong>Perception:" +
-    "</strong>" +
-    "Interpreting sensory information (like images or sound)." +
-    "</li>" +
-    "<li>" +
-    "<strong>Natural language understanding:" +
-    "</strong>" +
-    "Communicating and interacting with humans through language." +
-    "</li>" +
-    "</ul>" +
-  "<h2 class='h20101012'>" +
-    "Key Concepts in AI" +
-    "</h2>" +
-  "<ul class='ul010101'>" +
-    "<li>" +
-    "<strong>" +
-    "Machine Learning:" +
-    "</strong>" +
-    "A subset of AI that focuses on algorithms that allow computers to learn from data without explicit programming. This includes techniques like:" +
-    "<ul>" +
-    "<li>" +
-    "<strong>" +
-    "Supervised learning:" +
-    "</strong>" +
-    "Training models on labeled data (e.g., classNameifying images)." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Unsupervised learning:" +
-    "</strong>" +
-    "Finding patterns and structures in unlabeled data (e.g., customer segmentation)." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Reinforcement learning:" +
-    "</strong>" +
-    "Training agents to make decisions by rewarding desired behaviors." +
-    "</li>" +
-    "</ul>" +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Deep Learning: " +
-    "</strong>" +
-    "A type of machine learning that uses artificial neural networks with multiple layers to analyze complex patterns in data. Deep learning has revolutionized fields like image recognition, natural language processing, and speech recognition." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Natural Language Processing (NLP):" +
-    "</strong>" +
-    "The ability of computers to understand, interpret, and generate human language. This includes tasks like:" +
-    "<ul>" +
-    "<li>" +
-    "<strong>" +
-    "Translation:" +
-    "</strong>" +
-    "Converting text from one language to another." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Sentiment analysis:" +
-    "</strong>" +
-    "Determining the emotional tone of text." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Chatbots:" +
-    "</strong>" +
-    "Interacting with users through conversation." +
-    "</li>" +
-    "</ul>" +
-    "</li>" +
-    "</ul>" +
-    "<h2 className='h20101012'>" +
-    "Applications of AI" +
-    "</h2>" +
-    "<p className='p010101'>" +
-    "AI is rapidly transforming various sectors:" +
-    "</p>" +
-    "<ul className='ul010101'>" +
-    "<li>" +
-    "<strong>" +
-    "Healthcare:" +
-    "</strong>" +
-    "Diagnosing diseases, developing new drugs, personalizing treatment plans." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Finance:" +
-    "</strong>" +
-    "Fraud detection, algorithmic trading, credit scoring." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Transportation:" +
-    "</strong>" +
-    "Self-driving cars, traffic optimization, logistics." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Customer service:" +
-    "</strong>" +
-    "Chatbots, virtual assistants, personalized recommendations." +
-    "</li>" +
-    "<li>" +
-    "<strong>" +
-    "Entertainment:" +
-    "</strong>" +
-    "Game development, content creation, personalized streaming." +
-    "</li>" +
-    "</ul>" +
-  "<h2 class='h20101012 animate0110'>" +
-    "The Future of AI" +
-    "</h2>" +
-    "<p className='p010101'>" +
-    "AI is an evolving field with significant potential. Continued research and development will likely lead to even more sophisticated AI systems with broader applications. However, it's crucial to address ethical considerations, such as bias, job displacement, and the responsible use of AI." +
-    "</p>" +
-    "</div>" +
-    "</section>";
-
-  const text8 = document.getElementById("text8");
-  text8.innerHTML =
-    "<div class='mySlides fade'>" +
-    "<div className='numbertext'>" +
-    "1 / 3" +
-    "</div>" +
-  "<img class='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image1ss.webp' alt='image' />" +
-    "<div className='text'>" +
-    "<p>" +
-    "<a className='i0i2 loadicon010101' href='https://breathingtravel.com/best-islands-to-visit-in-indonesia/' target='_parent'>" +
-    "Bali Island" +
-    "</a>" +
-    "is one of the most beautiful tourist places in Indonesia, because of its rich natural beauty and ancient history and heritage that makes it one of the best cities in the world." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "<div className='mySlides fade'>" +
-    "<div className='numbertext'>" +
-    "2 / 3" +
-    "</div>" +
-    "<img className='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image2ss.webp' alt='image' />" +
-    "<div className='text'>" +
-    "<p>" +
-    "<a className='i0i2 loadicon010101' href='https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html' target='_parent'>" +
-    "Osaka" +
-    "</a>" +
-    "the second largest and richest city in Japan, and one of the most beautiful tourism cities in Japan and in the world as a whole, due to its long history that extends back to before the 16th century." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "<div className='mySlides fade'>" +
-    "<div className='numbertext'>" +
-    "3 / 3" +
-    "</div>" +
-    "<img className='imgslideshow' src='https://fouadbechar.x10.mx/p/m/image3ss.webp' alt='image' />" +
-    "<div className='text'>" +
-    "<p>" +
-    "<a className='i0i2 loadicon010101' href='https://www.routard.com/guide/code_dest/new_york.htm' target='_parent'>" +
-    "New York" +
-    "</a>" +
-    "is famous for its world-renowned shopping and fine restaurants around the most important tourist places such as the Statue of Liberty, its historical neighborhoods and museums." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "<span className='prev'>" +
-    " &lt;" +
-    "</span>" +
-    "<span className='next'>" +
-    " &gt; " +
-    "</span>";
-
-  const text9 = document.getElementById("text9");
-  text9.innerHTML =
-    "<span class='dot' onclick='currentSlide(1)'>" +
-    "</span>" +
-    "<span className='dot' onclick='currentSlide(2)'>" +
-    "</span>" +
-    "<span className='dot' onclick='currentSlide(3)'>" +
-    "</span>";
-
-  const text10 = document.getElementById("text10");
-  text10.innerHTML =
-    "<div class='ai-card'>" +
-    "<img src='https://fouadbechar.x10.mx/p/m/gpt01.webp' alt='ChatGPT Logo' width='50px' height='50px'/>" +
-    "<h3>" +
-    "ChatGPT" +
-    "</h3>" +
-    "<p>" +
-    "Smart assistant for programming, writing, and imaginative ideas." +
-    "</p>" +
-    "<a href='https://chat.openai.com/' target='_parent'>" +
-    "Try it now" +
-    "</a>" +
-    "</div>" +
-    "<div className='ai-card'>" +
-    "<img src='https://fouadbechar.x10.mx/p/m/gemini01.webp' alt='Gemini Logo' width='50px' height='50px'/>" +
-    "<h3>" +
-    "Gemini" +
-    "</h3>" +
-    "<p>" +
-    "Artificial intelligence for creativity, search, and images from Google." +
-    "</p>" +
-    "<a href='https://gemini.google.com/' target='_parent'>" +
-    "Try it now" +
-    "</a>" +
-    "</div>" +
-    "<div className='ai-card'>" +
-    "<img src='https://fouadbechar.x10.mx/p/m/copilot01.webp' alt='Copilot Logo' width='50px' height='50px'/>" +
-    "<h3>" +
-    "Copilot" +
-    "</h3>" +
-    "<p>" +
-    "Intelligent assistant in Windows and Office, from Microsoft." +
-    "</p>" +
-    "<a href='https://copilot.microsoft.com/' target='_parent'>" +
-    "Try it now" +
-    "</a>" +
-    "</div>";
-
-  const text11 = document.getElementById("text11");
-  text11.innerHTML =
-    "<center>" +
-    "<span>" +
-    "<a class='loadicon010101' href='https://www.facebook.com/FouadBechar2' target='_parent'>" +
-    "<img className='img321' src='https://fouadbechar.x10.mx/p/m/image0104.webp' alt='image0102' width='30px' height='30px'/>" +
-    "</a>" +
-    "<a className='loadicon010101' href='https://x.com/FouadBechar' target='_parent'>" +
-    "<img className='im0im1' src='https://fouadbechar.x10.mx/p/m/image0105.webp' alt='image0105' width='30px' height='30px' />" +
-    "</a>" +
-    "<a className='loadicon010101' href='https://www.youtube.com/channel/UCi3RVanUvgW2o1Ld5lt7EjA' target='_parent'>" +
-    "<img className='im0im2' src='https://fouadbechar.x10.mx/p/m/youtb.webp' alt='image0105' width='43px' height='30px' />" +
-    "</a>" +
-  "<img  id='open-btn' src='https://fouadbechar.x10.mx/p/m/ml.webp' alt='email' width='30px' height='30px' />" +
-    "</span>" +
-    "<div className='pr0101'>" +
-    "<a href='p/v/pr' target='_parent'>" +
-    "Privacy Policy" +
-    "</a>" +
-    "</div>" +
-    "</center>";
-    
+    function closeConsent() {
+      if (cookieConsent) {
+        cookieConsent.classList.remove("show2");
+        cookieConsent.classList.add("hide");
+        setTimeout(() => cookieConsent.remove(), 500);
+      }
+    }
   }, []);
-
 
   useEffect(() => {
-  const messages = {
-    ar: {
-      text: "يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك.",
-      accept: "أوافق",
-      decline: "أرفض",
-    },
-    en: {
-      text: "This site uses cookies to enhance your experience.",
-      accept: "Accept",
-      decline: "Decline",
-    },
-  };
+    document.addEventListener("scroll", function () {
+      const elements = document.querySelectorAll(".animate0110");
+      const windowHeight = window.innerHeight;
 
-  const lang = document.documentElement.lang.startsWith("ar") ? "ar" : "en";
-  const cookieConsent = document.getElementById("cookie-consent");
-  const msg = messages[lang];
+      elements.forEach((element) => {
+        const position = element.getBoundingClientRect().top;
 
-  document.getElementById("cookie-message").textContent = msg.text;
-  document.getElementById("accept").textContent = msg.accept;
-  document.getElementById("decline").textContent = msg.decline;
-
-  function getCookie(name) {
-    return document.cookie
-      .split("; ")
-      .find((row) => row.startsWith(name + "="))
-      ?.split("=")[1];
-  }
-
-  function setCookie(name, value, days) {
-    const maxAge = days * 24 * 60 * 60;
-    document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; SameSite=Lax; Secure`;
-  }
-
-  if (!getCookie("consent")) {
-    cookieConsent.style.display = "block";
-    cookieConsent.classList.add("show2");
-  }
-
-  const acceptBtn = document.getElementById("accept");
-  const declineBtn = document.getElementById("decline");
-  if (acceptBtn) {
-    acceptBtn.addEventListener("click", () => {
-      setCookie("consent", "accepted", 30);
-      closeConsent();
+        if (position < windowHeight) {
+          element.style.opacity = "1";
+          element.style.transform = "translateY(0)";
+        }
+      });
     });
-  }
-  if (declineBtn) {
-    declineBtn.addEventListener("click", () => {
-      setCookie("consent", "declined", 30);
-      closeConsent();
-    });
-  }
-
-  function closeConsent() {
-    cookieConsent.classList.remove("show2");
-    cookieConsent.classList.add("hide");
-    setTimeout(() => cookieConsent.remove(), 500);
-  }
   }, []);
-  
+
   return (
     <main>
       <div className="overlay" id="overlay" aria-hidden="true"></div>
@@ -505,7 +572,7 @@ export default function ContentSections() {
         <div className="loader010"></div>
       </div>
 
-      <div className="wrapper010"></div>
+      <div className="wrapper010" />
       <div className="open01">
         <img
           className="grid1img"
@@ -517,13 +584,7 @@ export default function ContentSections() {
       </div>
 
       <div className="wrapper">
-        <video
-          className="vividd"
-          src=""
-          preload="auto"
-          controls
-          autoPlay
-        ></video>
+        <video className="vividd" src="" preload="auto" controls autoPlay />
         <div className="close">
           <a href="https://www.worldwildlife.org/" target="_parent">
             <button type="button" className="lien">
@@ -549,38 +610,62 @@ export default function ContentSections() {
           </span>
         </div>
       </div>
-      <div className="f13">
-        <div id="text1" className="ff13"></div>
-        <div id="text2" className="ff14"></div>
-      </div>
 
       <div className="f13">
-        <div id="text3" className="ff13 animate0110"></div>
-        <div id="text4" className="ff14 animate0110"></div>
+        <div id="text1" className="ff13">
+          {section1}
+        </div>
+        <div id="text2" className="ff14">
+          {section2}
+        </div>
       </div>
-      <div id="text5" className="container208 animate0110"></div>
+
+      <div className="f13">
+        <div id="text3" className="ff13 animate0110">
+          {section3}
+        </div>
+        <div id="text4" className="ff14 animate0110">
+          {section4}
+        </div>
+      </div>
+
+      <div id="text5" className="container208 animate0110">
+        {section5}
+      </div>
 
       <div className="f113">
-        <div id="text6" className="ff113 animate0110"></div>
+        <div id="text6" className="ff113 animate0110">
+          {section6}
+        </div>
       </div>
 
       <div className="f113">
-        <div id="text7" className="ff113 animate0110"></div>
+        <div id="text7" className="ff113 animate0110">
+          {section7}
+        </div>
       </div>
 
-      <div id="text8" className="slideshow-container animate0110"></div>
+      <div id="text8" className="slideshow-container animate0110">
+        {section8}
+      </div>
 
-  <div id="text9" className="animate0110" style={{ textAlign: 'center' }}></div>
+      <div id="text9" className="animate0110" style={{ textAlign: "center" }}>
+        {section9}
+      </div>
 
-      <div id="text10" className="ai-card-grid"></div>
+      <div id="text10" className="ai-card-grid">
+        {section10}
+      </div>
 
       <div id="cookie-consent" role="dialog" aria-live="polite">
         <p id="cookie-message"></p>
-  <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <button type="button" id="accept" title="accept"></button>
           <button type="button" id="decline" title="decline"></button>
         </div>
       </div>
+
+      <div className="social-row">{section11}</div>
 
       <button id="chat-toggle" type="button">
         <img
@@ -594,13 +679,25 @@ export default function ContentSections() {
       <div id="chat-box">
         <div id="chat-header">
           <span>
-            <img className="img707" src="/src/assets/images/icons03.svg" alt="icons03" />
+            <img
+              className="img707"
+              src="/src/assets/images/icons03.svg"
+              alt="icons03"
+            />
           </span>
           <button id="clear-btn" title="Clear Chat">
-            <img className="img708" src="/src/assets/images/icons1.svg" alt="icons1" />
+            <img
+              className="img708"
+              src="/src/assets/images/icons1.svg"
+              alt="icons1"
+            />
           </button>
           <button id="close-btn" title="Close">
-            <img className="img709" src="/src/assets/images/icons2.svg" alt="icons2" />
+            <img
+              className="img709"
+              src="/src/assets/images/icons2.svg"
+              alt="icons2"
+            />
           </button>
         </div>
         <div id="chat-messages"></div>
@@ -614,7 +711,13 @@ export default function ContentSections() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="svg-icon"
-              style={{ width: '1em', height: '1em', verticalAlign: 'middle', fill: 'currentColor', overflow: 'hidden' }}
+              style={{
+                width: "1em",
+                height: "1em",
+                verticalAlign: "middle",
+                fill: "currentColor",
+                overflow: "hidden",
+              }}
               viewBox="0 0 1024 1024"
               version="1.1"
             >
@@ -654,7 +757,7 @@ export default function ContentSections() {
                 fontWeight="none"
                 fontSize="none"
                 textAnchor="none"
-                style={{ mixBlendMode: 'normal' }}
+                style={{ mixBlendMode: "normal" }}
               >
                 <g transform="scale(3.55556,3.55556)">
                   <path d="M19,15c-1.023,0 -2.04812,0.39087 -2.82812,1.17188c-1.562,1.562 -1.562,4.09425 0,5.65625l14.17188,14.17188l-14.17187,14.17188c-1.562,1.562 -1.562,4.09425 0,5.65625c0.78,0.78 1.80513,1.17188 2.82813,1.17188c1.023,0 2.04812,-0.39088 2.82813,-1.17187l14.17188,-14.17187l14.17188,14.17188c1.56,1.562 4.09525,1.562 5.65625,0c1.563,-1.563 1.563,-4.09325 0,-5.65625l-14.17187,-14.17187l14.17188,-14.17187c1.562,-1.562 1.562,-4.09425 0,-5.65625c-1.56,-1.561 -4.09625,-1.562 -5.65625,0l-14.17187,14.17188l-14.17187,-14.17187c-0.78,-0.78 -1.80513,-1.17187 -2.82812,-1.17187z" />
