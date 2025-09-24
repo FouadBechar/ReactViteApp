@@ -1,16 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import logo from "../assets/images/incon01.png";
 
-// import SearchBox from "./SearchBox";
 
 export default function NavBar() {
 
   const navRef = useRef(null);
 
   useEffect(() => {
-  /* ---------------------------
-       Utilities
-       --------------------------- */
+  
   const $ = (s, ctx = document) => ctx.querySelector(s);
   const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
   function debounce(fn, wait = 80) {
@@ -24,21 +21,13 @@ export default function NavBar() {
     return typeof x === "function";
   }
 
-  /* ---------------------------
-       Media queries helpers
-       --------------------------- */
+  
   const mql = window.matchMedia("(min-width:768px)");
   const mqlMedium = window.matchMedia("(max-width:1024px)");
   const isDesktop = () => mql.matches;
   const isMediumScreen = () =>
     window.innerWidth >= 768 && window.innerWidth <= 1024;
 
-  /* ---------------------------
-       DOM references
-       --------------------------- */
-
-  // const navLinks = $("#navLinks");
-  // const accountItem = $("#accountLink").closest("li");
   const menuBtn = $("#menuBtn");
   const closeBtn = $("#closeBtn");
   const navMenu = $("#navMenu");
@@ -57,9 +46,7 @@ export default function NavBar() {
   const searchForm = document.querySelector(".search-form");
   micBtn.setAttribute("ariaLive", "polite");
   micBtn.setAttribute("ariaLabel", "Listening...");
-  /* ---------------------------
-       Dropdown measurement cache + ResizeObserver
-       --------------------------- */
+  
   let ddCache = new WeakMap();
   const RO =
     window.ResizeObserver ||
@@ -98,7 +85,6 @@ export default function NavBar() {
     dropdown.classList.toggle("align-right", willOverflowRight);
   }
 
-  /* scheduleAdjust via rAF to avoid repeated layout thrash */
   const scheduled = new WeakMap();
   function scheduleAdjust(li, force = false) {
     if (!isDesktop()) return;
@@ -111,7 +97,6 @@ export default function NavBar() {
     });
   }
 
-  /* observe dropdown elements and attach pointerenter/leave for alignment locking */
   navListItems.forEach((li) => {
     const dd = li.querySelector(".dropdown");
     if (dd) ro.observe(dd);
@@ -145,9 +130,7 @@ export default function NavBar() {
   );
   navListItems.forEach((li) => scheduleAdjust(li, true));
 
-  /* ---------------------------
-       Menu (mobile) + Focus trap
-       --------------------------- */
+  
   let lastFocusedBeforeOpen = null;
 
   function trapFocus(e) {
@@ -188,7 +171,6 @@ export default function NavBar() {
     overlay.classList.add("show");
     menuBtn.setAttribute("aria-expanded", "true");
     navMenu.setAttribute("aria-hidden", "false");
-    // when menu acts as modal (mobile), set aria-modal true
     if (!isDesktop()) {
       navMenu.setAttribute("aria-modal", "true");
     } else {
@@ -240,7 +222,6 @@ export default function NavBar() {
     parentLi
       .querySelector(".top-link")
       ?.setAttribute("aria-expanded", String(isExpanded));
-    // close other open ones
     $$(".nav-menu li.open").forEach((li) => {
       if (li !== parentLi) {
         li.classList.remove("open");
@@ -253,7 +234,6 @@ export default function NavBar() {
     });
   }
 
-  /* keyboard navigation for top links (open + move into dropdown) */
   $$(".top-link").forEach((link) => {
     link.addEventListener("keydown", (e) => {
       const li = link.closest("li");
@@ -300,7 +280,6 @@ export default function NavBar() {
     });
   });
 
-  /* dropdown items arrow nav */
   $$(".dropdown a").forEach((a) => {
     a.addEventListener("keydown", (e) => {
       const dropdown = a.closest(".dropdown");
@@ -321,7 +300,6 @@ export default function NavBar() {
     });
   });
 
-  /* event listeners (menu open/close) */
   menuBtn?.addEventListener("click", () => {
     if (navMenu.classList.contains("open")) closeMenu();
     else openMenu();
@@ -333,7 +311,6 @@ export default function NavBar() {
     else openSearch();
   });
 
-  /* mobile: handle clicks inside nav for toggles */
   navMenu.addEventListener("click", (e) => {
     if (isDesktop()) return;
     const toggleButton = e.target.closest(".submenu-toggle");
@@ -352,7 +329,6 @@ export default function NavBar() {
     }
   });
 
-  /* Unified document click handler */
   const input = searchInput;
   const form = $(".search-form");
   const box = $("#suggestions");
@@ -361,7 +337,6 @@ export default function NavBar() {
   document.addEventListener("click", (e) => {
     const insideNav = navMenu.contains(e.target) || menuBtn.contains(e.target);
 
-    // Desktop dropdown toggling (Click-only + hover handled separately)
     if (isDesktop()) {
       const topLink = e.target.closest(
         ".nav-menu > ul > li.has-dropdown > .item-row > .top-link"
@@ -386,13 +361,11 @@ export default function NavBar() {
       }
     }
 
-    // Click outside nav -> close submenus + close mobile menu if open
     if (!insideNav) {
       closeAllSubmenus();
       if (!isDesktop()) closeMenu();
     }
 
-    // Medium screens: if search active and click outside nav, closeSearch
     if (
       isMediumScreen() &&
       navMenu.classList.contains("search-active") &&
@@ -401,7 +374,6 @@ export default function NavBar() {
       closeSearch();
     }
 
-    // suggestions: close if clicked outside
     if (box && input && !box.contains(e.target) && e.target !== input) {
       box.style.display = "none";
       box.setAttribute("aria-expanded", "false");
@@ -409,7 +381,6 @@ export default function NavBar() {
     }
   });
 
-  /* media query change handlers */
   mql.addEventListener("change", () => {
     if (isDesktop() && navMenu.classList.contains("open")) closeMenu();
     if (!isMediumScreen() && navMenu.classList.contains("search-active"))
@@ -424,18 +395,13 @@ export default function NavBar() {
     closeSearch();
   });
 
-  /* ---------------------------
-       Hover support for desktop dropdowns
-       (keeps click semantics but adds hover reveal)
-       --------------------------- */
+  
   $$(".nav-menu > ul > li.has-dropdown").forEach((li) => {
     let hoverTimeout;
-    // pointerenter/leave already used above for measuring; add open/close for UX
     li.addEventListener("pointerenter", () => {
       if (!isDesktop()) return;
       clearTimeout(hoverTimeout);
       scheduleAdjust(li, true);
-      // open subtly on hover
       li.classList.add("open2");
       li.querySelector(".top-link")?.setAttribute("aria-expanded", "true");
       li.querySelector(".submenu-toggle")?.setAttribute(
@@ -456,9 +422,7 @@ export default function NavBar() {
     });
   });
 
-  /* ---------------------------
-       Search suggestions module with Smart Fallback
-       --------------------------- */
+  
   let siteIndex = [];
   let history = [];
   try {
@@ -469,14 +433,12 @@ export default function NavBar() {
   }
   const MAX_HISTORY = 6;
 
-  // load index (pages.json) - professional: external file
-  fetch("https://fouadbechar.x10.mx/p/pages.json")
+  fetch("../assets/pages.json")
     .then((r) => (r.ok ? r.json() : []))
     .then((data) => {
       if (Array.isArray(data)) siteIndex = data;
     })
     .catch(() => {
-      /* fail silently */
     });
 
   function setHistory(arr) {
@@ -510,10 +472,9 @@ export default function NavBar() {
   }
 
   let active = -1;
-  let googlePending = null; // track jsonp script id
+  let googlePending = null; 
 
   function renderSuggestionsFromItems(items) {
-    // items: array of {type:'page'|'history'|'google', text, url?}
     if (!box) return;
     box.innerHTML = "";
     active = -1;
@@ -590,25 +551,18 @@ export default function NavBar() {
     const combined = [...siteMatches, ...histMatches];
 
     if (combined.length) {
-      // show local results (no Google call)
       renderSuggestionsFromItems(combined);
     } else {
-      // fallback: call Google Smart Suggestions (JSONP)
       fetchGoogleSuggestions(q);
     }
   }
 
-  /* ---------------------------
-       Google JSONP suggestions (fallback)
-       --------------------------- */
-  // expose as global so JSONP callback can call it
+  
   window.handleGoogleSuggestions = function (data) {
-    // data format: [query, [suggestions...], ...]
     if (!Array.isArray(data) || !data[1] || !data[1].length) {
       renderSuggestionsFromItems([]); // nothing
       return;
     }
-    // convert into items expected by renderSuggestionsFromItems
     const suggestions = data[1].map((s) => ({
       type: "google",
       text: String(s),
@@ -617,7 +571,6 @@ export default function NavBar() {
   };
 
   function fetchGoogleSuggestions(query) {
-    // remove old if pending
     if (googlePending) {
       const old = document.getElementById(googlePending);
       if (old) old.remove();
@@ -627,7 +580,6 @@ export default function NavBar() {
     googlePending = id;
     const script = document.createElement("script");
     script.id = id;
-    // callback param is 'callback' and must match global name above
     script.src = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(
       query
     )}&callback=handleGoogleSuggestions`;
@@ -635,7 +587,6 @@ export default function NavBar() {
       renderSuggestionsFromItems([]);
     };
     document.body.appendChild(script);
-    // auto-cleanup later
     setTimeout(() => {
       const el = document.getElementById(id);
       if (el) el.remove();
@@ -643,9 +594,7 @@ export default function NavBar() {
     }, 8000);
   }
 
-  /* ---------------------------
-       Selection / navigation logic
-       --------------------------- */
+  
   function selectItem(item) {
     if (!item) return;
     input.value = item.text;
@@ -664,7 +613,6 @@ export default function NavBar() {
       );
       return;
     }
-    // history or unknown: try local exact match then google
     const exact = siteIndex.find(
       (p) => (p.title || "").toLowerCase() === item.text.toLowerCase()
     );
@@ -707,10 +655,7 @@ export default function NavBar() {
     );
   }
 
-  /* ---------------------------
-       Wiring input / keyboard / delegation
-       --------------------------- */
-  // form submit: use navigate (local preferred, else google)
+  
   const formEl = form;
   formEl.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -721,7 +666,6 @@ export default function NavBar() {
   const debouncedRender = debounce((v) => renderSuggestions(v), 90);
   input.addEventListener("input", (e) => debouncedRender(e.target.value));
 
-  // keyboard navigation for suggestions
   input.addEventListener("keydown", (e) => {
     if (!box) return;
     const items = box.querySelectorAll(".suggestion-item");
@@ -774,12 +718,10 @@ export default function NavBar() {
     }
   }
 
-  // event delegation for suggestion clicks + delete
   box.addEventListener("mousedown", (ev) => {
-    ev.preventDefault(); // prevents blur on input
+    ev.preventDefault(); 
     const item = ev.target.closest(".suggestion-item");
     if (!item) return;
-    // delete button click
     if (ev.target.closest(".delete-btn")) {
       const text = item.dataset.text;
       setHistory(history.filter((h) => h !== text));
@@ -799,7 +741,6 @@ export default function NavBar() {
     }
   });
 
-  // Toggle mic/clear buttons based on input
   searchInput.addEventListener("input", () => {
     if (searchInput.value.trim().length > 0) {
       searchBox.classList.add("show-clear");
@@ -814,7 +755,6 @@ export default function NavBar() {
     searchBox.classList.remove("show-clear");
   });
 
-  // Color the microphone according to the situation
 
   function setMicUIState(state) {
     micBtn.classList.remove("mic-granted", "mic-denied", "mic-prompt");
@@ -866,7 +806,6 @@ export default function NavBar() {
     if (!ok) setMicUIState("prompt");
   })();
 
-  // Voice search
 
   if (SpeechRecognition) {
     const recognition = new SpeechRecognition();
@@ -887,12 +826,6 @@ export default function NavBar() {
       const transcript = e.results[0][0].transcript;
       searchInput.value = transcript;
       searchInput.dispatchEvent(new Event("input"));
-
-      // add
-
-      // setTimeout(() => {
-      //    searchForm.dispatchEvent(new Event('submit', { bubbles: true }));
-      // }, 3000);
     });
 
     recognition.addEventListener("end", () => {
@@ -912,7 +845,6 @@ export default function NavBar() {
     console.warn("🎤 Voice recognition not supported in this browser");
   }
 
-    // expose small test helper
     window.__navRefactor = {
       renderSuggestions,
       siteIndex,
@@ -921,7 +853,6 @@ export default function NavBar() {
     };
 
     return () => {
-      // best-effort cleanup of globals introduced by the legacy code
       try {
         if (window.__navRefactor) delete window.__navRefactor;
       } catch (e) {}
@@ -936,7 +867,7 @@ export default function NavBar() {
     <nav role="navigation" aria-label="Main navigation">
       <div className="nav-inner">
         <div className="logo" aria-label="Logos">
-          <a href="https://fouadbechar.x10.mx/" aria-label="FouadBechar">
+          <a href="/" aria-label="FouadBechar">
             <img src={logo} alt="Fouad Bechar logo" />
           </a>
         </div>
