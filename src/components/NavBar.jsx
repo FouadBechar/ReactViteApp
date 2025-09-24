@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import logo from "../assets/images/incon01.png";
-import pages from "../assets";
+import pages from "../assets/";
 
 
 export default function NavBar() {
