@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import image1 from "../assets/images/d1.webp";
+import image1 from "/src/assets/images/d1.webp";
 
 
 export default function ContentSections() {
