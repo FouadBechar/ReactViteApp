@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import icon from "/src/assets/images/chat-icon.png";
+import icons2 from "/src/assets/images/icons2.svg";
+import icons1 from "/src/assets/images/icons1.svg";
+import icons03 from "/src/assets/images/icons03.svg";
 function sanitizeLinksReact(text) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const parts = [];
