@@ -883,9 +883,9 @@ export default function ContentSections() {
           <button type="button" id="decline" title="decline"></button>
         </div>
       </div>
-     <>
+   
       <ChatWidget />
-     </>
+   
       <div id="form-container">
         <form
           id="my-form"
