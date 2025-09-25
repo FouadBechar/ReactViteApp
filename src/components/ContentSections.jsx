@@ -9,6 +9,7 @@ import image06 from "/src/assets/images/image06.webp";
 export default function ContentSections() {
   const contentRef = useRef(null);
   const section1 = (
+    <>
     <section>
       <h1 className="bb7">
         <a
@@ -30,10 +31,11 @@ export default function ContentSections() {
       <p className="b3">
       Most of the damage to our environment stems from consumption: what we consume, how much we consume and how often. Whether it’s gas,food, clothing, cars, furniture, water, toys, electronics, knick-knacks or other goods, we are all consumers. The key is not to stop consuming, but to start being mindful of our consumption habits and how each purchase or action affects the ecosystem. The good news is that it’s often not too difficult, expensive, or inconvenient to become more environmentally friendly. It can even be a fun challenge to implement among your family or coworkers. And though small changes at the individual level may seem trivial, just think how much cleaner the planet would be If everyone adopts behavior modification.<i className="i0i1"><a className="loadicon010101" href="https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment" target="_parent">(continued..)</a></i></p>
     </section>
-    
+    </>
   );
 
   const section2 = (
+    <>
     <section>
       <h2 className="bb7">
         <a
@@ -55,6 +57,7 @@ export default function ContentSections() {
       <p className="b3">
        Renewable energy is energy derived from natural sources that are replenished at a higher rate than they are consumed. Sunlight and wind, for example, are such sources that are constantly being replenished. Renewable energy sources are plentiful and all around us. Fossil fuels - coal, oil and gas - on the other hand, are non-renewable resources that take hundreds of millions of years to form. Fossil fuels, when burned to produce energy, cause harmful greenhouse gas emissions, such as carbon dioxide. Generating renewable energy creates far lower emissions than burning fossil fuels. Transitioning from fossil fuels, which currently account for the lion’s share of emissions, to renewable energy is key to addressing the climate crisis. Renewables are now cheaper in most countries, and generate three times more jobs than fossil fuels.<i className="i0i1"><a className="loadicon010101" href="https://www.un.org/en/climatechange/raising-ambition/renewable-energy" target="_parent"> (continued..) </a></i></p>
     </section>
+      </>
   );
 
   const section3 = (
@@ -188,6 +191,7 @@ export default function ContentSections() {
   );
 
   const section6 = (
+    <>
     <section>
       <h2 className="bb7 animate0110">
         <a
@@ -209,6 +213,7 @@ export default function ContentSections() {
       <p className="b3 animate0110">
        10+ Years Industry Veteran We've been around for a long time and we're here to stay. Rest assured that we know how to provide a stable, high-performance web hosting service that isn't going to close overnight. We believe that hosting should be accessible to all, and that's precisely why we offer free hosting for everyone. We even give you unmetered bandwidth and disk space? allowing your site to grow without fear of ridiculously low limits like our other free hosting competitors! You won't find many companies doing that free of charge.<i>to visit the official website click here</i><i className="i0i1"><a className="loadicon010101" href="https://x10hosting.com/" title="https://x10hosting.com/" target="_parent">x10hosting</a></i></p>
     </section>
+      </>
   );
 
   const section7 = (
