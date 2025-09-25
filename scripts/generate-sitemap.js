@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const SITE_URL = process.env.SITE_URL || 'https://react-vite-app-eight.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://react-app-eight.vercel.app';
 const pagesPath = path.join(__dirname, '..', 'public', 'pages.json');
 const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
 
