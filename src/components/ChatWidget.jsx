@@ -1,4 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import icon from "/src/assets/images/chat-icon.png";
+import icons2 from "/src/assets/images/icons2.svg";
+import icons1 from "/src/assets/images/icons1.svg";
+import icons03 from "/src/assets/images/icons03.svg";
+
 
 function sanitizeLinksReact(text) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -132,19 +137,19 @@ export default function ChatWidget() {
   return (
     <>
       <button id="chat-toggle" type="button" onClick={() => setOpen(true)} style={{ display: open ? "none" : "block" }}>
-        <img src={"/src/assets/images/chat-icon.png"} alt="chat Logo" width="50px" height="31px" />
+        <img src={chat-icon} alt="chat Logo" width="50px" height="31px" />
       </button>
 
       <div id="chat-box" style={{ display: open ? "flex" : "none" }}>
         <div id="chat-header">
           <span>
-            <img className="img707" src={"/src/assets/images/icons03.svg"} alt="icons03" />
+            <img className="img707" src={icons03} alt="icons03" />
           </span>
           <button id="clear-btn" title="Clear Chat" onClick={clearHistory}>
-            <img className="img708" src={"/src/assets/images/icons1.svg"} alt="icons1" />
+            <img className="img708" src={icons1} alt="icons1" />
           </button>
           <button id="close-btn" title="Close" onClick={() => setOpen(false)}>
-            <img className="img709" src={"/src/assets/images/icons2.svg"} alt="icons2" />
+            <img className="img709" src={icons2} alt="icons2" />
           </button>
         </div>
 
