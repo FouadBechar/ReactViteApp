@@ -95,9 +95,9 @@ export default function ContentSections() {
           height={200}
         />
         <p className="b3 animate0110">
-          Children exposed to violence may face long-term physical and mental
-          health issues. Support and early intervention are critical.
-        </p>
+          
+
+        Many children exposed to violence in the home are also victims of physical abuse.One: Children who witness domestic violence or are victims of abuse themselves are at serious risk for long-term physical and mental health problems.two: Children who witness violence between parents may also be at greater risk of being violent in their future relationships. If you are a parent who is experiencing abuse, it can be difficult to know how to protect your child.<i className="i0i1"><a className="loadicon010101" href="https://womenshealth.gov/relationships-and-safety/domestic-violence/effects-domestic-violence-children" target="_parent"> (continued..) </a></i></p>
       </section>
     </>
   );
@@ -123,10 +123,8 @@ export default function ContentSections() {
           height={142}
         />
         <p className="b3">
-          Child development often occurs in stages; understanding those stages
-          helps caregivers support growth.
-        </p>
-      </section>
+         Children change rapidly as they grow. Many of these changes are physical. Other changes are cognitive, which means the changes affect the way children think and learn. Child development often occurs in stages, with the majority of children hitting specific developmental landmarks by the time they reach a certain age.<i className="i0i1"><a className="loadicon010101" href="https://riseservicesinc.org/news/5-stages-child-development/#:~:text=Other%20scholars%20describe%20six%20stages,%2C%20school%20age%2C%20and%20adolescents." target="_parent">(continued..)</a></i></p>
+        </section>
 
       <section>
         <h2 className="bb7 animate0110">
@@ -147,9 +145,7 @@ export default function ContentSections() {
           height={200}
         />
         <p className="b3 animate0110">
-          Mental health affects the way people think, feel and act. Taking care
-          of our mental health is just as important as having a healthy body.
-        </p>
+        Mental health affects the way people think, feel and act. Taking care of our mental health is just as important as having a healthy body. As a parent, you play an important role in your child's mental health. You can promote good mental health by the things you say and do, and through the environment you create at home. You can also learn about the early signs of mental health problems and know where to go for help.<i className="i0i1"><a className="loadicon010101" href="https://caringforkids.cps.ca/handouts/mentalhealth/mental_health" target="_parent">(continued..)</a></i></p>
       </section>
     </>
   );
