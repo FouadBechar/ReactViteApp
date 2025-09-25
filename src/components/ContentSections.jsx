@@ -17,7 +17,7 @@ export default function ContentSections() {
       </h1>
       <img
         className="iiim"
-        src="https://fouadbechar.x10.mx/p/m/enrg.webp"
+        src={https://fouadbechar.x10.mx/p/m/enrg.webp}
         alt="image"
         width={400}
         height={224}
