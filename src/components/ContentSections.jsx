@@ -7,9 +7,10 @@ import image06 from "/src/assets/images/image06.webp";
 import image7 from "/src/assets/images/image7.webp";
 import image8 from "/src/assets/images/image8.webp";
 import book from "/src/assets/images/book.webp";
-
-
-
+import x10 from "/src/assets/images/x10.webp";
+import image1ss from "/src/assets/images/image1ss.webp";
+import image1ss from "/src/assets/images/image2ss.webp";
+import image1ss from "/src/assets/images/image3ss.webp";
 
 export default function ContentSections() {
   const contentRef = useRef(null);
@@ -210,7 +211,7 @@ export default function ContentSections() {
       </h2>
       <img
         className="iiim0 animate0110"
-        src="https://fouadbechar.x10.mx/p/m/x10.webp"
+        src={x10}
         alt="image"
         width={400}
         height={100}
@@ -233,7 +234,7 @@ export default function ContentSections() {
         <div className="numbertext">1 / 3</div>
         <img
           className="imgslideshow"
-          src="https://fouadbechar.x10.mx/p/m/image1ss.webp"
+          src={image1ss}
           alt="image"
         />
         <div className="text">
@@ -255,7 +256,7 @@ export default function ContentSections() {
         <div className="numbertext">2 / 3</div>
         <img
           className="imgslideshow"
-          src="https://fouadbechar.x10.mx/p/m/image2ss.webp"
+          src={image2ss}
           alt="image"
         />
         <div className="text">
@@ -277,7 +278,7 @@ export default function ContentSections() {
         <div className="numbertext">3 / 3</div>
         <img
           className="imgslideshow"
-          src="https://fouadbechar.x10.mx/p/m/image3ss.webp"
+          src={image3ss}
           alt="image"
         />
         <div className="text">
