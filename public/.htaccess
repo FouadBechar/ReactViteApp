@@ -1,0 +1,35 @@
+# Apache configuration for single-page app (Vite)
+# Place this file in your site root (or keep it in public/ so Vite copies it to the build output)
+
+# Enable Rewrite
+RewriteEngine On
+
+# Serve existing files directly
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Serve existing directories directly
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Rewrite everything else to index.html (SPA)
+RewriteRule ^ index.html [L]
+
+# Optional: caching for static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/* "access plus 1 month"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Optional: ensure sitemap and robots are served with caching
+<Files "sitemap.xml">
+  Header set Cache-Control "public, max-age=86400"
+</Files>
+<Files "robots.txt">
+  Header set Cache-Control "public, max-age=86400"
+</Files>

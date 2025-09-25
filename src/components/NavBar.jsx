@@ -1,849 +1,852 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import logo from "/src/assets/images/incon01.png";
-
 
 export default function NavBar() {
 
-  const navRef = useRef(null);
 
   useEffect(() => {
-  
-  const $ = (s, ctx = document) => ctx.querySelector(s);
-  const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
-  function debounce(fn, wait = 80) {
-    let t;
-    return (...a) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...a), wait);
-    };
-  }
-  function isFunction(x) {
-    return typeof x === "function";
-  }
 
-  
-  const mql = window.matchMedia("(min-width:768px)");
-  const mqlMedium = window.matchMedia("(max-width:1024px)");
-  const isDesktop = () => mql.matches;
-  const isMediumScreen = () =>
-    window.innerWidth >= 768 && window.innerWidth <= 1024;
+    const $ = (s, ctx = document) => ctx.querySelector(s);
+    const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
+    function debounce(fn, wait = 80) {
+      let t;
+      return (...a) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...a), wait);
+      };
+    }
+    function isFunction(x) {
+      return typeof x === "function";
+    }
 
-  const menuBtn = $("#menuBtn");
-  const closeBtn = $("#closeBtn");
-  const navMenu = $("#navMenu");
-  const overlay = $("#overlay");
-  const searchToggleBtn = $("#searchToggleBtn");
-  const searchBox = $("#searchBox");
-  const searchInput = $("#searchInput");
-  const clearBtn = $("#clearBtn");
-  const navListItems = $$(".nav-menu > ul > li").length
-    ? $$(".nav-menu > ul > li")
-    : $$("#navLinks > li");
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+    const mql = window.matchMedia("(min-width:768px)");
+    const mqlMedium = window.matchMedia("(max-width:1024px)");
+    const isDesktop = () => mql.matches;
+    const isMediumScreen = () =>
+      window.innerWidth >= 768 && window.innerWidth <= 1024;
 
-  const micBtn = $("#micBtn");
-  const searchForm = document.querySelector(".search-form");
-  micBtn.setAttribute("ariaLive", "polite");
-  micBtn.setAttribute("ariaLabel", "Listening...");
-  
-  let ddCache = new WeakMap();
-  const RO =
-    window.ResizeObserver ||
-    class {
-      observe() {}
-      disconnect() {}
-    };
-  const ro = new RO((entries) => {
-    entries.forEach((e) => ddCache.delete(e.target));
-  });
+    const menuBtn = $("#menuBtn");
+    const closeBtn = $("#closeBtn");
+    const navMenu = $("#navMenu");
+    const overlay = $("#overlay");
+    const searchToggleBtn = $("#searchToggleBtn");
+    const searchBox = $("#searchBox");
+    const searchInput = $("#searchInput");
+    const clearBtn = $("#clearBtn");
+    const navListItems = $$(".nav-menu > ul > li").length
+      ? $$(".nav-menu > ul > li")
+      : $$("#navLinks > li");
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  function measureDropdownWidth(dropdown) {
-    if (!dropdown) return 0;
-    if (ddCache.has(dropdown)) return ddCache.get(dropdown);
-    const clone = dropdown.cloneNode(true);
-    clone.style.visibility = "hidden";
-    clone.style.display = "block";
-    clone.style.position = "absolute";
-    clone.style.left = "-9999px";
-    clone.style.top = "0";
-    document.body.appendChild(clone);
-    const w = Math.ceil(clone.getBoundingClientRect().width);
-    document.body.removeChild(clone);
-    ddCache.set(dropdown, w);
-    return w;
-  }
+    const micBtn = $("#micBtn");
+    const searchForm = document.querySelector(".search-form");
+    if (micBtn) {
+      micBtn.setAttribute("aria-live", "polite");
+      micBtn.setAttribute("aria-label", "Listening...");
+    }
 
-  function adjustDropdownPosition(li, force = false) {
-    if (!isDesktop()) return;
-    if (li.dataset.alignLocked === "true" && !force) return;
-    const dropdown = li.querySelector(".dropdown");
-    if (!dropdown) return;
-    const ddWidth = measureDropdownWidth(dropdown);
-    const liRect = li.getBoundingClientRect();
-    const willOverflowRight = liRect.left + ddWidth > window.innerWidth - 12;
-    dropdown.classList.toggle("align-right", willOverflowRight);
-  }
-
-  const scheduled = new WeakMap();
-  function scheduleAdjust(li, force = false) {
-    if (!isDesktop()) return;
-    if (li.dataset.alignLocked === "true" && !force) return;
-    if (scheduled.get(li)) return;
-    scheduled.set(li, true);
-    requestAnimationFrame(() => {
-      adjustDropdownPosition(li, force);
-      scheduled.delete(li);
-    });
-  }
-
-  navListItems.forEach((li) => {
-    const dd = li.querySelector(".dropdown");
-    if (dd) ro.observe(dd);
-
-    li.addEventListener("pointerenter", () => {
-      scheduleAdjust(li, true);
-      li.dataset.alignLocked = "true";
-    });
-    li.addEventListener("pointerleave", () => {
-      delete li.dataset.alignLocked;
+    let ddCache = new WeakMap();
+    const RO =
+      window.ResizeObserver ||
+      class {
+        observe() {}
+        disconnect() {}
+      };
+    const ro = new RO((entries) => {
+      entries.forEach((e) => ddCache.delete(e.target));
     });
 
-    const topLink = li.querySelector(".top-link");
-    if (topLink) {
-      topLink.addEventListener("focus", () => {
+    function measureDropdownWidth(dropdown) {
+      if (!dropdown) return 0;
+      if (ddCache.has(dropdown)) return ddCache.get(dropdown);
+      const clone = dropdown.cloneNode(true);
+      clone.style.visibility = "hidden";
+      clone.style.display = "block";
+      clone.style.position = "absolute";
+      clone.style.left = "-9999px";
+      clone.style.top = "0";
+      document.body.appendChild(clone);
+      const w = Math.ceil(clone.getBoundingClientRect().width);
+      document.body.removeChild(clone);
+      ddCache.set(dropdown, w);
+      return w;
+    }
+
+    function adjustDropdownPosition(li, force = false) {
+      if (!isDesktop()) return;
+      if (li.dataset.alignLocked === "true" && !force) return;
+      const dropdown = li.querySelector(".dropdown");
+      if (!dropdown) return;
+      const ddWidth = measureDropdownWidth(dropdown);
+      const liRect = li.getBoundingClientRect();
+      const willOverflowRight = liRect.left + ddWidth > window.innerWidth - 12;
+      dropdown.classList.toggle("align-right", willOverflowRight);
+    }
+
+    const scheduled = new WeakMap();
+    function scheduleAdjust(li, force = false) {
+      if (!isDesktop()) return;
+      if (li.dataset.alignLocked === "true" && !force) return;
+      if (scheduled.get(li)) return;
+      scheduled.set(li, true);
+      requestAnimationFrame(() => {
+        adjustDropdownPosition(li, force);
+        scheduled.delete(li);
+      });
+    }
+
+    navListItems.forEach((li) => {
+      const dd = li.querySelector(".dropdown");
+      if (dd) ro.observe(dd);
+
+      li.addEventListener("pointerenter", () => {
         scheduleAdjust(li, true);
         li.dataset.alignLocked = "true";
       });
-      topLink.addEventListener("blur", () => {
+      li.addEventListener("pointerleave", () => {
         delete li.dataset.alignLocked;
       });
-    }
-  });
 
-  window.addEventListener(
-    "resize",
-    debounce(() => {
-      ddCache = new WeakMap();
-      navListItems.forEach((li) => scheduleAdjust(li, true));
-    }, 120)
-  );
-  navListItems.forEach((li) => scheduleAdjust(li, true));
+      const topLink = li.querySelector(".top-link");
+      if (topLink) {
+        topLink.addEventListener("focus", () => {
+          scheduleAdjust(li, true);
+          li.dataset.alignLocked = "true";
+        });
+        topLink.addEventListener("blur", () => {
+          delete li.dataset.alignLocked;
+        });
+      }
+    });
 
-  
-  let lastFocusedBeforeOpen = null;
-
-  function trapFocus(e) {
-    if (isDesktop() || !navMenu.classList.contains("open")) return;
-    const focusable = navMenu.querySelectorAll(
-      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    window.addEventListener(
+      "resize",
+      debounce(() => {
+        ddCache = new WeakMap();
+        navListItems.forEach((li) => scheduleAdjust(li, true));
+      }, 120)
     );
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.key === "Tab") {
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+    navListItems.forEach((li) => scheduleAdjust(li, true));
+
+    let lastFocusedBeforeOpen = null;
+
+    function trapFocus(e) {
+      if (isDesktop() || !navMenu.classList.contains("open")) return;
+      const focusable = navMenu.querySelectorAll(
+        'a[href]:not([disabled]), button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     }
-  }
 
-  function closeAllSubmenus() {
-    $$(".nav-menu li.open").forEach((li) => {
-      li.classList.remove("open");
-      li.querySelector(".submenu-toggle")?.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-      li.querySelector(".top-link")?.setAttribute("aria-expanded", "false");
-    });
-  }
-
-  function openMenu() {
-    if (navMenu.classList.contains("open")) return;
-    lastFocusedBeforeOpen = document.activeElement;
-    document.body.style.overflow = "hidden";
-    navMenu.classList.add("open");
-    overlay.classList.add("show");
-    menuBtn.setAttribute("aria-expanded", "true");
-    navMenu.setAttribute("aria-hidden", "false");
-    if (!isDesktop()) {
-      navMenu.setAttribute("aria-modal", "true");
-    } else {
-      navMenu.setAttribute("aria-modal", "false");
-    }
-    closeBtn.focus();
-    document.addEventListener("keydown", handleKeydown);
-  }
-
-  function closeMenu() {
-    if (!navMenu.classList.contains("open")) return;
-    document.body.style.overflow = "";
-    navMenu.classList.remove("open");
-    overlay.classList.remove("show");
-    menuBtn.setAttribute("aria-expanded", "false");
-    navMenu.setAttribute("aria-hidden", "true");
-    navMenu.setAttribute("aria-modal", "false");
-    closeAllSubmenus();
-    try {
-      lastFocusedBeforeOpen?.focus();
-    } catch (e) {}
-    lastFocusedBeforeOpen = null;
-    document.removeEventListener("keydown", handleKeydown);
-  }
-
-  function openSearch() {
-    navMenu.classList.add("search-active");
-    searchInput?.focus();
-  }
-  function closeSearch() {
-    navMenu.classList.remove("search-active");
-    searchToggleBtn?.focus();
-  }
-
-  function handleKeydown(e) {
-    if (e.key === "Escape") {
-      if (navMenu.classList.contains("search-active") && isMediumScreen())
-        closeSearch();
-      else closeMenu();
-    } else {
-      trapFocus(e);
-    }
-  }
-
-  function toggleSubmenu(btn) {
-    const parentLi = btn.closest("li");
-    const isExpanded = parentLi.classList.toggle("open");
-    btn.setAttribute("aria-expanded", String(isExpanded));
-    parentLi
-      .querySelector(".top-link")
-      ?.setAttribute("aria-expanded", String(isExpanded));
-    $$(".nav-menu li.open").forEach((li) => {
-      if (li !== parentLi) {
+    function closeAllSubmenus() {
+      $$(".nav-menu li.open").forEach((li) => {
         li.classList.remove("open");
         li.querySelector(".submenu-toggle")?.setAttribute(
           "aria-expanded",
           "false"
         );
         li.querySelector(".top-link")?.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  $$(".top-link").forEach((link) => {
-    link.addEventListener("keydown", (e) => {
-      const li = link.closest("li");
-      const dropdown = li.querySelector(".dropdown");
-      if (!dropdown) return;
-      const items = Array.from(dropdown.querySelectorAll("a"));
-      if (!items.length) return;
-
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (!li.classList.contains("open")) {
-          li.classList.add("open");
-          link.setAttribute("aria-expanded", "true");
-          li.querySelector(".submenu-toggle")?.setAttribute(
-            "aria-expanded",
-            "true"
-          );
-        }
-        items[0].focus();
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (!li.classList.contains("open")) {
-          li.classList.add("open");
-          link.setAttribute("aria-expanded", "true");
-          li.querySelector(".submenu-toggle")?.setAttribute(
-            "aria-expanded",
-            "true"
-          );
-        }
-        items[items.length - 1].focus();
-      } else if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        const toggle = li.querySelector(".submenu-toggle");
-        if (toggle) toggleSubmenu(toggle);
-      } else if (e.key === "Escape") {
-        li.classList.remove("open");
-        link.setAttribute("aria-expanded", "false");
-        li.querySelector(".submenu-toggle")?.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-        link.focus();
-      }
-    });
-  });
-
-  $$(".dropdown a").forEach((a) => {
-    a.addEventListener("keydown", (e) => {
-      const dropdown = a.closest(".dropdown");
-      if (!dropdown) return;
-      const items = Array.from(dropdown.querySelectorAll("a"));
-      const idx = items.indexOf(a);
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        items[(idx + 1) % items.length].focus();
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        items[(idx - 1 + items.length) % items.length].focus();
-      } else if (e.key === "Escape") {
-        const parentLi = dropdown.closest("li");
-        parentLi.classList.remove("open");
-        parentLi.querySelector(".top-link")?.focus();
-      }
-    });
-  });
-
-  menuBtn?.addEventListener("click", () => {
-    if (navMenu.classList.contains("open")) closeMenu();
-    else openMenu();
-  });
-  closeBtn?.addEventListener("click", closeMenu);
-  overlay?.addEventListener("click", closeMenu);
-  searchToggleBtn?.addEventListener("click", () => {
-    if (navMenu.classList.contains("search-active")) closeSearch();
-    else openSearch();
-  });
-
-  navMenu.addEventListener("click", (e) => {
-    if (isDesktop()) return;
-    const toggleButton = e.target.closest(".submenu-toggle");
-    const topLink = e.target.closest(".top-link");
-    if (toggleButton) {
-      e.preventDefault();
-      toggleSubmenu(toggleButton);
-      return;
+      });
     }
-    if (topLink && topLink.getAttribute("aria-haspopup") === "true") {
-      e.preventDefault();
-      const associatedToggleButton = topLink
-        .closest(".item-row")
-        ?.querySelector(".submenu-toggle");
-      if (associatedToggleButton) toggleSubmenu(associatedToggleButton);
+
+    function openMenu() {
+      if (navMenu.classList.contains("open")) return;
+      lastFocusedBeforeOpen = document.activeElement;
+      document.body.style.overflow = "hidden";
+      navMenu.classList.add("open");
+      overlay.classList.add("show");
+      menuBtn.setAttribute("aria-expanded", "true");
+      navMenu.setAttribute("aria-hidden", "false");
+      if (!isDesktop()) {
+        navMenu.setAttribute("aria-modal", "true");
+      } else {
+        navMenu.setAttribute("aria-modal", "false");
+      }
+      closeBtn.focus();
+      document.addEventListener("keydown", handleKeydown);
     }
-  });
 
-  const input = searchInput;
-  const form = $(".search-form");
-  const box = $("#suggestions");
-  const announcer = $("#sr-announcer");
+    function closeMenu() {
+      if (!navMenu.classList.contains("open")) return;
+      document.body.style.overflow = "";
+      navMenu.classList.remove("open");
+      overlay.classList.remove("show");
+      menuBtn.setAttribute("aria-expanded", "false");
+      navMenu.setAttribute("aria-hidden", "true");
+      navMenu.setAttribute("aria-modal", "false");
+      closeAllSubmenus();
+      try {
+        lastFocusedBeforeOpen?.focus();
+      } catch (e) {}
+      lastFocusedBeforeOpen = null;
+      document.removeEventListener("keydown", handleKeydown);
+    }
 
-  document.addEventListener("click", (e) => {
-    const insideNav = navMenu.contains(e.target) || menuBtn.contains(e.target);
+    function openSearch() {
+      navMenu.classList.add("search-active");
+      searchInput?.focus();
+    }
+    function closeSearch() {
+      navMenu.classList.remove("search-active");
+      searchToggleBtn?.focus();
+    }
 
-    if (isDesktop()) {
-      const topLink = e.target.closest(
-        ".nav-menu > ul > li.has-dropdown > .item-row > .top-link"
-      );
-      const toggleBtn = e.target.closest(
-        ".nav-menu > ul > li.has-dropdown > .item-row > .submenu-toggle"
-      );
-      if (topLink || toggleBtn) {
-        e.preventDefault();
-        const li = (topLink || toggleBtn).closest("li");
-        const isOpen = li.classList.contains("open");
-        closeAllSubmenus();
-        if (!isOpen) {
-          li.classList.add("open");
-          li.querySelector(".top-link")?.setAttribute("aria-expanded", "true");
+    function handleKeydown(e) {
+      if (e.key === "Escape") {
+        if (navMenu.classList.contains("search-active") && isMediumScreen())
+          closeSearch();
+        else closeMenu();
+      } else {
+        trapFocus(e);
+      }
+    }
+
+    function toggleSubmenu(btn) {
+      const parentLi = btn.closest("li");
+      const isExpanded = parentLi.classList.toggle("open");
+      btn.setAttribute("aria-expanded", String(isExpanded));
+      parentLi
+        .querySelector(".top-link")
+        ?.setAttribute("aria-expanded", String(isExpanded));
+      $$(".nav-menu li.open").forEach((li) => {
+        if (li !== parentLi) {
+          li.classList.remove("open");
           li.querySelector(".submenu-toggle")?.setAttribute(
             "aria-expanded",
-            "true"
+            "false"
           );
+          li.querySelector(".top-link")?.setAttribute("aria-expanded", "false");
         }
+      });
+    }
+
+    $$(".top-link").forEach((link) => {
+      link.addEventListener("keydown", (e) => {
+        const li = link.closest("li");
+        const dropdown = li.querySelector(".dropdown");
+        if (!dropdown) return;
+        const items = Array.from(dropdown.querySelectorAll("a"));
+        if (!items.length) return;
+
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (!li.classList.contains("open")) {
+            li.classList.add("open");
+            link.setAttribute("aria-expanded", "true");
+            li.querySelector(".submenu-toggle")?.setAttribute(
+              "aria-expanded",
+              "true"
+            );
+          }
+          items[0].focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (!li.classList.contains("open")) {
+            li.classList.add("open");
+            link.setAttribute("aria-expanded", "true");
+            li.querySelector(".submenu-toggle")?.setAttribute(
+              "aria-expanded",
+              "true"
+            );
+          }
+          items[items.length - 1].focus();
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const toggle = li.querySelector(".submenu-toggle");
+          if (toggle) toggleSubmenu(toggle);
+        } else if (e.key === "Escape") {
+          li.classList.remove("open");
+          link.setAttribute("aria-expanded", "false");
+          li.querySelector(".submenu-toggle")?.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+          link.focus();
+        }
+      });
+    });
+
+    $$(".dropdown a").forEach((a) => {
+      a.addEventListener("keydown", (e) => {
+        const dropdown = a.closest(".dropdown");
+        if (!dropdown) return;
+        const items = Array.from(dropdown.querySelectorAll("a"));
+        const idx = items.indexOf(a);
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          items[(idx + 1) % items.length].focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          items[(idx - 1 + items.length) % items.length].focus();
+        } else if (e.key === "Escape") {
+          const parentLi = dropdown.closest("li");
+          parentLi.classList.remove("open");
+          parentLi.querySelector(".top-link")?.focus();
+        }
+      });
+    });
+
+    menuBtn?.addEventListener("click", () => {
+      if (navMenu.classList.contains("open")) closeMenu();
+      else openMenu();
+    });
+    closeBtn?.addEventListener("click", closeMenu);
+    overlay?.addEventListener("click", closeMenu);
+    searchToggleBtn?.addEventListener("click", () => {
+      if (navMenu.classList.contains("search-active")) closeSearch();
+      else openSearch();
+    });
+
+    navMenu.addEventListener("click", (e) => {
+      if (isDesktop()) return;
+      const toggleButton = e.target.closest(".submenu-toggle");
+      const topLink = e.target.closest(".top-link");
+      if (toggleButton) {
+        e.preventDefault();
+        toggleSubmenu(toggleButton);
         return;
       }
-    }
-
-    if (!insideNav) {
-      closeAllSubmenus();
-      if (!isDesktop()) closeMenu();
-    }
-
-    if (
-      isMediumScreen() &&
-      navMenu.classList.contains("search-active") &&
-      !navMenu.contains(e.target)
-    ) {
-      closeSearch();
-    }
-
-    if (box && input && !box.contains(e.target) && e.target !== input) {
-      box.style.display = "none";
-      box.setAttribute("aria-expanded", "false");
-      announcer.textContent = "";
-    }
-  });
-
-  mql.addEventListener("change", () => {
-    if (isDesktop() && navMenu.classList.contains("open")) closeMenu();
-    if (!isMediumScreen() && navMenu.classList.contains("search-active"))
-      closeSearch();
-  });
-  mqlMedium.addEventListener("change", () => {
-    if (!isMediumScreen() && navMenu.classList.contains("search-active"))
-      closeSearch();
-  });
-  window.addEventListener("orientationchange", () => {
-    closeMenu();
-    closeSearch();
-  });
-
-  
-  $$(".nav-menu > ul > li.has-dropdown").forEach((li) => {
-    let hoverTimeout;
-    li.addEventListener("pointerenter", () => {
-      if (!isDesktop()) return;
-      clearTimeout(hoverTimeout);
-      scheduleAdjust(li, true);
-      li.classList.add("open2");
-      li.querySelector(".top-link")?.setAttribute("aria-expanded", "true");
-      li.querySelector(".submenu-toggle")?.setAttribute(
-        "aria-expanded",
-        "true"
-      );
+      if (topLink && topLink.getAttribute("aria-haspopup") === "true") {
+        e.preventDefault();
+        const associatedToggleButton = topLink
+          .closest(".item-row")
+          ?.querySelector(".submenu-toggle");
+        if (associatedToggleButton) toggleSubmenu(associatedToggleButton);
+      }
     });
-    li.addEventListener("pointerleave", () => {
-      if (!isDesktop()) return;
-      hoverTimeout = setTimeout(() => {
-        li.classList.remove("open2");
-        li.querySelector(".top-link")?.setAttribute("aria-expanded", "false");
-        li.querySelector(".submenu-toggle")?.setAttribute(
-          "aria-expanded",
-          "false"
+
+    const input = searchInput;
+    const form = $(".search-form");
+    const box = $("#suggestions");
+    const announcer = $("#sr-announcer");
+
+    document.addEventListener("click", (e) => {
+      const insideNav =
+        navMenu.contains(e.target) || menuBtn.contains(e.target);
+
+      if (isDesktop()) {
+        const topLink = e.target.closest(
+          ".nav-menu > ul > li.has-dropdown > .item-row > .top-link"
         );
-      }, 220);
-    });
-  });
-
-  
-  let siteIndex = [];
-  let history = [];
-  try {
-    history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
-    if (!Array.isArray(history)) history = [];
-  } catch (e) {
-    history = [];
-  }
-  const MAX_HISTORY = 6;
-
-  fetch("https://fouadbechar.x10.mx/p/pages.json")
-    .then((r) => (r.ok ? r.json() : []))
-    .then((data) => {
-      if (Array.isArray(data)) siteIndex = data;
-    })
-    .catch(() => {
-    });
-
-  function setHistory(arr) {
-    history = arr;
-    try {
-      localStorage.setItem("searchHistory", JSON.stringify(history));
-    } catch (e) {}
-  }
-  function addHistory(q) {
-    const query = (q || "").trim().toLowerCase();
-    if (!query) return;
-    const next = [query, ...history.filter((h) => h !== query)].slice(
-      0,
-      MAX_HISTORY
-    );
-    setHistory(next);
-  }
-
-  function filterSite(q) {
-    const s = q.toLowerCase();
-    return siteIndex
-      .filter((p) => (p.title || "").toLowerCase().includes(s))
-      .slice(0, 6);
-  }
-  function filterHistory(q) {
-    const s = q.toLowerCase();
-    return history
-      .filter((h) => h.startsWith(s))
-      .slice(0, 4)
-      .map((t) => ({ type: "history", text: t }));
-  }
-
-  let active = -1;
-  let googlePending = null; 
-
-  function renderSuggestionsFromItems(items) {
-    if (!box) return;
-    box.innerHTML = "";
-    active = -1;
-    if (!items || !items.length) {
-      box.style.display = "none";
-      box.setAttribute("aria-expanded", "false");
-      announcer.textContent = "";
-      return;
-    }
-    const baseId = "suggest-" + Date.now();
-    items.forEach((item, idx) => {
-      const div = document.createElement("div");
-      const itemId = baseId + "-" + idx;
-      div.id = itemId;
-      const cls =
-        item.type === "page"
-          ? "page"
-          : item.type === "history"
-          ? "history"
-          : "google";
-      div.className = "suggestion-item " + cls;
-      div.setAttribute("role", "option");
-      div.setAttribute("data-index", String(idx));
-      div.dataset.type = item.type;
-      div.dataset.text = item.text;
-      if (item.url) div.dataset.url = item.url;
-
-      const span = document.createElement("span");
-      span.textContent = item.text;
-      div.appendChild(span);
-
-      if (item.type === "history") {
-        const del = document.createElement("button");
-        del.type = "button";
-        del.className = "delete-btn";
-        del.title = "Remove";
-        del.setAttribute("aria-label", "Remove from history");
-        del.innerHTML =
-          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-        div.appendChild(del);
+        const toggleBtn = e.target.closest(
+          ".nav-menu > ul > li.has-dropdown > .item-row > .submenu-toggle"
+        );
+        if (topLink || toggleBtn) {
+          e.preventDefault();
+          const li = (topLink || toggleBtn).closest("li");
+          const isOpen = li.classList.contains("open");
+          closeAllSubmenus();
+          if (!isOpen) {
+            li.classList.add("open");
+            li.querySelector(".top-link")?.setAttribute(
+              "aria-expanded",
+              "true"
+            );
+            li.querySelector(".submenu-toggle")?.setAttribute(
+              "aria-expanded",
+              "true"
+            );
+          }
+          return;
+        }
       }
 
-      box.appendChild(div);
+      if (!insideNav) {
+        closeAllSubmenus();
+        if (!isDesktop()) closeMenu();
+      }
+
+      if (
+        isMediumScreen() &&
+        navMenu.classList.contains("search-active") &&
+        !navMenu.contains(e.target)
+      ) {
+        closeSearch();
+      }
+
+      if (box && input && !box.contains(e.target) && e.target !== input) {
+        box.style.display = "none";
+        box.setAttribute("aria-expanded", "false");
+        announcer.textContent = "";
+      }
     });
 
-    box.style.display = "block";
-    box.setAttribute("aria-expanded", "true");
-    box.setAttribute("aria-activedescendant", "");
-    announcer.textContent = items.length + " suggestions available";
-  }
+    mql.addEventListener("change", () => {
+      if (isDesktop() && navMenu.classList.contains("open")) closeMenu();
+      if (!isMediumScreen() && navMenu.classList.contains("search-active"))
+        closeSearch();
+    });
+    mqlMedium.addEventListener("change", () => {
+      if (!isMediumScreen() && navMenu.classList.contains("search-active"))
+        closeSearch();
+    });
+    window.addEventListener("orientationchange", () => {
+      closeMenu();
+      closeSearch();
+    });
 
-  function renderSuggestions(value) {
-    // Primary: local search
-    if (!box) return;
-    box.innerHTML = "";
-    active = -1;
-    const q = (value || "").trim();
-    if (!q) {
+    $$(".nav-menu > ul > li.has-dropdown").forEach((li) => {
+      let hoverTimeout;
+      li.addEventListener("pointerenter", () => {
+        if (!isDesktop()) return;
+        clearTimeout(hoverTimeout);
+        scheduleAdjust(li, true);
+        li.classList.add("open2");
+        li.querySelector(".top-link")?.setAttribute("aria-expanded", "true");
+        li.querySelector(".submenu-toggle")?.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+      });
+      li.addEventListener("pointerleave", () => {
+        if (!isDesktop()) return;
+        hoverTimeout = setTimeout(() => {
+          li.classList.remove("open2");
+          li.querySelector(".top-link")?.setAttribute("aria-expanded", "false");
+          li.querySelector(".submenu-toggle")?.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+        }, 220);
+      });
+    });
+
+    let siteIndex = [];
+    let history = [];
+    try {
+      history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+      if (!Array.isArray(history)) history = [];
+    } catch (e) {
+      history = [];
+    }
+    const MAX_HISTORY = 6;
+
+    fetch("/pages.json")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => {
+        if (Array.isArray(data)) siteIndex = data;
+      })
+      .catch(() => {});
+
+    function setHistory(arr) {
+      history = arr;
+      try {
+        localStorage.setItem("searchHistory", JSON.stringify(history));
+      } catch (e) {}
+    }
+    function addHistory(q) {
+      const query = (q || "").trim().toLowerCase();
+      if (!query) return;
+      const next = [query, ...history.filter((h) => h !== query)].slice(
+        0,
+        MAX_HISTORY
+      );
+      setHistory(next);
+    }
+
+    function filterSite(q) {
+      const s = q.toLowerCase();
+      return siteIndex
+        .filter((p) => (p.title || "").toLowerCase().includes(s))
+        .slice(0, 6);
+    }
+    function filterHistory(q) {
+      const s = q.toLowerCase();
+      return history
+        .filter((h) => h.startsWith(s))
+        .slice(0, 4)
+        .map((t) => ({ type: "history", text: t }));
+    }
+
+    let active = -1;
+    let googlePending = null;
+
+    function renderSuggestionsFromItems(items) {
+      if (!box) return;
+      box.innerHTML = "";
+      active = -1;
+      if (!items || !items.length) {
+        box.style.display = "none";
+        box.setAttribute("aria-expanded", "false");
+        announcer.textContent = "";
+        return;
+      }
+      const baseId = "suggest-" + Date.now();
+      items.forEach((item, idx) => {
+        const div = document.createElement("div");
+        const itemId = baseId + "-" + idx;
+        div.id = itemId;
+        const cls =
+          item.type === "page"
+            ? "page"
+            : item.type === "history"
+            ? "history"
+            : "google";
+        div.className = "suggestion-item " + cls;
+        div.setAttribute("role", "option");
+        div.setAttribute("data-index", String(idx));
+        div.dataset.type = item.type;
+        div.dataset.text = item.text;
+        if (item.url) div.dataset.url = item.url;
+
+        const span = document.createElement("span");
+        span.textContent = item.text;
+        div.appendChild(span);
+
+        if (item.type === "history") {
+          const del = document.createElement("button");
+          del.type = "button";
+          del.className = "delete-btn";
+          del.title = "Remove";
+          del.setAttribute("aria-label", "Remove from history");
+          del.innerHTML =
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+          div.appendChild(del);
+        }
+
+        box.appendChild(div);
+      });
+
+      box.style.display = "block";
+      box.setAttribute("aria-expanded", "true");
+      box.setAttribute("aria-activedescendant", "");
+      announcer.textContent = items.length + " suggestions available";
+    }
+
+    function renderSuggestions(value) {
+      // Primary: local search
+      if (!box) return;
+      box.innerHTML = "";
+      active = -1;
+      const q = (value || "").trim();
+      if (!q) {
+        box.style.display = "none";
+        box.setAttribute("aria-expanded", "false");
+        announcer.textContent = "";
+        return;
+      }
+
+      const siteMatches = filterSite(q).map((p) => ({
+        type: "page",
+        text: p.title,
+        url: p.url,
+      }));
+      const siteTitles = new Set(siteMatches.map((m) => m.text.toLowerCase()));
+      const histMatches = filterHistory(q).filter(
+        (h) => !siteTitles.has(h.text.toLowerCase())
+      );
+      const combined = [...siteMatches, ...histMatches];
+
+      if (combined.length) {
+        renderSuggestionsFromItems(combined);
+      } else {
+        fetchGoogleSuggestions(q);
+      }
+    }
+
+    window.handleGoogleSuggestions = function (data) {
+      if (!Array.isArray(data) || !data[1] || !data[1].length) {
+        renderSuggestionsFromItems([]); // nothing
+        return;
+      }
+      const suggestions = data[1].map((s) => ({
+        type: "google",
+        text: String(s),
+      }));
+      renderSuggestionsFromItems(suggestions);
+    };
+
+    function fetchGoogleSuggestions(query) {
+      if (googlePending) {
+        const old = document.getElementById(googlePending);
+        if (old) old.remove();
+        googlePending = null;
+      }
+      const id = "jsonp-g-" + Date.now();
+      googlePending = id;
+      const script = document.createElement("script");
+      script.id = id;
+      script.src = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(
+        query
+      )}&callback=handleGoogleSuggestions`;
+      script.onerror = () => {
+        renderSuggestionsFromItems([]);
+      };
+      document.body.appendChild(script);
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+        if (googlePending === id) googlePending = null;
+      }, 8000);
+    }
+
+    function selectItem(item) {
+      if (!item) return;
+      input.value = item.text;
       box.style.display = "none";
       box.setAttribute("aria-expanded", "false");
-      announcer.textContent = "";
-      return;
-    }
+      addHistory(item.text);
 
-    const siteMatches = filterSite(q).map((p) => ({
-      type: "page",
-      text: p.title,
-      url: p.url,
-    }));
-    const siteTitles = new Set(siteMatches.map((m) => m.text.toLowerCase()));
-    const histMatches = filterHistory(q).filter(
-      (h) => !siteTitles.has(h.text.toLowerCase())
-    );
-    const combined = [...siteMatches, ...histMatches];
-
-    if (combined.length) {
-      renderSuggestionsFromItems(combined);
-    } else {
-      fetchGoogleSuggestions(q);
-    }
-  }
-
-  
-  window.handleGoogleSuggestions = function (data) {
-    if (!Array.isArray(data) || !data[1] || !data[1].length) {
-      renderSuggestionsFromItems([]); // nothing
-      return;
-    }
-    const suggestions = data[1].map((s) => ({
-      type: "google",
-      text: String(s),
-    }));
-    renderSuggestionsFromItems(suggestions);
-  };
-
-  function fetchGoogleSuggestions(query) {
-    if (googlePending) {
-      const old = document.getElementById(googlePending);
-      if (old) old.remove();
-      googlePending = null;
-    }
-    const id = "jsonp-g-" + Date.now();
-    googlePending = id;
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(
-      query
-    )}&callback=handleGoogleSuggestions`;
-    script.onerror = () => {
-      renderSuggestionsFromItems([]);
-    };
-    document.body.appendChild(script);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) el.remove();
-      if (googlePending === id) googlePending = null;
-    }, 8000);
-  }
-
-  
-  function selectItem(item) {
-    if (!item) return;
-    input.value = item.text;
-    box.style.display = "none";
-    box.setAttribute("aria-expanded", "false");
-    addHistory(item.text);
-
-    if (item.type === "page" && item.url) {
-      window.location.href = item.url;
-      return;
-    }
-    if (item.type === "google") {
+      if (item.type === "page" && item.url) {
+        window.location.href = item.url;
+        return;
+      }
+      if (item.type === "google") {
+        window.open(
+          "https://www.google.com/search?q=" + encodeURIComponent(item.text),
+          "_blank"
+        );
+        return;
+      }
+      const exact = siteIndex.find(
+        (p) => (p.title || "").toLowerCase() === item.text.toLowerCase()
+      );
+      if (exact) {
+        window.location.href = exact.url;
+        return;
+      }
       window.open(
         "https://www.google.com/search?q=" + encodeURIComponent(item.text),
         "_blank"
       );
-      return;
     }
-    const exact = siteIndex.find(
-      (p) => (p.title || "").toLowerCase() === item.text.toLowerCase()
-    );
-    if (exact) {
-      window.location.href = exact.url;
-      return;
-    }
-    window.open(
-      "https://www.google.com/search?q=" + encodeURIComponent(item.text),
-      "_blank"
-    );
-  }
 
-  function navigate(query, directUrl) {
-    const q = (query || "").trim();
-    if (!q) return;
-    addHistory(q);
-    if (directUrl) {
-      window.location.href = directUrl;
-      return;
-    }
-    const qLower = q.toLowerCase();
-    const exact = siteIndex.find(
-      (p) => (p.title || "").toLowerCase() === qLower
-    );
-    if (exact) {
-      window.location.href = exact.url;
-      return;
-    }
-    const included = siteIndex.find((p) =>
-      (p.title || "").toLowerCase().includes(qLower)
-    );
-    if (included) {
-      window.location.href = included.url;
-      return;
-    }
-    window.open(
-      "https://www.google.com/search?q=" + encodeURIComponent(q),
-      "_blank"
-    );
-  }
-
-  
-  const formEl = form;
-  formEl.addEventListener("submit", (e) => {
-    e.preventDefault();
-    box.style.display = "none";
-    navigate(input.value);
-  });
-
-  const debouncedRender = debounce((v) => renderSuggestions(v), 90);
-  input.addEventListener("input", (e) => debouncedRender(e.target.value));
-
-  input.addEventListener("keydown", (e) => {
-    if (!box) return;
-    const items = box.querySelectorAll(".suggestion-item");
-    if (!items.length) return;
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      active = (active + 1) % items.length;
-      updateActive(items);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      active = (active - 1 + items.length) % items.length;
-      updateActive(items);
-    } else if (e.key === "Enter") {
-      if (active > -1) {
-        e.preventDefault();
-        const el = items[active];
-        const selText = el.dataset.text;
-        const type = el.dataset.type;
-        if (type === "page") {
-          const page = siteIndex.find((p) => p.title === selText);
-          if (page) selectItem({ type: "page", text: selText, url: page.url });
-          else selectItem({ type: "page", text: selText });
-        } else if (type === "google")
-          selectItem({ type: "google", text: selText });
-        else selectItem({ type: el.dataset.type, text: selText });
-      } else {
-        e.preventDefault();
-        navigate(input.value);
+    function navigate(query, directUrl) {
+      const q = (query || "").trim();
+      if (!q) return;
+      addHistory(q);
+      if (directUrl) {
+        window.location.href = directUrl;
+        return;
       }
-    } else if (e.key === "Escape") {
+      const qLower = q.toLowerCase();
+      const exact = siteIndex.find(
+        (p) => (p.title || "").toLowerCase() === qLower
+      );
+      if (exact) {
+        window.location.href = exact.url;
+        return;
+      }
+      const included = siteIndex.find((p) =>
+        (p.title || "").toLowerCase().includes(qLower)
+      );
+      if (included) {
+        window.location.href = included.url;
+        return;
+      }
+      window.open(
+        "https://www.google.com/search?q=" + encodeURIComponent(q),
+        "_blank"
+      );
+    }
+
+    const formEl = form;
+    formEl.addEventListener("submit", (e) => {
+      e.preventDefault();
       box.style.display = "none";
-      box.setAttribute("aria-expanded", "false");
-      announcer.textContent = "";
-    }
-  });
-
-  function updateActive(items) {
-    items.forEach((el) => {
-      el.removeAttribute("aria-selected");
+      navigate(input.value);
     });
-    if (active > -1) {
-      const el = items[active];
-      el.setAttribute("aria-selected", "true");
-      box.setAttribute("aria-activedescendant", el.id);
-      el.scrollIntoView({ block: "nearest" });
-      announcer.textContent = el.textContent + " selected";
-    } else {
-      box.setAttribute("aria-activedescendant", "");
-      announcer.textContent = "";
-    }
-  }
 
-  box.addEventListener("mousedown", (ev) => {
-    ev.preventDefault(); 
-    const item = ev.target.closest(".suggestion-item");
-    if (!item) return;
-    if (ev.target.closest(".delete-btn")) {
-      const text = item.dataset.text;
-      setHistory(history.filter((h) => h !== text));
-      renderSuggestions(input.value);
-      return;
-    }
-    const type = item.dataset.type;
-    const text = item.dataset.text;
-    if (type === "page") {
-      const page = siteIndex.find((p) => p.title === text);
-      if (page) selectItem({ type: "page", text: text, url: page.url });
-      else selectItem({ type: "page", text: text });
-    } else if (type === "google") {
-      selectItem({ type: "google", text });
-    } else {
-      selectItem({ type: "history", text });
-    }
-  });
+    const debouncedRender = debounce((v) => renderSuggestions(v), 90);
+    input.addEventListener("input", (e) => debouncedRender(e.target.value));
 
-  searchInput.addEventListener("input", () => {
-    if (searchInput.value.trim().length > 0) {
-      searchBox.classList.add("show-clear");
-    } else {
-      searchBox.classList.remove("show-clear");
-    }
-  });
-
-  clearBtn.addEventListener("click", () => {
-    searchInput.value = "";
-    searchInput.focus();
-    searchBox.classList.remove("show-clear");
-  });
-
-
-  function setMicUIState(state) {
-    micBtn.classList.remove("mic-granted", "mic-denied", "mic-prompt");
-    if (state === "granted") {
-      micBtn.classList.add("mic-granted");
-    } else if (state === "denied") {
-      micBtn.classList.add("mic-denied");
-    } else {
-      micBtn.classList.add("mic-prompt");
-    }
-  }
-
-  async function probePermissionAPI() {
-    if (!navigator.permissions) return false;
-    try {
-      const status = await navigator.permissions.query({ name: "microphone" });
-      handlePermissionState(status.state);
-      status.onchange = () => handlePermissionState(status.state);
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }
-
-  function handlePermissionState(state) {
-    if (state === "granted") setMicUIState("granted");
-    else if (state === "denied") setMicUIState("denied");
-    else setMicUIState("prompt");
-  }
-
-  micBtn.addEventListener("click", async () => {
-    const current = micBtn.classList.contains("mic-granted");
-    if (current) {
-      return;
-    }
-    setMicUIState("prompt");
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setMicUIState("granted");
-      stream.getTracks().forEach((t) => t.stop());
-    } catch (err) {
-      setMicUIState("denied");
-      console.warn("getUserMedia error:", err);
-    }
-  });
-
-  (async function initMicState() {
-    const ok = await probePermissionAPI();
-    if (!ok) setMicUIState("prompt");
-  })();
-
-
-  if (SpeechRecognition) {
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en";
-    recognition.interimResults = false;
-
-    micBtn.addEventListener("click", () => {
-      if (micBtn.classList.contains("listening")) {
-        recognition.stop();
-        micBtn.classList.remove("listening");
-      } else {
-        recognition.start();
-        micBtn.classList.add("listening");
+    input.addEventListener("keydown", (e) => {
+      if (!box) return;
+      const items = box.querySelectorAll(".suggestion-item");
+      if (!items.length) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        active = (active + 1) % items.length;
+        updateActive(items);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        active = (active - 1 + items.length) % items.length;
+        updateActive(items);
+      } else if (e.key === "Enter") {
+        if (active > -1) {
+          e.preventDefault();
+          const el = items[active];
+          const selText = el.dataset.text;
+          const type = el.dataset.type;
+          if (type === "page") {
+            const page = siteIndex.find((p) => p.title === selText);
+            if (page)
+              selectItem({ type: "page", text: selText, url: page.url });
+            else selectItem({ type: "page", text: selText });
+          } else if (type === "google")
+            selectItem({ type: "google", text: selText });
+          else selectItem({ type: el.dataset.type, text: selText });
+        } else {
+          e.preventDefault();
+          navigate(input.value);
+        }
+      } else if (e.key === "Escape") {
+        box.style.display = "none";
+        box.setAttribute("aria-expanded", "false");
+        announcer.textContent = "";
       }
     });
 
-    recognition.addEventListener("result", (e) => {
-      const transcript = e.results[0][0].transcript;
-      searchInput.value = transcript;
-      searchInput.dispatchEvent(new Event("input"));
+    function updateActive(items) {
+      items.forEach((el) => {
+        el.removeAttribute("aria-selected");
+      });
+      if (active > -1) {
+        const el = items[active];
+        el.setAttribute("aria-selected", "true");
+        box.setAttribute("aria-activedescendant", el.id);
+        el.scrollIntoView({ block: "nearest" });
+        announcer.textContent = el.textContent + " selected";
+      } else {
+        box.setAttribute("aria-activedescendant", "");
+        announcer.textContent = "";
+      }
+    }
+
+    box.addEventListener("mousedown", (ev) => {
+      ev.preventDefault();
+      const item = ev.target.closest(".suggestion-item");
+      if (!item) return;
+      if (ev.target.closest(".delete-btn")) {
+        const text = item.dataset.text;
+        setHistory(history.filter((h) => h !== text));
+        renderSuggestions(input.value);
+        return;
+      }
+      const type = item.dataset.type;
+      const text = item.dataset.text;
+      if (type === "page") {
+        const page = siteIndex.find((p) => p.title === text);
+        if (page) selectItem({ type: "page", text: text, url: page.url });
+        else selectItem({ type: "page", text: text });
+      } else if (type === "google") {
+        selectItem({ type: "google", text });
+      } else {
+        selectItem({ type: "history", text });
+      }
     });
 
-    recognition.addEventListener("end", () => {
-      micBtn.classList.remove("listening");
+    searchInput.addEventListener("input", () => {
+      if (searchInput.value.trim().length > 0) {
+        searchBox.classList.add("show-clear");
+      } else {
+        searchBox.classList.remove("show-clear");
+      }
     });
-  } else {
-    micBtn.innerHTML =
-      '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +
-      '<path d="M12 1a3.5 3.5 0 0 0-3.5 3.5v6a3.5 3.5 0 0 0 7 0v-6A3.5 3.5 0 0 0 12 1z">' +
-      '</path> +<path d="M19 11v1a7 7 0 0 1-14 0v-1">' +
-      '</path> <path d="M12 19v4">' +
-      "</path>" +
-      '<line x1="4" y1="20" x2="20" y2="4" stroke="red" stroke-width="2"/>' +
-      "</svg>";
-    micBtn.disabled = true;
-    micBtn.title = "⚠️ Voice search not supported on this browser";
-    console.warn("🎤 Voice recognition not supported in this browser");
-  }
+
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.focus();
+      searchBox.classList.remove("show-clear");
+    });
+
+    function setMicUIState(state) {
+      if (!micBtn) return;
+      micBtn.classList.remove("mic-granted", "mic-denied", "mic-prompt");
+      if (state === "granted") {
+        micBtn.classList.add("mic-granted");
+      } else if (state === "denied") {
+        micBtn.classList.add("mic-denied");
+      } else {
+        micBtn.classList.add("mic-prompt");
+      }
+    }
+
+    async function probePermissionAPI() {
+      if (!navigator.permissions) return false;
+      try {
+        const status = await navigator.permissions.query({
+          name: "microphone",
+        });
+        handlePermissionState(status.state);
+        status.onchange = () => handlePermissionState(status.state);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function handlePermissionState(state) {
+      if (state === "granted") setMicUIState("granted");
+      else if (state === "denied") setMicUIState("denied");
+      else setMicUIState("prompt");
+    }
+
+    if (micBtn) {
+      micBtn.addEventListener("click", async () => {
+        const current = micBtn.classList.contains("mic-granted");
+        if (current) {
+          return;
+        }
+        setMicUIState("prompt");
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          setMicUIState("granted");
+          stream.getTracks().forEach((t) => t.stop());
+        } catch (err) {
+          setMicUIState("denied");
+          console.warn("getUserMedia error:", err);
+        }
+      });
+    }
+
+    (async function initMicState() {
+      const ok = await probePermissionAPI();
+      if (!ok) setMicUIState("prompt");
+    })();
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en";
+      recognition.interimResults = false;
+
+      micBtn.addEventListener("click", () => {
+        if (micBtn.classList.contains("listening")) {
+          recognition.stop();
+          micBtn.classList.remove("listening");
+        } else {
+          recognition.start();
+          micBtn.classList.add("listening");
+        }
+      });
+
+      recognition.addEventListener("result", (e) => {
+        const transcript = e.results[0][0].transcript;
+        searchInput.value = transcript;
+        searchInput.dispatchEvent(new Event("input"));
+      });
+
+      recognition.addEventListener("end", () => {
+        micBtn.classList.remove("listening");
+      });
+    } else {
+      if (micBtn) { 
+        micBtn.innerHTML =
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">' +
+          '<path d="M12 1a3.5 3.5 0 0 0-3.5 3.5v6a3.5 3.5 0 0 0 7 0v-6A3.5 3.5 0 0 0 12 1z"></path>' +
+          '<path d="M19 11v1a7 7 0 0 1-14 0v-1"></path>' +
+          '<path d="M12 19v4"></path>' +
+          '<line x1="4" y1="20" x2="20" y2="4" stroke="red" stroke-width="2"/>' +
+          '</svg>';
+        micBtn.disabled = true;
+        micBtn.title = "⚠️ Voice search not supported on this browser";
+      }
+      console.warn("🎤 Voice recognition not supported in this browser");
+    }
 
     window.__navRefactor = {
       renderSuggestions,
@@ -857,13 +860,15 @@ export default function NavBar() {
         if (window.__navRefactor) delete window.__navRefactor;
       } catch (e) {}
       try {
-        if (window.handleGoogleSuggestions) delete window.handleGoogleSuggestions;
+        if (window.handleGoogleSuggestions)
+          delete window.handleGoogleSuggestions;
       } catch (e) {}
     };
+
   }, []);
 
-
   return (
+
     <nav role="navigation" aria-label="Main navigation">
       <div className="nav-inner">
         <div className="logo" aria-label="Logos">
@@ -1248,7 +1253,5 @@ export default function NavBar() {
         </div>
       </div>
     </nav>
-
-    
   );
 }

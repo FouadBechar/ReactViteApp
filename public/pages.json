@@ -1,0 +1,7 @@
+[
+  { "title": "Home", "url": "/" },
+  { "title": "About Us", "url": "/about" },
+  { "title": "Contact", "url": "/contact" },
+  { "title": "Games Section", "url": "/games" },
+  { "title": "Blog", "url": "/blog" }
+]
