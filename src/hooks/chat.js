@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 export default function chatBot() {
   
-  useEffect(() => {
+ 
 
 
   const chatBox = document.getElementById("chat-box");
@@ -214,7 +214,7 @@ export default function chatBot() {
 
     
     
-  }, []);
+ 
   
 return;
   
