@@ -670,15 +670,17 @@ export default function ContentSections() {
 
     const acceptBtn = document.getElementById("accept");
     const declineBtn = document.getElementById("decline");
+    let onAccept = null;
+    let onDecline = null;
     if (acceptBtn) {
-      const onAccept = () => {
+      onAccept = () => {
         setCookie("consent", "accepted", 30);
         closeConsent();
       };
       acceptBtn.addEventListener("click", onAccept);
     }
     if (declineBtn) {
-      const onDecline = () => {
+      onDecline = () => {
         setCookie("consent", "declined", 30);
         closeConsent();
       };
@@ -692,10 +694,19 @@ export default function ContentSections() {
         setTimeout(() => cookieConsent.remove(), 500);
       }
     }
+
+    return () => {
+      try {
+        if (acceptBtn && onAccept) acceptBtn.removeEventListener("click", onAccept);
+      } catch (e) {}
+      try {
+        if (declineBtn && onDecline) declineBtn.removeEventListener("click", onDecline);
+      } catch (e) {}
+    };
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", function () {
+    function onScroll() {
       const elements = document.querySelectorAll(".animate0110");
       const windowHeight = window.innerHeight;
 
@@ -707,7 +718,16 @@ export default function ContentSections() {
           element.style.transform = "translateY(0)";
         }
       });
-    });
+    }
+
+    document.addEventListener("scroll", onScroll);
+    onScroll();
+
+    return () => {
+      try {
+        document.removeEventListener("scroll", onScroll);
+      } catch (e) {}
+    };
   }, []);
 
   useEffect(() => {
@@ -826,22 +846,35 @@ export default function ContentSections() {
     return appendMessage(dots, "bot", false);
   }
 
-  chatToggle.addEventListener("click", () => {
-    chatBox.classList.remove("fade-out");
-    void chatBox.offsetWidth;
-    chatBox.classList.add("bounce-in");
-    chatBox.style.display = "flex";
-    chatToggle.style.display = "none";
-  });
+  // Attach chat handlers with guards and named functions so we can remove them
+  let onChatToggle = null;
+  let onCloseBtn = null;
+  let onClearBtn = null;
+  if (chatToggle && chatBox) {
+    onChatToggle = () => {
+      chatBox.classList.remove("fade-out");
+      void chatBox.offsetWidth;
+      chatBox.classList.add("bounce-in");
+      chatBox.style.display = "flex";
+      chatToggle.style.display = "none";
+    };
+    chatToggle.addEventListener("click", onChatToggle);
+  }
 
-  closeBtn.addEventListener("click", () => {
-    chatBox.classList.remove("bounce-in");
-    chatBox.classList.add("fade-out");
-    chatBox.style.display = "none";
-    chatToggle.style.display = "block";
-  });
+  if (closeBtn && chatBox && chatToggle) {
+    onCloseBtn = () => {
+      chatBox.classList.remove("bounce-in");
+      chatBox.classList.add("fade-out");
+      chatBox.style.display = "none";
+      chatToggle.style.display = "block";
+    };
+    closeBtn.addEventListener("click", onCloseBtn);
+  }
 
-  clearBtn2.addEventListener("click", clearHistory);
+  if (clearBtn2) {
+    onClearBtn = clearHistory;
+    clearBtn2.addEventListener("click", onClearBtn);
+  }
 
   async function sendMessage() {
     const message = userInput.value.trim();
@@ -886,13 +919,21 @@ export default function ContentSections() {
     }
   }
 
-  sendBtn.addEventListener("click", sendMessage);
-  userInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+  let onSendBtn = null;
+  let onUserKeydown = null;
+  if (sendBtn) {
+    onSendBtn = sendMessage;
+    sendBtn.addEventListener("click", onSendBtn);
+  }
+  if (userInput) {
+    onUserKeydown = (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    };
+    userInput.addEventListener("keydown", onUserKeydown);
+  }
 
   async function warmUpConnection() {
     try {
@@ -909,13 +950,33 @@ export default function ContentSections() {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  // initialize immediately (no need for DOMContentLoaded inside useEffect)
+  try {
     loadHistory();
     if (messagesHistory.length === 0) {
       appendMessage("Hello! How can I assist you today?", "bot", false);
     }
     warmUpConnection();
-  });
+  } catch (e) {}
+
+  // cleanup listeners on unmount
+  return () => {
+    try {
+      if (chatToggle && onChatToggle) chatToggle.removeEventListener("click", onChatToggle);
+    } catch (e) {}
+    try {
+      if (closeBtn && onCloseBtn) closeBtn.removeEventListener("click", onCloseBtn);
+    } catch (e) {}
+    try {
+      if (clearBtn2 && onClearBtn) clearBtn2.removeEventListener("click", onClearBtn);
+    } catch (e) {}
+    try {
+      if (sendBtn && onSendBtn) sendBtn.removeEventListener("click", onSendBtn);
+    } catch (e) {}
+    try {
+      if (userInput && onUserKeydown) userInput.removeEventListener("keydown", onUserKeydown);
+    } catch (e) {}
+  };
   }, []);
 
   return (
