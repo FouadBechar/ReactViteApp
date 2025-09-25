@@ -208,40 +208,7 @@ export default function ContentSections() {
 
   const section7 = (
     <>
-      <section>
-        <h2 className="bb7">
-          <a
-            className="loadicon010101"
-            href="https://youtu.be/nWkAatonIdk"
-            target="_parent"
-            rel="noreferrer"
-          >
-            Artificial Intelligence
-          </a>
-        </h2>
-        <a
-          className="loadicon010101"
-          href="https://youtu.be/nWkAatonIdk"
-          target="_parent"
-          rel="noreferrer"
-        >
-          <img
-            className="iiim"
-            src="https://fouadbechar.x10.mx/p/m/AI.webp"
-            alt="image"
-            width={400}
-            height={224}
-          />
-        </a>
-        <div className="container010101 loadicon010101">
-          <h2 className="h2010101">Defining Artificial Intelligence</h2>
-          <p className="p010101">
-            Artificial intelligence (AI) is a broad field of computer science
-            that aims to create systems capable of performing tasks that
-            typically require human intelligence.
-          </p>
-        </div>
-      </section>
+  <section><h2 class="bb7"><a className="loadicon010101" href="https://youtu.be/nWkAatonIdk" target="_parent">Artificial Intelligence</a></h2><a className="loadicon010101" href="https://youtu.be/nWkAatonIdk" target="_parent"><img className="iiim" src="https://fouadbechar.x10.mx/p/m/AI.webp" alt="image" width="400px" height="224px"></a><div className="container010101 loadicon010101"><h2 className="h2010101">Defining Artificial Intelligence</h2><p className="p010101">Artificial intelligence (AI) is a broad field of computer science that aims to create systems capable of performing tasks that typically require human intelligence. This includes activities like:</p><ul className="ul010101"><li><strong>Learning:</strong>Acquiring new information and rules for using it.</li><li><strong>Reasoning:</strong>Using rules to reach approximate or definite conclusions.</li><li><strong>Problem-solving:</strong>Finding solutions to complex challenges.</li><li><strong>Perception:</strong>Interpreting sensory information (like images or sound).</li><li><strong>Natural language understanding:</strong>Communicating and interacting with humans through language.</li></ul><h2 className="h20101012">Key Concepts in AI</h2><ul className="ul010101"><li><strong>Machine Learning:</strong>A subset of AI that focuses on algorithms that allow computers to learn from data without explicit programming. This includes techniques like:<ul><li><strong>Supervised learning:</strong>Training models on labeled data (e.g., classifying images).</li><li><strong>Unsupervised learning:</strong>Finding patterns and structures in unlabeled data (e.g., customer segmentation).</li><li><strong>Reinforcement learning:</strong>Training agents to make decisions by rewarding desired behaviors.</li></ul></li><li><strong>Deep Learning: </strong>A type of machine learning that uses artificial neural networks with multiple layers to analyze complex patterns in data. Deep learning has revolutionized fields like image recognition, natural language processing, and speech recognition.</li><li><strong>Natural Language Processing (NLP):</strong>The ability of computers to understand, interpret, and generate human language. This includes tasks like:<ul><li><strong>Translation:</strong>Converting text from one language to another.</li><li><strong>Sentiment analysis:</strong>Determining the emotional tone of text.</li><li><strong>Chatbots:</strong>Interacting with users through conversation.</li></ul></li></ul><h2 className="h20101012">Applications of AI</h2><p className="p010101">AI is rapidly transforming various sectors:</p><ul className="ul010101"><li><strong>Healthcare:</strong>Diagnosing diseases, developing new drugs, personalizing treatment plans.</li><li><strong>Finance:</strong>Fraud detection, algorithmic trading, credit scoring.</li><li><strong>Transportation:</strong>Self-driving cars, traffic optimization, logistics.</li><li><strong>Customer service:</strong>Chatbots, virtual assistants, personalized recommendations.</li><li><strong>Entertainment:</strong>Game development, content creation, personalized streaming.</li></ul><h2 className="h20101012 animate0110">The Future of AI</h2><p className="p010101">AI is an evolving field with significant potential. Continued research and development will likely lead to even more sophisticated AI systems with broader applications. However, it's crucial to address ethical considerations, such as bias, job displacement, and the responsible use of AI.</p></div></section>
     </>
   );
 
@@ -264,7 +231,7 @@ export default function ContentSections() {
             >
               Bali Island
             </a>
-            is one of the most beautiful tourist places in Indonesia.
+            is one of the most beautiful tourist places in Indonesia, because of its rich natural beauty and ancient history and heritage that makes it one of the best cities in the world.
           </p>
         </div>
       </div>
@@ -286,7 +253,7 @@ export default function ContentSections() {
             >
               Osaka
             </a>
-            the second largest and richest city in Japan.
+            the second largest and richest city in Japan, and one of the most beautiful tourism cities in Japan and in the world as a whole, due to its long history that extends back to before the 16th century.
           </p>
         </div>
       </div>
@@ -308,7 +275,7 @@ export default function ContentSections() {
             >
               New York
             </a>
-            is famous for its world-renowned shopping and fine restaurants.
+            is famous for its world-renowned shopping and fine restaurants around the most important tourist places such as the Statue of Liberty, its historical neighborhoods and museums.
           </p>
         </div>
       </div>
@@ -387,6 +354,7 @@ export default function ContentSections() {
   );
 
   const section11 = (
+      <>
     <div className="social-center">
       <span>
         <a
@@ -445,6 +413,7 @@ export default function ContentSections() {
         </a>
       </div>
     </div>
+    </>   
   );
 
   useEffect(() => {
