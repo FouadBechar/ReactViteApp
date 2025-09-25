@@ -137,7 +137,7 @@ export default function ChatWidget() {
   return (
     <>
       <button id="chat-toggle" type="button" onClick={() => setOpen(true)} style={{ display: open ? "none" : "block" }}>
-        <img src={chat-icon} alt="chat Logo" width="50px" height="31px" />
+        <img src={icon} alt="chat Logo" width="50px" height="31px" />
       </button>
 
       <div id="chat-box" style={{ display: open ? "flex" : "none" }}>
