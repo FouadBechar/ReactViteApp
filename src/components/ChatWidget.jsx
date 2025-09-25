@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import icon from "/src/assets/images/chat-icon.png";
+import icons2 from "/src/assets/images/icons2.svg";
+import icons1 from "/src/assets/images/icons1.svg";
+import icons03 from "/src/assets/images/icons03.svg";
 function sanitizeLinksReact(text) {
-  // Return an array of React nodes (strings or <a>) for safe rendering
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const parts = [];
   let lastIndex = 0;
@@ -28,13 +30,40 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef(null);
+
+  // Inject minimal CSS for typing dots and sr-only helper (keeps component self-contained)
+  useEffect(() => {
+    const css = `
+      .typing-dots { display:inline-flex; gap:6px; align-items:center; }
+      .typing-dots span { display:inline-block; width:6px; height:6px; background:currentColor; border-radius:50%; opacity:0.25; transform:translateY(0); animation:dotPulse 1s infinite linear; }
+      .typing-dots span:nth-child(1){ animation-delay:0s; }
+      .typing-dots span:nth-child(2){ animation-delay:0.15s; }
+      .typing-dots span:nth-child(3){ animation-delay:0.3s; }
+      @keyframes dotPulse { 0% { opacity:0.25; transform:translateY(0);} 50%{ opacity:1; transform:translateY(-4px);} 100%{ opacity:0.25; transform:translateY(0);} }
+      @media (prefers-reduced-motion: reduce) { .typing-dots span { animation: none; opacity: 0.7; transform: none; } }
+      .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    `;
+    const style = document.createElement("style");
+    style.setAttribute("data-generated-by", "ChatWidget");
+    style.appendChild(document.createTextNode(css));
+    document.head.appendChild(style);
+    return () => {
+      try { document.head.removeChild(style); } catch (_) {}
+    };
+  }, []);
 
   useEffect(() => {
     // load history
     try {
       const hist = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      setMessages(hist);
+      // normalize older entries that used `content` property -> map to `text` for the UI
+      const normalized = (hist || []).map((m) => ({
+        role: m.role,
+        text: m.text ?? m.content ?? "",
+      }));
+      setMessages(normalized);
     } catch (_) {}
     // warm up connection (fire-and-forget)
     (async function warmUp() {
@@ -42,7 +71,9 @@ export default function ChatWidget() {
         await fetch("https://chat-779e.onrender.com/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: [{ role: "system", content: "warmup" }] }),
+          body: JSON.stringify({
+            messages: [{ role: "system", content: "warmup" }],
+          }),
         });
         // console.log("🔥 Chat server warmed up!");
       } catch (_) {}
@@ -76,55 +107,64 @@ export default function ChatWidget() {
     const text = input.trim();
     if (!text) {
       // show a bot message for empty
-      setMessages((m) => [...m, { role: "bot", text: "⚠️ Message is empty. Please say something." }]);
+      setMessages((m) => [
+        ...m,
+        { role: "bot", text: "⚠️ Message is empty. Please say something." },
+      ]);
       return;
     }
     if (text.length > 300) {
-      setMessages((m) => [...m, { role: "bot", text: "Your message is too long. Please shorten it." }]);
+      setMessages((m) => [
+        ...m,
+        { role: "bot", text: "Your message is too long. Please shorten it." },
+      ]);
       return;
     }
 
-    setMessages((m) => [...m, { role: "user", text }]);
-    setInput("");
-    setSending(true);
-
-    const typingIndex = messages.length + 1;
-    setMessages((m) => [...m, { role: "bot", text: "..." }]);
+  setMessages((m) => [...m, { role: "user", text }]);
+  setInput("");
+  setSending(true);
+  setIsTyping(true);
 
     try {
+      // Build payload that matches backend expectations: array of { role, content }
+      const backendMessages = messages.map((m) => ({
+        role: m.role === "bot" ? "assistant" : m.role,
+        content: m.text ?? m.content ?? "",
+      }));
+      backendMessages.push({ role: "user", content: text });
+
       const res = await fetch("https://chat-779e.onrender.com/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, { role: "user", content: text }] }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ messages: backendMessages }),
       });
+
+      // If server returned non-2xx, read the body for details to surface in the UI
+      if (!res.ok) {
+        let errText = "";
+        try {
+          errText = await res.text();
+        } catch (_) {}
+        throw new Error(
+          `Server responded with ${res.status}: ${errText || res.statusText}`
+        );
+      }
+
       const data = await res.json();
-      if (!res.ok || !data.reply) throw new Error("No valid response from the bot.");
-      // replace typing placeholder with reply
-      setMessages((m) => {
-        const copy = m.slice();
-        // remove last typing placeholder (best-effort)
-        for (let i = copy.length - 1; i >= 0; i--) {
-          if (copy[i].role === "bot" && copy[i].text === "...") {
-            copy.splice(i, 1);
-            break;
-          }
-        }
-        copy.push({ role: "bot", text: data.reply });
-        return copy;
-      });
+      if (!data.reply) throw new Error("No valid response body from the bot.");
+      // append reply and clear typing indicator
+      setIsTyping(false);
+      setMessages((m) => [...m, { role: "bot", text: data.reply }]);
     } catch (err) {
-      setMessages((m) => {
-        const copy = m.slice();
-        // remove typing
-        for (let i = copy.length - 1; i >= 0; i--) {
-          if (copy[i].role === "bot" && copy[i].text === "...") {
-            copy.splice(i, 1);
-            break;
-          }
-        }
-        copy.push({ role: "bot", text: `🤖 Error while connecting: ${err.message || err}` });
-        return copy;
-      });
+      setIsTyping(false);
+      setMessages((m) => [
+        ...m,
+        { role: "bot", text: `🤖 Error while connecting: ${err.message || err}` },
+      ]);
     } finally {
       setSending(false);
     }
@@ -132,31 +172,75 @@ export default function ChatWidget() {
 
   return (
     <>
-      <button id="chat-toggle" type="button" onClick={() => setOpen(true)} style={{ display: open ? "none" : "block" }}>
-        <img src={"/src/assets/images/chat-icon.png"} alt="chat Logo" width="50px" height="31px" />
+      <button
+        id="chat-toggle"
+        type="button"
+        onClick={() => setOpen(true)}
+        style={{ display: open ? "none" : "block" }}
+      >
+        <img
+          src={icon}
+          alt="chat Logo"
+          width="50px"
+          height="31px"
+        />
       </button>
 
       <div id="chat-box" style={{ display: open ? "flex" : "none" }}>
         <div id="chat-header">
           <span>
-            <img className="img707" src={"/src/assets/images/icons03.svg"} alt="icons03" />
+            <img
+              className="img707"
+              src={icons03}
+              alt="icons03"
+            />
           </span>
           <button id="clear-btn" title="Clear Chat" onClick={clearHistory}>
-            <img className="img708" src={"/src/assets/images/icons1.svg"} alt="icons1" />
+            <img
+              className="img708"
+              src={icons1}
+              alt="icons1"
+            />
           </button>
           <button id="close-btn" title="Close" onClick={() => setOpen(false)}>
-            <img className="img709" src={"/src/assets/images/icons2.svg"} alt="icons2" />
+            <img
+              className="img709"
+              src={icons2}
+              alt="icons2"
+            />
           </button>
         </div>
 
-        <div id="chat-messages" ref={messagesRef} style={{ overflowY: "auto", maxHeight: 300 }}>
+        <div
+          id="chat-messages"
+          ref={messagesRef}
+          style={{ overflowY: "auto", maxHeight: 300 }}
+        >
           {messages.map((m, idx) => (
-            <div className={`bubble ${m.role}`} key={idx} style={{ animation: "fadeInUp 0.4s ease-out" }}>
+            <div
+              className={`bubble ${m.role}`}
+              key={idx}
+              style={{ animation: "fadeInUp 0.4s ease-out" }}
+            >
               <div className="bubble-content">
-                {typeof m.text === "string" ? sanitizeLinksReact(m.text) : m.text}
+                {typeof m.text === "string"
+                  ? sanitizeLinksReact(m.text)
+                  : m.text}
               </div>
             </div>
           ))}
+          {isTyping && (
+            <div className={`bubble bot`} key="typing" role="status" aria-live="polite" aria-atomic="true">
+              <div className="bubble-content">
+                <span className="typing-dots" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span className="sr-only">Bot is typing…</span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div id="chat-input">
@@ -173,8 +257,26 @@ export default function ChatWidget() {
               }
             }}
           />
-          <button type="button" id="send-btn" title="send-btn" onClick={() => !sending && sendMessage()} disabled={sending}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="svg-icon" style={{ width: "1em", height: "1em", verticalAlign: "middle", fill: "currentColor", overflow: "hidden" }} viewBox="0 0 1024 1024" version="1.1">
+          <button
+            type="button"
+            id="send-btn"
+            title="send-btn"
+            onClick={() => !sending && sendMessage()}
+            disabled={sending}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="svg-icon"
+              style={{
+                width: "1em",
+                height: "1em",
+                verticalAlign: "middle",
+                fill: "currentColor",
+                overflow: "hidden",
+              }}
+              viewBox="0 0 1024 1024"
+              version="1.1"
+            >
               <path d="M41.353846 876.307692l86.646154-320.984615h366.276923c9.846154 0 19.692308-9.846154 19.692308-19.692308v-39.384615c0-9.846154-9.846154-19.692308-19.692308-19.692308H128l-84.676923-315.076923C41.353846 157.538462 39.384615 151.630769 39.384615 145.723077c0-13.784615 13.784615-27.569231 29.538462-25.6 3.938462 0 5.907692 1.969231 9.846154 1.969231l886.153846 364.307692c11.815385 3.938462 19.692308 15.753846 19.692308 27.569231s-7.876923 21.661538-17.723077 25.6L78.769231 913.723077c-3.938462 1.969231-7.876923 1.969231-11.815385 1.969231-15.753846-1.969231-27.569231-13.784615-27.569231-29.538462 0-3.938462 0-5.907692 1.969231-9.846154z" />
             </svg>
           </button>
