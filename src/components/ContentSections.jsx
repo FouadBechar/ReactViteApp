@@ -2,8 +2,12 @@ import React, { useEffect, useRef } from "react";
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
-import image5 from "/src/assets/images/image4.webp";
+import image5 from "/src/assets/images/image5.webp";
 import image06 from "/src/assets/images/image06.webp";
+import image7 from "/src/assets/images/image7.webp";
+import image8 from "/src/assets/images/image8.webp";
+import book from "/src/assets/images/book.webp";
+
 
 
 
@@ -126,7 +130,7 @@ export default function ContentSections() {
         </h1>
         <img
           className="iim"
-          src="https://fouadbechar.x10.mx/p/m/image7.webp"
+          src={image7}
           alt="image"
           width={300}
           height={142}
@@ -148,7 +152,7 @@ export default function ContentSections() {
         </h2>
         <img
           className="iim animate0110"
-          src="https://fouadbechar.x10.mx/p/m/image8.webp"
+          src={image8}
           alt="image"
           width={300}
           height={200}
@@ -168,7 +172,7 @@ export default function ContentSections() {
         rel="noreferrer"
       >
         <img
-          src="https://fouadbechar.x10.mx/p/m/book.webp"
+          src={book}
           alt="Description of Image"
           className="image208 animate0110"
           width={100}
