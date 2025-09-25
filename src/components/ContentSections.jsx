@@ -1,5 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import image1 from "/src/assets/images/d1.webp";
+import enrg from "/src/assets/images/enrg.webp";
+import image5 from "/src/assets/images/image5.webp";
+import image06 from "/src/assets/images/image06.webp";
+
+
 
 export default function ContentSections() {
   const contentRef = useRef(null);
@@ -17,7 +22,7 @@ export default function ContentSections() {
       </h1>
       <img
         className="iiim"
-        src={https://fouadbechar.x10.mx/p/m/enrg.webp}
+        src={enrg}
         alt="image"
         width={400}
         height={224}
@@ -42,7 +47,7 @@ export default function ContentSections() {
       </h2>
       <img
         className="iiim"
-        src="https://fouadbechar.x10.mx/p/m/enrg.webp"
+        src={enrg}
         alt="image"
         width={400}
         height={224}
@@ -67,7 +72,7 @@ export default function ContentSections() {
         </h1>
         <img
           className="iim"
-          src="https://fouadbechar.x10.mx/p/m/image5.webp"
+          src={image5}
           alt="image"
           width={300}
           height={192}
@@ -89,7 +94,7 @@ export default function ContentSections() {
         </h2>
         <img
           className="iim animate0110"
-          src="https://fouadbechar.x10.mx/p/m/image06.webp"
+          src={image06}
           alt="image"
           width={300}
           height={200}
