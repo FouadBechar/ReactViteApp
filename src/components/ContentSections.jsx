@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
-import image5 from "/src/assets/images/image5.webp";
+import image4 from "/src/assets/images/image4.webp";
 import image06 from "/src/assets/images/image06.webp";
 
 
