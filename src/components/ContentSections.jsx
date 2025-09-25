@@ -202,11 +202,7 @@ export default function ContentSections() {
         height={100}
       />
       <p className="b3 animate0110">
-        10+ Years Industry Veteran We've been around for a long time and we're
-        here to stay. Rest assured that we know how to provide a stable,
-        high-performance web hosting service that isn't going to close
-        overnight. We believe that hosting should be accessible to all.
-      </p>
+       10+ Years Industry Veteran We've been around for a long time and we're here to stay. Rest assured that we know how to provide a stable, high-performance web hosting service that isn't going to close overnight. We believe that hosting should be accessible to all, and that's precisely why we offer free hosting for everyone. We even give you unmetered bandwidth and disk space? allowing your site to grow without fear of ridiculously low limits like our other free hosting competitors! You won't find many companies doing that free of charge.<i>to visit the official website click here</i><i className="i0i1"><a className="loadicon010101" href="https://x10hosting.com/" title="https://x10hosting.com/" target="_parent">x10hosting</a></i></p>
     </section>
   );
 
