@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ChatWidget from "./ChatWidget";
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
@@ -706,278 +707,75 @@ export default function ContentSections() {
   }, []);
 
   useEffect(() => {
-    function onScroll() {
-      const elements = document.querySelectorAll(".animate0110");
-      const windowHeight = window.innerHeight;
+    // Use IntersectionObserver for better scroll performance, with a
+    // fallback to the original onScroll handler for environments that
+    // don't support IntersectionObserver.
+    const selector = ".animate0110";
 
-      elements.forEach((element) => {
-        const position = element.getBoundingClientRect().top;
-
-        if (position < windowHeight) {
-          element.style.opacity = "1";
-          element.style.transform = "translateY(0)";
-        }
-      });
-    }
-
-    document.addEventListener("scroll", onScroll);
-    onScroll();
-
-    return () => {
+    function applyVisibleStyles(el) {
       try {
-        document.removeEventListener("scroll", onScroll);
-      } catch (e) {}
-    };
-  }, []);
-
-  useEffect(() => {
-  const chatBox = document.getElementById("chat-box");
-  const chatToggle = document.getElementById("chat-toggle");
-  const closeBtn = document.getElementById("close-btn");
-  const clearBtn2 = document.getElementById("clear-btn");
-  const sendBtn = document.getElementById("send-btn");
-  const userInput = document.getElementById("user-input");
-  const chatMessages = document.getElementById("chat-messages");
-
-  const i18n = {
-    en: {
-      tooLong: "Your message is too long. Please shorten it.",
-      fetchErr: (err) => `🤖 Error while connecting: ${err}`,
-      defaultReply: "🤖 ...",
-      emptyMsg: "⚠️ Message is empty. Please say something.",
-    },
-    ar: {
-      tooLong: "رسالتك طويلة جدًا. قصّرها شوية من فضلك.",
-      fetchErr: (err) => `🤖 حدث خطأ أثناء الاتصال: ${err}`,
-      defaultReply: "🤖 ...",
-      emptyMsg: "⚠️ الرسالة فارغة. أرسل شيئًا مفيدًا",
-    },
-    fr: {
-      tooLong: "Votre message est trop long. Veuillez le raccourcir.",
-      fetchErr: (err) => `🤖 Erreur de connexion : ${err}`,
-      defaultReply: "🤖 ...",
-      emptyMsg: "⚠️ Le message est vide. Écrivez quelque chose.",
-    },
-  };
-
-  function detectLanguage(text) {
-    if (/[؀-ۿ]/.test(text)) return "ar";
-    if (/[éèêàâùûôçïü]/i.test(text)) return "fr";
-    return "en";
-  }
-
-  const STORAGE_KEY = "chatHistory";
-  let messagesHistory = [];
-
-  function saveToHistory(text, role) {
-    try {
-      const hist = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      hist.push({ text, role });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(hist));
-    } catch (_) {}
-  }
-
-  function loadHistory() {
-    try {
-      const hist = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      hist.forEach((msg) => appendMessage(msg.text, msg.role, false));
-    } catch (_) {}
-  }
-
-  function clearHistory() {
-    localStorage.removeItem(STORAGE_KEY);
-    messagesHistory = [];
-    chatMessages.innerHTML = "";
-  }
-
-  function appendMessage(content, role, save = true) {
-    const messageElement = createMessageElement(content, role);
-    chatMessages.appendChild(messageElement);
-    messageElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    if (save) saveMessage(content, role);
-    scrollToBottom();
-    return messageElement;
-  }
-
-  function scrollToBottom() {
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function createMessageElement(content, role) {
-    const msg = document.createElement("div");
-    msg.className = `bubble ${role}`;
-    msg.style.animation = "fadeInUp 0.4s ease-out";
-
-    const inner = document.createElement("div");
-    inner.className = "bubble-content";
-
-    if (typeof content === "string") {
-      inner.innerHTML = sanitizeLinks(content);
-    } else {
-      inner.appendChild(content);
-    }
-
-    msg.appendChild(inner);
-    return msg;
-  }
-
-  function sanitizeLinks(text) {
-    const escaped = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    return escaped.replace(/(https?:\/\/[^\s]+)/g, (url) => {
-      if (!/^https?:\/\//i.test(url)) return url;
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-    });
-  }
-
-  function saveMessage(content, role) {
-    try {
-      const cleanText =
-        typeof content === "string" ? content : content.textContent;
-      saveToHistory(cleanText, role);
-    } catch (err) {
-      console.warn("⚠️ Failed to save message:", err);
-    }
-  }
-
-  function showTyping() {
-    const dots = document.createElement("span");
-    dots.className = "typing-dots";
-    dots.innerHTML = "<span>.</span><span>.</span><span>.</span>";
-    return appendMessage(dots, "bot", false);
-  }
-
-  // Attach chat handlers with guards and named functions so we can remove them
-  let onChatToggle = null;
-  let onCloseBtn = null;
-  let onClearBtn = null;
-  if (chatToggle && chatBox) {
-    onChatToggle = () => {
-      chatBox.classList.remove("fade-out");
-      void chatBox.offsetWidth;
-      chatBox.classList.add("bounce-in");
-      chatBox.style.display = "flex";
-      chatToggle.style.display = "none";
-    };
-    chatToggle.addEventListener("click", onChatToggle);
-  }
-
-  if (closeBtn && chatBox && chatToggle) {
-    onCloseBtn = () => {
-      chatBox.classList.remove("bounce-in");
-      chatBox.classList.add("fade-out");
-      chatBox.style.display = "none";
-      chatToggle.style.display = "block";
-    };
-    closeBtn.addEventListener("click", onCloseBtn);
-  }
-
-  if (clearBtn2) {
-    onClearBtn = clearHistory;
-    clearBtn2.addEventListener("click", onClearBtn);
-  }
-
-  async function sendMessage() {
-    const message = userInput.value.trim();
-    const lang = detectLanguage(message);
-
-    if (!message) {
-      appendMessage(i18n[lang].emptyMsg, "bot");
-      return;
-    }
-
-    if (message.length > 300) {
-      appendMessage(i18n[lang].tooLong, "bot");
-      return;
-    }
-
-    appendMessage(message, "user");
-    userInput.value = "";
-    messagesHistory.push({ role: "user", content: message });
-
-    const typingPlaceholder = showTyping();
-    try {
-      sendBtn.disabled = true;
-      const res = await fetch("https://chat-779e.onrender.com/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: messagesHistory }),
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.reply?.trim())
-        throw new Error("No valid response from the bot.");
-
-      typingPlaceholder.remove();
-      appendMessage(data.reply, "bot");
-      messagesHistory.push({ role: "assistant", content: data.reply });
-      saveToHistory(data.reply, "bot");
-    } catch (err) {
-      typingPlaceholder.remove();
-      appendMessage(i18n[lang].fetchErr(err.message), "bot");
-    } finally {
-      sendBtn.disabled = false;
-    }
-  }
-
-  let onSendBtn = null;
-  let onUserKeydown = null;
-  if (sendBtn) {
-    onSendBtn = sendMessage;
-    sendBtn.addEventListener("click", onSendBtn);
-  }
-  if (userInput) {
-    onUserKeydown = (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      } catch (e) {
+        // ignore styling errors
       }
-    };
-    userInput.addEventListener("keydown", onUserKeydown);
-  }
-
-  async function warmUpConnection() {
-    try {
-      await fetch("https://chat-779e.onrender.com/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [{ role: "system", content: "warmup" }],
-        }),
-      });
-      console.log("🔥 Chat server warmed up!");
-    } catch (err) {
-      console.warn("⚠️ Warm-up failed:", err.message);
     }
-  }
 
-  // initialize immediately (no need for DOMContentLoaded inside useEffect)
-  try {
-    loadHistory();
-    if (messagesHistory.length === 0) {
-      appendMessage("Hello! How can I assist you today?", "bot", false);
+    if (typeof window !== "undefined" && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              applyVisibleStyles(entry.target);
+              // If you only want the animation once, unobserve after first intersection
+              try {
+                obs.unobserve(entry.target);
+              } catch (e) {}
+            }
+          });
+        },
+        { root: null, rootMargin: "0px", threshold: 0.05 }
+      );
+
+      // Observe existing elements
+      try {
+        const els = document.querySelectorAll(selector);
+        els.forEach((el) => observer.observe(el));
+      } catch (e) {}
+
+      return () => {
+        try {
+          observer.disconnect();
+        } catch (e) {}
+      };
+    } else {
+      // Fallback for older browsers
+      function onScroll() {
+        const elements = document.querySelectorAll(selector);
+        const windowHeight = window.innerHeight;
+
+        elements.forEach((element) => {
+          const position = element.getBoundingClientRect().top;
+
+          if (position < windowHeight) {
+            applyVisibleStyles(element);
+          }
+        });
+      }
+
+      document.addEventListener("scroll", onScroll);
+      // run once to catch already visible elements
+      onScroll();
+
+      return () => {
+        try {
+          document.removeEventListener("scroll", onScroll);
+        } catch (e) {}
+      };
     }
-    warmUpConnection();
-  } catch (e) {}
-
-  // cleanup listeners on unmount
-  return () => {
-    try {
-      if (chatToggle && onChatToggle) chatToggle.removeEventListener("click", onChatToggle);
-    } catch (e) {}
-    try {
-      if (closeBtn && onCloseBtn) closeBtn.removeEventListener("click", onCloseBtn);
-    } catch (e) {}
-    try {
-      if (clearBtn2 && onClearBtn) clearBtn2.removeEventListener("click", onClearBtn);
-    } catch (e) {}
-    try {
-      if (sendBtn && onSendBtn) sendBtn.removeEventListener("click", onSendBtn);
-    } catch (e) {}
-    try {
-      if (userInput && onUserKeydown) userInput.removeEventListener("keydown", onUserKeydown);
-    } catch (e) {}
-  };
   }, []);
+
+  
 
   return (
     <main>
@@ -1088,48 +886,7 @@ export default function ContentSections() {
         </div>
       </div>
 
-      <button id="chat-toggle" type="button">
-        <img src={icon} alt="chat Logo" width="50px" height="31px" />
-      </button>
-
-      <div id="chat-box">
-        <div id="chat-header">
-          <span>
-            <img className="img707" src={icons03} alt="icons03" />
-          </span>
-          <button id="clear-btn" title="Clear Chat">
-            <img className="img708" src={icons1} alt="icons1" />
-          </button>
-          <button id="close-btn" title="Close">
-            <img className="img709" src={icons2} alt="icons2" />
-          </button>
-        </div>
-        <div id="chat-messages"></div>
-        <div id="chat-input">
-          <input
-            type="text"
-            id="user-input"
-            placeholder="Type your message..."
-          />
-          <button type="button" id="send-btn" title="send-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="svg-icon"
-              style={{
-                width: "1em",
-                height: "1em",
-                verticalAlign: "middle",
-                fill: "currentColor",
-                overflow: "hidden",
-              }}
-              viewBox="0 0 1024 1024"
-              version="1.1"
-            >
-              <path d="M41.353846 876.307692l86.646154-320.984615h366.276923c9.846154 0 19.692308-9.846154 19.692308-19.692308v-39.384615c0-9.846154-9.846154-19.692308-19.692308-19.692308H128l-84.676923-315.076923C41.353846 157.538462 39.384615 151.630769 39.384615 145.723077c0-13.784615 13.784615-27.569231 29.538462-25.6 3.938462 0 5.907692 1.969231 9.846154 1.969231l886.153846 364.307692c11.815385 3.938462 19.692308 15.753846 19.692308 27.569231s-7.876923 21.661538-17.723077 25.6L78.769231 913.723077c-3.938462 1.969231-7.876923 1.969231-11.815385 1.969231-15.753846-1.969231-27.569231-13.784615-27.569231-29.538462 0-3.938462 0-5.907692 1.969231-9.846154z" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <ChatWidget />
 
       <div id="form-container">
         <form
