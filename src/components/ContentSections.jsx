@@ -9,8 +9,15 @@ import image8 from "/src/assets/images/image8.webp";
 import book from "/src/assets/images/book.webp";
 import x10 from "/src/assets/images/x10.webp";
 import image1ss from "/src/assets/images/image1ss.webp";
-import image1ss from "/src/assets/images/image2ss.webp";
-import image1ss from "/src/assets/images/image3ss.webp";
+import image2ss from "/src/assets/images/image2ss.webp";
+import image3ss from "/src/assets/images/image3ss.webp";
+import gpt01 from "/src/assets/images/gpt01.webp";
+import gemini01 from "/src/assets/images/gemini01.webp";
+import copilot01 from "/src/assets/images/copilot01.webp";
+import icon from "/src/assets/images/ icon.png";
+import icons2 from "/src/assets/images/ icons2.svg";
+import icons1 from "/src/assets/images/ icons1.svg";
+import icons03 from "/src/assets/images/ icons03.svg";
 
 export default function ContentSections() {
   const contentRef = useRef(null);
@@ -322,7 +329,7 @@ export default function ContentSections() {
     <>
       <div className="ai-card">
         <img
-          src="https://fouadbechar.x10.mx/p/m/gpt01.webp"
+          src={gpt01}  
           alt="ChatGPT Logo"
           width={50}
           height={50}
@@ -335,7 +342,7 @@ export default function ContentSections() {
       </div>
       <div className="ai-card">
         <img
-          src="https://fouadbechar.x10.mx/p/m/gemini01.webp"
+          src={gemini01}    
           alt="Gemini Logo"
           width={50}
           height={50}
@@ -351,7 +358,7 @@ export default function ContentSections() {
       </div>
       <div className="ai-card">
         <img
-          src="https://fouadbechar.x10.mx/p/m/copilot01.webp"
+          src={copilot01}
           alt="Copilot Logo"
           width={50}
           height={50}
@@ -574,7 +581,7 @@ export default function ContentSections() {
 
       <button id="chat-toggle" type="button">
         <img
-          src="/src/assets/images/chat-icon.png"
+          src={icon}
           alt="chat Logo"
           width="50px"
           height="31px"
@@ -586,21 +593,21 @@ export default function ContentSections() {
           <span>
             <img
               className="img707"
-              src="/src/assets/images/icons03.svg"
+              src={icons03} 
               alt="icons03"
             />
           </span>
           <button id="clear-btn" title="Clear Chat">
             <img
               className="img708"
-              src="/src/assets/images/icons1.svg"
+              src={icons1} 
               alt="icons1"
             />
           </button>
           <button id="close-btn" title="Close">
             <img
               className="img709"
-              src="/src/assets/images/icons2.svg"
+              src={icons2}
               alt="icons2"
             />
           </button>
