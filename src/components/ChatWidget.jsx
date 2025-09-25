@@ -176,7 +176,7 @@ export default function ChatWidget() {
         style={{ display: open ? "none" : "block" }}
       >
         <img
-          src={"/src/assets/images/chat-icon.png"}
+          src={icon}
           alt="chat Logo"
           width="50px"
           height="31px"
@@ -188,21 +188,21 @@ export default function ChatWidget() {
           <span>
             <img
               className="img707"
-              src={"/src/assets/images/icons03.svg"}
+              src={icons03}
               alt="icons03"
             />
           </span>
           <button id="clear-btn" title="Clear Chat" onClick={clearHistory}>
             <img
               className="img708"
-              src={"/src/assets/images/icons1.svg"}
+              src={icons1}
               alt="icons1"
             />
           </button>
           <button id="close-btn" title="Close" onClick={() => setOpen(false)}>
             <img
               className="img709"
-              src={"/src/assets/images/icons2.svg"}
+              src={icons2}
               alt="icons2"
             />
           </button>
