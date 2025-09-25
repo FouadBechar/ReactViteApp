@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from "react";
+
+import chatBot from '/src/hooks/chat';
+                    
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
