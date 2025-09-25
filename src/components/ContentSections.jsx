@@ -15,11 +15,12 @@ import image3ss from "/src/assets/images/image3ss.webp";
 import gpt01 from "/src/assets/images/gpt01.webp";
 import gemini01 from "/src/assets/images/gemini01.webp";
 import copilot01 from "/src/assets/images/copilot01.webp";
-import icon from "/src/assets/images/chat-icon.png";
 import AI from "/src/assets/images/AI.webp";
-import icons2 from "/src/assets/images/icons2.svg";
-import icons1 from "/src/assets/images/icons1.svg";
-import icons03 from "/src/assets/images/icons03.svg";
+
+// import icon from "/src/assets/images/chat-icon.png";
+// import icons2 from "/src/assets/images/icons2.svg";
+// import icons1 from "/src/assets/images/icons1.svg";
+// import icons03 from "/src/assets/images/icons03.svg";
 
 export default function ContentSections() {
   const section1 = (
@@ -698,18 +699,18 @@ export default function ContentSections() {
 
     return () => {
       try {
-        if (acceptBtn && onAccept) acceptBtn.removeEventListener("click", onAccept);
+        if (acceptBtn && onAccept)
+          acceptBtn.removeEventListener("click", onAccept);
       } catch (e) {}
       try {
-        if (declineBtn && onDecline) declineBtn.removeEventListener("click", onDecline);
+        if (declineBtn && onDecline)
+          declineBtn.removeEventListener("click", onDecline);
       } catch (e) {}
     };
   }, []);
 
   useEffect(() => {
-    // Use IntersectionObserver for better scroll performance, with a
-    // fallback to the original onScroll handler for environments that
-    // don't support IntersectionObserver.
+    
     const selector = ".animate0110";
 
     function applyVisibleStyles(el) {
@@ -774,8 +775,6 @@ export default function ContentSections() {
       };
     }
   }, []);
-
-  
 
   return (
     <main>
