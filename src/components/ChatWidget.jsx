@@ -30,7 +30,29 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef(null);
+
+  // Inject minimal CSS for typing dots and sr-only helper (keeps component self-contained)
+  useEffect(() => {
+    const css = `
+      .typing-dots { display:inline-flex; gap:6px; align-items:center; }
+      .typing-dots span { display:inline-block; width:6px; height:6px; background:currentColor; border-radius:50%; opacity:0.25; transform:translateY(0); animation:dotPulse 1s infinite linear; }
+      .typing-dots span:nth-child(1){ animation-delay:0s; }
+      .typing-dots span:nth-child(2){ animation-delay:0.15s; }
+      .typing-dots span:nth-child(3){ animation-delay:0.3s; }
+      @keyframes dotPulse { 0% { opacity:0.25; transform:translateY(0);} 50%{ opacity:1; transform:translateY(-4px);} 100%{ opacity:0.25; transform:translateY(0);} }
+      @media (prefers-reduced-motion: reduce) { .typing-dots span { animation: none; opacity: 0.7; transform: none; } }
+      .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    `;
+    const style = document.createElement("style");
+    style.setAttribute("data-generated-by", "ChatWidget");
+    style.appendChild(document.createTextNode(css));
+    document.head.appendChild(style);
+    return () => {
+      try { document.head.removeChild(style); } catch (_) {}
+    };
+  }, []);
 
   useEffect(() => {
     // load history
@@ -99,12 +121,10 @@ export default function ChatWidget() {
       return;
     }
 
-    setMessages((m) => [...m, { role: "user", text }]);
-    setInput("");
-    setSending(true);
-
-    const typingIndex = messages.length + 1;
-    setMessages((m) => [...m, { role: "bot", text: "..." }]);
+  setMessages((m) => [...m, { role: "user", text }]);
+  setInput("");
+  setSending(true);
+  setIsTyping(true);
 
     try {
       // Build payload that matches backend expectations: array of { role, content }
@@ -136,35 +156,15 @@ export default function ChatWidget() {
 
       const data = await res.json();
       if (!data.reply) throw new Error("No valid response body from the bot.");
-      // replace typing placeholder with reply
-      setMessages((m) => {
-        const copy = m.slice();
-        // remove last typing placeholder (best-effort)
-        for (let i = copy.length - 1; i >= 0; i--) {
-          if (copy[i].role === "bot" && copy[i].text === "...") {
-            copy.splice(i, 1);
-            break;
-          }
-        }
-        copy.push({ role: "bot", text: data.reply });
-        return copy;
-      });
+      // append reply and clear typing indicator
+      setIsTyping(false);
+      setMessages((m) => [...m, { role: "bot", text: data.reply }]);
     } catch (err) {
-      setMessages((m) => {
-        const copy = m.slice();
-        // remove typing
-        for (let i = copy.length - 1; i >= 0; i--) {
-          if (copy[i].role === "bot" && copy[i].text === "...") {
-            copy.splice(i, 1);
-            break;
-          }
-        }
-        copy.push({
-          role: "bot",
-          text: `🤖 Error while connecting: ${err.message || err}`,
-        });
-        return copy;
-      });
+      setIsTyping(false);
+      setMessages((m) => [
+        ...m,
+        { role: "bot", text: `🤖 Error while connecting: ${err.message || err}` },
+      ]);
     } finally {
       setSending(false);
     }
@@ -229,6 +229,18 @@ export default function ChatWidget() {
               </div>
             </div>
           ))}
+          {isTyping && (
+            <div className={`bubble bot`} key="typing" role="status" aria-live="polite" aria-atomic="true">
+              <div className="bubble-content">
+                <span className="typing-dots" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span className="sr-only">Bot is typing…</span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div id="chat-input">
