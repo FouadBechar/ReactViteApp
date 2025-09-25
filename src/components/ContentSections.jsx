@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import chat from '/src/hooks';
+import chat from '/src/hooks/chat';
                     
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
