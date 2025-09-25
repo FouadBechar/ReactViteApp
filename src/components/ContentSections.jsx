@@ -15,11 +15,11 @@ import image3ss from "/src/assets/images/image3ss.webp";
 import gpt01 from "/src/assets/images/gpt01.webp";
 import gemini01 from "/src/assets/images/gemini01.webp";
 import copilot01 from "/src/assets/images/copilot01.webp";
-import icon from "/src/assets/images/chat-icon.png";
+// import icon from "/src/assets/images/chat-icon.png";
 import AI from "/src/assets/images/AI.webp";
-import icons2 from "/src/assets/images/icons2.svg";
-import icons1 from "/src/assets/images/icons1.svg";
-import icons03 from "/src/assets/images/icons03.svg";
+// import icons2 from "/src/assets/images/icons2.svg";
+// import icons1 from "/src/assets/images/icons1.svg";
+// import icons03 from "/src/assets/images/icons03.svg";
 
 export default function ContentSections() {
   const section1 = (
