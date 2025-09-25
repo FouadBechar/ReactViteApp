@@ -23,14 +23,9 @@ export default function ContentSections() {
         height={224}
       />
       <p className="b3">
-        We are all consumers — what we buy, how much we consume and how often.
-        Whether it’s gas, food, clothing, cars, furniture, water, toys,
-        electronics or knick-knacks, we are all consumers. The key is not to
-        stop consuming but to start being mindful of our consumption habits and
-        how each purchase or action affects the ecosystem. Small changes can
-        make a big difference.
-      </p>
+      Most of the damage to our environment stems from consumption: what we consume, how much we consume and how often. Whether it’s gas,food, clothing, cars, furniture, water, toys, electronics, knick-knacks or other goods, we are all consumers. The key is not to stop consuming, but to start being mindful of our consumption habits and how each purchase or action affects the ecosystem. The good news is that it’s often not too difficult, expensive, or inconvenient to become more environmentally friendly. It can even be a fun challenge to implement among your family or coworkers. And though small changes at the individual level may seem trivial, just think how much cleaner the planet would be If everyone adopts behavior modification.<i className="i0i1"><a className="loadicon010101" href="https://www.greenmountainenergy.com/why-renewable-energy/protect-the-environment" target="_parent">(continued..)</a></i></p>
     </section>
+    
   );
 
   const section2 = (
@@ -53,10 +48,7 @@ export default function ContentSections() {
         height={224}
       />
       <p className="b3">
-        Renewable energy is energy derived from natural sources that are
-        replenished at a higher rate than they are consumed. Sunlight and wind
-        are examples of renewable sources that are constantly replenished.
-      </p>
+       Renewable energy is energy derived from natural sources that are replenished at a higher rate than they are consumed. Sunlight and wind, for example, are such sources that are constantly being replenished. Renewable energy sources are plentiful and all around us. Fossil fuels - coal, oil and gas - on the other hand, are non-renewable resources that take hundreds of millions of years to form. Fossil fuels, when burned to produce energy, cause harmful greenhouse gas emissions, such as carbon dioxide. Generating renewable energy creates far lower emissions than burning fossil fuels. Transitioning from fossil fuels, which currently account for the lion’s share of emissions, to renewable energy is key to addressing the climate crisis. Renewables are now cheaper in most countries, and generate three times more jobs than fossil fuels.<i className="i0i1"><a className="loadicon010101" href="https://www.un.org/en/climatechange/raising-ambition/renewable-energy" target="_parent"> (continued..) </a></i></p>
     </section>
   );
 
@@ -81,9 +73,7 @@ export default function ContentSections() {
           height={192}
         />
         <p className="b3">
-          We are living in an era of contradictions. Social justice may be a
-          powerful way to address inequality and heal communities.
-        </p>
+        We are living in an era of contradictions. While we should focus on building a unified approach towards fighting a global pandemic, we are more divided than ever. We are more connected than ever before in human history, yet are unable to understand the plight of others. We see an evolution of human rights, but see no end to conflict. We are more willing to accept differences, yet discrimination is on the rise. We are living in an era where we have greater freedoms than ever before, yet we see no end to injustice. So where do we go from here? Is there a way to heal the world? Social justice may be the answer.<i className="i0i1"><a className="loadicon010101" href="https://www.aroundrobin.com/importance-of-social-justice/" target="_parent">(continued..)</a></i></p>
       </section>
 
       <section>
