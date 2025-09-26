@@ -161,8 +161,7 @@ useEffect(() => {
   }, []);
 
  document.addEventListener("DOMContentLoaded", (event) => {
-    showSlides(slideIndex);
-    slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+    slideIndex += 1;
   });
 
   return (
