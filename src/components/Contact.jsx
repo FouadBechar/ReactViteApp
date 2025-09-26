@@ -10,6 +10,73 @@ export default function Contact() {
 useEffect(() => {
   
  
+  const formContainer = document.getElementById("form-container");
+  const form = document.getElementById("my-form");
+  const closeBtn2 = document.getElementById("close-btn2");
+  const openBtn = document.getElementById("open-btn");
+  const fileInput = document.getElementById("file-input");
+  const filePreview = document.getElementById("file-preview");
+  const responseMsg = document.getElementById("responseMessage");
+
+  let isClosing = false;
+
+  openBtn.addEventListener("click", () => {
+    form.classList.remove("fade-out");
+    void form.offsetWidth;
+    form.classList.add("bounce-in");
+    formContainer.style.display = "flex";
+    openBtn.style.display = "none";
+  });
+
+  closeBtn2.addEventListener("click", () => {
+    if (isClosing) return;
+    isClosing = true;
+    form.classList.remove("bounce-in");
+    form.classList.add("fade-out");
+    setTimeout(() => {
+      formContainer.style.display = "none";
+      responseMsg.textContent = "";
+      responseMsg.style.padding = "0px";
+      openBtn.style.display = "inline-block";
+      isClosing = false;
+    }, 600);
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("https://fouadbechar.x10.mx/p/api05", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        responseMsg.textContent = data.message;
+        responseMsg.style.color = data.status === "success" ? "green" : "red";
+        responseMsg.style.padding = data.status === "success" ? "4px" : "4px";
+
+        if (data.status === "success") {
+          form.reset();
+          filePreview.textContent = "";
+        }
+      })
+      .catch((err) => {
+        responseMsg.textContent = "Error: " + err;
+        responseMsg.style.color = "red";
+      });
+  });
+fileInput.addEventListener("change", function () {
+    if (this.files[0] && this.files[0].size > 5 * 1024 * 1024) {
+      alert("File too large (max 5MB)");
+      this.value = "";
+      filePreview.textContent = "";
+    } else {
+      filePreview.textContent =
+        this.files.length > 0 ? "Selected: " + this.files[0].name : "";
+    }
+  });
+
 
   }, []);
   
