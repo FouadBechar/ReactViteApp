@@ -93,6 +93,7 @@ export default function Slideshow() {
   );
 
  
+ 
 useEffect(() => {
  
    let slideIndex = 1;
@@ -158,6 +159,11 @@ useEffect(() => {
   });
 
   }, []);
+
+ document.addEventListener("DOMContentLoaded", (event) => {
+    showSlides(slideIndex);
+    slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+  });
 
   return (
     <>
