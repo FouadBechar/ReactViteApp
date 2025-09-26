@@ -1124,10 +1124,10 @@ export default function NavBar() {
               >
                 <ul>
                   <li>
-                    <a href="p/o">Sign in</a>
+                    <a href="https://fouadbechar.x10.mx/p/o">Sign in</a>
                   </li>
                   <li>
-                    <a href="p/r">Register</a>
+                    <a href="https://fouadbechar.x10.mx/p/r">Register</a>
                   </li>
                 </ul>
               </div>
