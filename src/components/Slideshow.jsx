@@ -93,7 +93,7 @@ export default function Slideshow() {
   );
 
  
-useEffect(() => {
+// useEffect(() => {
  
    let slideIndex = 1;
   let slideInterval;
@@ -157,7 +157,7 @@ useEffect(() => {
     });
   });
 
-  }, []);
+  // }, []);
 
   return (
     <>
