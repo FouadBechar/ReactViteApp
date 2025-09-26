@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 
 // import icon from "/src/assets/images/chat-icon.png";
 // import icons2 from "/src/assets/images/icons2.svg";
@@ -91,7 +91,8 @@ export default function Slideshow() {
     </>
   );
 
-    useEffect(() => {
+  useEffect(() => {
+      
   let slideIndex = 1;
   let slideInterval;
   let isPaused = false;
