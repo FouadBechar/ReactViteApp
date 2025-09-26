@@ -5,14 +5,7 @@ import d1 from "/src/assets/images/d1.webp";
 // import image3ss from "/src/assets/images/image3ss.webp";
 
 
-
 export default function Videoshow() {
-
-
-
-  
-
- 
 
 useEffect(() => {
   const openPop11 = document.querySelector(".open01");
@@ -55,8 +48,7 @@ useEffect(() => {
           <button>Close</button>
         </div>
       </div>
-  
-</>
+  </>
     
   );
 }
