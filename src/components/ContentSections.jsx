@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import ChatWidget from "./ChatWidget";
+import slide from "./slide";
+
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
@@ -500,89 +502,89 @@ export default function ContentSections() {
     </>
   );
 
-  const section8 = (
-    <>
-      <div className="mySlides fade">
-        <div className="numbertext">1 / 3</div>
-        <img className="imgslideshow" src={image1ss} alt="image" />
-        <div className="text">
-          <p>
-            <a
-              className="i0i2 loadicon010101"
-              href="https://breathingtravel.com/best-islands-to-visit-in-indonesia/"
-              target="_parent"
-              rel="noreferrer"
-            >
-              Bali Island
-            </a>
-            is one of the most beautiful tourist places in Indonesia, because of
-            its rich natural beauty and ancient history and heritage that makes
-            it one of the best cities in the world.
-          </p>
-        </div>
-      </div>
+  // const section8 = (
+  //   <>
+  //     <div className="mySlides fade">
+  //       <div className="numbertext">1 / 3</div>
+  //       <img className="imgslideshow" src={image1ss} alt="image" />
+  //       <div className="text">
+  //         <p>
+  //           <a
+  //             className="i0i2 loadicon010101"
+  //             href="https://breathingtravel.com/best-islands-to-visit-in-indonesia/"
+  //             target="_parent"
+  //             rel="noreferrer"
+  //           >
+  //             Bali Island
+  //           </a>
+  //           is one of the most beautiful tourist places in Indonesia, because of
+  //           its rich natural beauty and ancient history and heritage that makes
+  //           it one of the best cities in the world.
+  //         </p>
+  //       </div>
+  //     </div>
 
-      <div className="mySlides fade">
-        <div className="numbertext">2 / 3</div>
-        <img className="imgslideshow" src={image2ss} alt="image" />
-        <div className="text">
-          <p>
-            <a
-              className="i0i2 loadicon010101"
-              href="https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html"
-              target="_parent"
-              rel="noreferrer"
-            >
-              Osaka
-            </a>
-            the second largest and richest city in Japan, and one of the most
-            beautiful tourism cities in Japan and in the world as a whole, due
-            to its long history that extends back to before the 16th century.
-          </p>
-        </div>
-      </div>
+  //     <div className="mySlides fade">
+  //       <div className="numbertext">2 / 3</div>
+  //       <img className="imgslideshow" src={image2ss} alt="image" />
+  //       <div className="text">
+  //         <p>
+  //           <a
+  //             className="i0i2 loadicon010101"
+  //             href="https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html"
+  //             target="_parent"
+  //             rel="noreferrer"
+  //           >
+  //             Osaka
+  //           </a>
+  //           the second largest and richest city in Japan, and one of the most
+  //           beautiful tourism cities in Japan and in the world as a whole, due
+  //           to its long history that extends back to before the 16th century.
+  //         </p>
+  //       </div>
+  //     </div>
 
-      <div className="mySlides fade">
-        <div className="numbertext">3 / 3</div>
-        <img className="imgslideshow" src={image3ss} alt="image" />
-        <div className="text">
-          <p>
-            <a
-              className="i0i2 loadicon010101"
-              href="https://www.routard.com/guide/code_dest/new_york.htm"
-              target="_parent"
-              rel="noreferrer"
-            >
-              New York
-            </a>
-            is famous for its world-renowned shopping and fine restaurants
-            around the most important tourist places such as the Statue of
-            Liberty, its historical neighborhoods and museums.
-          </p>
-        </div>
-      </div>
+  //     <div className="mySlides fade">
+  //       <div className="numbertext">3 / 3</div>
+  //       <img className="imgslideshow" src={image3ss} alt="image" />
+  //       <div className="text">
+  //         <p>
+  //           <a
+  //             className="i0i2 loadicon010101"
+  //             href="https://www.routard.com/guide/code_dest/new_york.htm"
+  //             target="_parent"
+  //             rel="noreferrer"
+  //           >
+  //             New York
+  //           </a>
+  //           is famous for its world-renowned shopping and fine restaurants
+  //           around the most important tourist places such as the Statue of
+  //           Liberty, its historical neighborhoods and museums.
+  //         </p>
+  //       </div>
+  //     </div>
 
-      <span className="prev"> &lt; </span>
-      <span className="next"> &gt; </span>
-    </>
-  );
+  //     <span className="prev"> &lt; </span>
+  //     <span className="next"> &gt; </span>
+  //   </>
+  // );
 
-  const section9 = (
-    <>
-      <span
-        className="dot"
-        onClick={() => window.currentSlide && window.currentSlide(1)}
-      />
-      <span
-        className="dot"
-        onClick={() => window.currentSlide && window.currentSlide(2)}
-      />
-      <span
-        className="dot"
-        onClick={() => window.currentSlide && window.currentSlide(3)}
-      />
-    </>
-  );
+  // const section9 = (
+  //   <>
+  //     <span
+  //       className="dot"
+  //       onClick={() => window.currentSlide && window.currentSlide(1)}
+  //     />
+  //     <span
+  //       className="dot"
+  //       onClick={() => window.currentSlide && window.currentSlide(2)}
+  //     />
+  //     <span
+  //       className="dot"
+  //       onClick={() => window.currentSlide && window.currentSlide(3)}
+  //     />
+  //   </>
+  // );
 
   const section10 = (
     <>
@@ -864,13 +866,15 @@ export default function ContentSections() {
         </div>
       </div>
 
-      <div id="text8" className="slideshow-container animate0110">
+      {/* <div id="text8" className="slideshow-container animate0110">
         {section8}
       </div>
 
       <div id="text9" className="animate0110" style={{ textAlign: "center" }}>
         {section9}
-      </div>
+      </div> */}
+
+       <slide />
 
       <div id="text10" className="ai-card-grid">
         {section10}
