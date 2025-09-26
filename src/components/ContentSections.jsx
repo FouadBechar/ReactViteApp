@@ -4,7 +4,6 @@ import Slideshow from "./Slideshow";
 import Videoshow from "./Videoshow";
 import TextDq from "./TextDq";
 import Contact from "./Contact";
-import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
 import image5 from "/src/assets/images/image5.webp";
@@ -13,17 +12,10 @@ import image7 from "/src/assets/images/image7.webp";
 import image8 from "/src/assets/images/image8.webp";
 import book from "/src/assets/images/book.webp";
 import x10 from "/src/assets/images/x10.webp";
-import image1ss from "/src/assets/images/image1ss.webp";
-import image2ss from "/src/assets/images/image2ss.webp";
-import image3ss from "/src/assets/images/image3ss.webp";
 import gpt01 from "/src/assets/images/gpt01.webp";
 import gemini01 from "/src/assets/images/gemini01.webp";
 import copilot01 from "/src/assets/images/copilot01.webp";
-// import icon from "/src/assets/images/chat-icon.png";
 import AI from "/src/assets/images/AI.webp";
-// import icons2 from "/src/assets/images/icons2.svg";
-// import icons1 from "/src/assets/images/icons1.svg";
-// import icons03 from "/src/assets/images/icons03.svg";
 
 export default function ContentSections() {
   const section1 = (
@@ -504,90 +496,6 @@ export default function ContentSections() {
     </>
   );
 
-  // const section8 = (
-  //   <>
-  //     <div className="mySlides fade">
-  //       <div className="numbertext">1 / 3</div>
-  //       <img className="imgslideshow" src={image1ss} alt="image" />
-  //       <div className="text">
-  //         <p>
-  //           <a
-  //             className="i0i2 loadicon010101"
-  //             href="https://breathingtravel.com/best-islands-to-visit-in-indonesia/"
-  //             target="_parent"
-  //             rel="noreferrer"
-  //           >
-  //             Bali Island
-  //           </a>
-  //           is one of the most beautiful tourist places in Indonesia, because of
-  //           its rich natural beauty and ancient history and heritage that makes
-  //           it one of the best cities in the world.
-  //         </p>
-  //       </div>
-  //     </div>
-
-  //     <div className="mySlides fade">
-  //       <div className="numbertext">2 / 3</div>
-  //       <img className="imgslideshow" src={image2ss} alt="image" />
-  //       <div className="text">
-  //         <p>
-  //           <a
-  //             className="i0i2 loadicon010101"
-  //             href="https://www.tripadvisor.fr/Tourism-g298566-Osaka_Osaka_Prefecture_Kinki-Vacations.html"
-  //             target="_parent"
-  //             rel="noreferrer"
-  //           >
-  //             Osaka
-  //           </a>
-  //           the second largest and richest city in Japan, and one of the most
-  //           beautiful tourism cities in Japan and in the world as a whole, due
-  //           to its long history that extends back to before the 16th century.
-  //         </p>
-  //       </div>
-  //     </div>
-
-  //     <div className="mySlides fade">
-  //       <div className="numbertext">3 / 3</div>
-  //       <img className="imgslideshow" src={image3ss} alt="image" />
-  //       <div className="text">
-  //         <p>
-  //           <a
-  //             className="i0i2 loadicon010101"
-  //             href="https://www.routard.com/guide/code_dest/new_york.htm"
-  //             target="_parent"
-  //             rel="noreferrer"
-  //           >
-  //             New York
-  //           </a>
-  //           is famous for its world-renowned shopping and fine restaurants
-  //           around the most important tourist places such as the Statue of
-  //           Liberty, its historical neighborhoods and museums.
-  //         </p>
-  //       </div>
-  //     </div>
-
-  //     <span className="prev"> &lt; </span>
-  //     <span className="next"> &gt; </span>
-  //   </>
-  // );
-
-  // const section9 = (
-  //   <>
-  //     <span
-  //       className="dot"
-  //       onClick={() => window.currentSlide && window.currentSlide(1)}
-  //     />
-  //     <span
-  //       className="dot"
-  //       onClick={() => window.currentSlide && window.currentSlide(2)}
-  //     />
-  //     <span
-  //       className="dot"
-  //       onClick={() => window.currentSlide && window.currentSlide(3)}
-  //     />
-  //   </>
-  // );
-
   const section10 = (
     <>
       <div className="ai-card">
@@ -713,16 +621,13 @@ export default function ContentSections() {
   }, []);
 
   useEffect(() => {
-    
     const selector = ".animate0110";
 
     function applyVisibleStyles(el) {
       try {
         el.style.opacity = "1";
         el.style.transform = "translateY(0)";
-      } catch (e) {
-        // ignore styling errors
-      }
+      } catch (e) {}
     }
 
     if (typeof window !== "undefined" && "IntersectionObserver" in window) {
@@ -731,7 +636,6 @@ export default function ContentSections() {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               applyVisibleStyles(entry.target);
-              // If you only want the animation once, unobserve after first intersection
               try {
                 obs.unobserve(entry.target);
               } catch (e) {}
@@ -741,7 +645,6 @@ export default function ContentSections() {
         { root: null, rootMargin: "0px", threshold: 0.05 }
       );
 
-      // Observe existing elements
       try {
         const els = document.querySelectorAll(selector);
         els.forEach((el) => observer.observe(el));
@@ -753,7 +656,6 @@ export default function ContentSections() {
         } catch (e) {}
       };
     } else {
-      // Fallback for older browsers
       function onScroll() {
         const elements = document.querySelectorAll(selector);
         const windowHeight = window.innerHeight;
@@ -768,7 +670,6 @@ export default function ContentSections() {
       }
 
       document.addEventListener("scroll", onScroll);
-      // run once to catch already visible elements
       onScroll();
 
       return () => {
@@ -795,47 +696,8 @@ export default function ContentSections() {
         <div className="loader010"></div>
       </div>
 
-      {/* <div className="wrapper010" />
-      <div className="open01">
-        <img
-          className="grid1img"
-          src={image1}
-          width="200px"
-          height="133px"
-          alt="image"
-        />
-      </div> */}
-
-      {/* <div className="wrapper">
-        <video className="vividd" src="" preload="auto" controls autoPlay />
-        <div className="close">
-          <a href="https://www.worldwildlife.org/" target="_parent">
-            <button type="button" className="lien">
-              WWF
-            </button>
-          </a>
-          <button>Close</button>
-        </div>
-      </div> */}
-
-     <Videoshow />
-     <TextDq />
-      
-      {/* <div className="container">
-        <div className="text1">
-          <a
-            className="b6"
-            href="https://www.worldwildlife.org/"
-            target="_parent"
-          >
-            World Wide Fund for Nature
-          </a>
-
-          <span id="p010101" className="p1">
-            {" "}
-          </span>
-        </div>
-      </div> */}
+      <Videoshow />
+      <TextDq />
 
       <div className="f13">
         <div id="text1" className="ff13">
@@ -871,15 +733,7 @@ export default function ContentSections() {
         </div>
       </div>
 
-      {/* <div id="text8" className="slideshow-container animate0110">
-        {section8}
-      </div>
-
-      <div id="text9" className="animate0110" style={{ textAlign: "center" }}>
-        {section9}
-      </div> */}
-
-       <Slideshow />
+      <Slideshow />
 
       <div id="text10" className="ai-card-grid">
         {section10}
@@ -892,91 +746,9 @@ export default function ContentSections() {
           <button type="button" id="decline" title="decline"></button>
         </div>
       </div>
-   
-      <ChatWidget />
-       <Contact />
-      
-      {/* <div id="form-container">
-        <form
-          id="my-form"
-          className="animated"
-          encType="multipart/form-data"
-          method="POST"
-        >
-          <button type="button" id="close-btn2" title="close-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 256"
-              width="22px"
-              height="22px"
-              fillRule="nonzero"
-            >
-              <g
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                fillRule="nonzero"
-                stroke="none"
-                strokeWidth="1"
-                strokeLinecap="butt"
-                strokeLinejoin="miter"
-                strokeMiterlimit="10"
-                strokeDasharray=""
-                strokeDashoffset="0"
-                fontFamily="none"
-                fontWeight="none"
-                fontSize="none"
-                textAnchor="none"
-                style={{ mixBlendMode: "normal" }}
-              >
-                <g transform="scale(3.55556,3.55556)">
-                  <path d="M19,15c-1.023,0 -2.04812,0.39087 -2.82812,1.17188c-1.562,1.562 -1.562,4.09425 0,5.65625l14.17188,14.17188l-14.17187,14.17188c-1.562,1.562 -1.562,4.09425 0,5.65625c0.78,0.78 1.80513,1.17188 2.82813,1.17188c1.023,0 2.04812,-0.39088 2.82813,-1.17187l14.17188,-14.17187l14.17188,14.17188c1.56,1.562 4.09525,1.562 5.65625,0c1.563,-1.563 1.563,-4.09325 0,-5.65625l-14.17187,-14.17187l14.17188,-14.17187c1.562,-1.562 1.562,-4.09425 0,-5.65625c-1.56,-1.561 -4.09625,-1.562 -5.65625,0l-14.17187,14.17188l-14.17187,-14.17187c-0.78,-0.78 -1.80513,-1.17187 -2.82812,-1.17187z" />
-                </g>
-              </g>
-            </svg>
-          </button>
-          <h2>Contact Form</h2>
-          <p id="responseMessage" className="pp00"></p>
-          <input
-            className="input02"
-            type="text"
-            name="prenom"
-            placeholder="First Name"
-            required
-          />
-          <input
-            className="input02"
-            type="text"
-            name="nom"
-            placeholder="Last Name"
-            required
-          />
-          <input
-            className="input02"
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            required
-          />
-          <textarea
-            className="textarea02"
-            name="textarea"
-            placeholder="Your message"
-          ></textarea>
-          <input
-            className="input002"
-            type="file"
-            name="file"
-            id="file-input"
-            placeholder="selet file"
-          />
-          <div id="file-preview" className="preview"></div>
-          <button className="button2" type="submit">
-            Send
-          </button>
-        </form>
-      </div> */}
 
-      
+      <ChatWidget />
+      <Contact />
     </main>
   );
 }
