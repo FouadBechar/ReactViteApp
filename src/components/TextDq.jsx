@@ -14,7 +14,21 @@ useEffect(() => {
  
   return (
     <>
-  
+        <div className="container">
+        <div className="text1">
+          <a
+            className="b6"
+            href="https://www.worldwildlife.org/"
+            target="_parent"
+          >
+            World Wide Fund for Nature
+          </a>
+
+          <span id="p010101" className="p1">
+            {" "}
+          </span>
+        </div>
+      </div>
   </>
     
   );
