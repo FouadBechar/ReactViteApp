@@ -158,11 +158,10 @@ useEffect(() => {
     });
   });
 
-  }, [cont]);
+  }, []);
 
-let cont = 0;
 setTimeout(() => {
-cont += 1;
+plusSlides(1);
  }, "1000");
 
   return (
