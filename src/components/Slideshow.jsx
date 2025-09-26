@@ -98,8 +98,7 @@ useEffect(() => {
  
    let slideIndex = 1;
   let slideInterval;
-  let isPaused = false;
-  let n = 1;
+  let isPaused = true;
 
   function plusSlides(n) {
     if (!isPaused) {
