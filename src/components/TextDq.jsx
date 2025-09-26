@@ -9,9 +9,31 @@ export default function TextDq() {
 
 useEffect(() => {
   
+  const container = document.querySelector(".container");
+const textElement = document.querySelector(".text1");
+
+const resizeObserver = new ResizeObserver(() => {
+  if (container.scrollHeight > container.clientHeight) {
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: "smooth",
+    });
+  } else {
+    container.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+});
+
+resizeObserver.observe(textElement);
 
   }, []);
- 
+  
+ useEffect(() => {
+
+    }, []);
+  
   return (
     <>
         <div className="container">
