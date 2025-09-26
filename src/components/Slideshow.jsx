@@ -5,6 +5,74 @@ import React, {useEffect} from "react";
 // import icons1 from "/src/assets/images/icons1.svg";
 // import icons03 from "/src/assets/images/icons03.svg";
 
+
+
+      
+  let slideIndex = 1;
+  let slideInterval;
+  let isPaused = false;
+
+  function plusSlides(n) {
+    if (!isPaused) {
+      clearInterval(slideInterval);
+      showSlides((slideIndex += n));
+      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+    }
+  }
+
+  const prevButton = document.querySelector(".prev");
+  const nextButton = document.querySelector(".next");
+  prevButton.addEventListener("click", () => plusSlides(-1));
+  nextButton.addEventListener("click", () => plusSlides(1));
+
+  function currentSlide(n) {
+    if (!isPaused) {
+      clearInterval(slideInterval);
+      showSlides((slideIndex = n));
+      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+    }
+  }
+
+  function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].className += " active";
+  }
+
+  document.addEventListener("DOMContentLoaded", (event) => {
+    showSlides(slideIndex);
+    slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+  });
+
+  document.querySelectorAll(".mySlides").forEach((img) => {
+    img.addEventListener("mouseover", () => {
+      clearInterval(slideInterval);
+      isPaused = true;
+    });
+
+    img.addEventListener("mouseout", () => {
+      isPaused = false;
+      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+    });
+  });
+
+
+
+
 export default function Slideshow() {
 
   onst section8 = (
@@ -91,71 +159,7 @@ export default function Slideshow() {
     </>
   );
 
-  useEffect(() => {
-      
-  let slideIndex = 1;
-  let slideInterval;
-  let isPaused = false;
-
-  function plusSlides(n) {
-    if (!isPaused) {
-      clearInterval(slideInterval);
-      showSlides((slideIndex += n));
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-    }
-  }
-
-  const prevButton = document.querySelector(".prev");
-  const nextButton = document.querySelector(".next");
-  prevButton.addEventListener("click", () => plusSlides(-1));
-  nextButton.addEventListener("click", () => plusSlides(1));
-
-  function currentSlide(n) {
-    if (!isPaused) {
-      clearInterval(slideInterval);
-      showSlides((slideIndex = n));
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-    }
-  }
-
-  function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {
-      slideIndex = 1;
-    }
-    if (n < 1) {
-      slideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
-  }
-
-  document.addEventListener("DOMContentLoaded", (event) => {
-    showSlides(slideIndex);
-    slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-  });
-
-  document.querySelectorAll(".mySlides").forEach((img) => {
-    img.addEventListener("mouseover", () => {
-      clearInterval(slideInterval);
-      isPaused = true;
-    });
-
-    img.addEventListener("mouseout", () => {
-      isPaused = false;
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-    });
-  });
-
-  }, []);
+ 
 
   
 
