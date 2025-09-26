@@ -15,45 +15,22 @@ export default function Videoshow() {
  
 
 useEffect(() => {
-
-  var vido;
-  var clo;
-  var im00;
-  var aaa001;
-  var divvv12;
-
-  function video() {
-    vido = document.getElementById("vid");
-    clo = document.getElementById("cl");
-    im00 = document.getElementById("im0");
-    aaa001 = document.getElementById("aa001");
-    divvv12 = document.getElementById("divv12");
-    vido.src =
-      "https://res.cloudinary.com/dougpslkv/video/upload/v1708992004/WWF.mp4";
-    clo.style.display = "block";
-    vido.style.display = "block";
-    aaa001.style.display = "block";
-    im00.style.display = "none";
-    divvv12.style.display = "none";
-  }
-
-  function closse() {
-    vido = document.getElementById("vid");
-    clo = document.getElementById("cl");
-    clo.style.display = "none";
-    vido.style.display = "none";
-    aaa001.style.display = "none";
-    im00.style.display = "block";
-    divvv12.style.display = "block";
-    vido.src = "";
-  }
-
-   
+  const openPop11 = document.querySelector(".open01");
+  const closePop11 = document.querySelector(".close");
+  const wrapper = document.querySelector(".wrapper");
+  const vividd1 = document.querySelector(".vividd");
+  openPop11.addEventListener("click", () => {
+    wrapper.classList.add("active");
+    vividd1.src =
+      "https://res.cloudinary.com/dgi9vyjff/video/upload/v1729979577/WWF.mp4";
+  });
+  closePop11.addEventListener("click", () => {
+    wrapper.classList.remove("active");
+    vividd1.src = "";
+  });
 
   }, []);
  
-
-
   return (
     <>
   <div className="wrapper010" />
