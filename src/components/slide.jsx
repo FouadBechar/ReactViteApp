@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import icon from "/src/assets/images/chat-icon.png";
-import icons2 from "/src/assets/images/icons2.svg";
-import icons1 from "/src/assets/images/icons1.svg";
-import icons03 from "/src/assets/images/icons03.svg";
+// import icon from "/src/assets/images/chat-icon.png";
+// import icons2 from "/src/assets/images/icons2.svg";
+// import icons1 from "/src/assets/images/icons1.svg";
+// import icons03 from "/src/assets/images/icons03.svg";
 
 export default function slide() {
 
@@ -163,8 +163,9 @@ export default function slide() {
     <>
   <div id="text8" className="slideshow-container animate0110">
         {section8}
-      </div>
-
+  </div>
+    </>
+     <>
       <div id="text9" className="animate0110" style={{ textAlign: "center" }}>
         {section9}
       </div>
