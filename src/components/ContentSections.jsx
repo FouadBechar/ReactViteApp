@@ -3,7 +3,7 @@ import ChatWidget from "./ChatWidget";
 import Slideshow from "./Slideshow";
 import Videoshow from "./Videoshow";
 import TextDq from "./TextDq";
-
+import Contact from "./Contact";
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
@@ -894,8 +894,9 @@ export default function ContentSections() {
       </div>
    
       <ChatWidget />
-   
-      <div id="form-container">
+       <Contact />
+      
+      {/* <div id="form-container">
         <form
           id="my-form"
           className="animated"
@@ -973,7 +974,9 @@ export default function ContentSections() {
             Send
           </button>
         </form>
-      </div>
+      </div> */}
+
+      
     </main>
   );
 }
