@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import ChatWidget from "./ChatWidget";
 import slide from "./slide";
-
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
 import image4 from "/src/assets/images/image4.webp";
