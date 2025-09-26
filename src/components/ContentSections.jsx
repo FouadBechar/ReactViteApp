@@ -792,7 +792,7 @@ export default function ContentSections() {
         <div className="loader010"></div>
       </div>
 
-      <div className="wrapper010" />
+      {/* <div className="wrapper010" />
       <div className="open01">
         <img
           className="grid1img"
@@ -801,9 +801,9 @@ export default function ContentSections() {
           height="133px"
           alt="image"
         />
-      </div>
+      </div> */}
 
-      <div className="wrapper">
+      {/* <div className="wrapper">
         <video className="vividd" src="" preload="auto" controls autoPlay />
         <div className="close">
           <a href="https://www.worldwildlife.org/" target="_parent">
@@ -813,7 +813,7 @@ export default function ContentSections() {
           </a>
           <button>Close</button>
         </div>
-      </div>
+      </div> */}
 
       <div className="container">
         <div className="text1">
