@@ -32,6 +32,12 @@ resizeObserver.observe(textElement);
   
  useEffect(() => {
 
+var typed = new Typed("#p010101", {
+  strings: ["&nbsp; The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961", "&nbsp; that works in the field of wilderness preservation  and the reduction of human impact on the environment", "&nbsp; It was formerly named the World Wildlife Fund,  which remains its official name in Canada and the United States.", "&nbsp; WWF is the world's largest conservation organization."],
+  typeSpeed: 100,
+  backSpeed: 100,
+  loop: true,
+});
     }, []);
   
   return (
