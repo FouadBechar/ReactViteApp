@@ -94,69 +94,105 @@ export default function Slideshow() {
 
  
 
-useEffect(() => {
- 
-   let slideIndex = 1;
-  let slideInterval;
-  let isPaused = false;
+  useEffect(() => {
 
-  function plusSlides(n) {
-    if (!isPaused) {
-      clearInterval(slideInterval);
-      showSlides((slideIndex += n));
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-    }
-  }
+    let slideIndex = 1;
+    let slideInterval;
+    let isPaused = false;
 
-  const prevButton = document.querySelector(".prev");
-  const nextButton = document.querySelector(".next");
-  prevButton.addEventListener("click", () => plusSlides(-1));
-  nextButton.addEventListener("click", () => plusSlides(1));
+    function showSlides(n) {
+      let i;
+      const slides = document.getElementsByClassName("mySlides");
+      const dots = document.getElementsByClassName("dot");
+      if (!slides || slides.length === 0) return;
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      if (dots && dots[slideIndex - 1]) dots[slideIndex - 1].className += " active";
+    }
 
-  function currentSlide(n) {
-    if (!isPaused) {
-      clearInterval(slideInterval);
-      showSlides((slideIndex = n));
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+    function plusSlides(n) {
+      if (!isPaused) {
+        clearInterval(slideInterval);
+        showSlides((slideIndex += n));
+        slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+      }
     }
-  }
 
-  function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {
-      slideIndex = 1;
+    function currentSlide(n) {
+      if (!isPaused) {
+        clearInterval(slideInterval);
+        showSlides((slideIndex = n));
+        slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+      }
     }
-    if (n < 1) {
-      slideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
-  }
 
-  document.addEventListener("DOMContentLoaded", (event) => {
+    // expose currentSlide to window so existing dot onClick handlers work
+    try {
+      window.currentSlide = currentSlide;
+    } catch (e) {}
+
+    // initialize slideshow immediately (don't rely on DOMContentLoaded)
     showSlides(slideIndex);
     slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-  });
 
-  document.querySelectorAll(".mySlides").forEach((img) => {
-    img.addEventListener("mouseover", () => {
-      clearInterval(slideInterval);
-      isPaused = true;
+    // Attach prev/next handlers if elements exist
+    const prevButton = document.querySelector(".prev");
+    const nextButton = document.querySelector(".next");
+    const prevHandler = () => plusSlides(-1);
+    const nextHandler = () => plusSlides(1);
+    if (prevButton) prevButton.addEventListener("click", prevHandler);
+    if (nextButton) nextButton.addEventListener("click", nextHandler);
+
+    // Pause on hover
+    const slideEls = Array.from(document.querySelectorAll(".mySlides"));
+    const hoverHandlers = [];
+    slideEls.forEach((el) => {
+      const onMouseOver = () => {
+        clearInterval(slideInterval);
+        isPaused = true;
+      };
+      const onMouseOut = () => {
+        isPaused = false;
+        slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
+      };
+      el.addEventListener("mouseover", onMouseOver);
+      el.addEventListener("mouseout", onMouseOut);
+      hoverHandlers.push({ el, onMouseOver, onMouseOut });
     });
 
-    img.addEventListener("mouseout", () => {
-      isPaused = false;
-      slideInterval = setInterval(() => showSlides((slideIndex += 1)), 10000);
-    });
-  });
+    return () => {
+      // cleanup interval and event listeners
+      try {
+        clearInterval(slideInterval);
+      } catch (e) {}
+      try {
+        if (prevButton) prevButton.removeEventListener("click", prevHandler);
+      } catch (e) {}
+      try {
+        if (nextButton) nextButton.removeEventListener("click", nextHandler);
+      } catch (e) {}
+      hoverHandlers.forEach(({ el, onMouseOver, onMouseOut }) => {
+        try {
+          el.removeEventListener("mouseover", onMouseOver);
+          el.removeEventListener("mouseout", onMouseOut);
+        } catch (e) {}
+      });
+      try {
+        // clean window helper
+        if (window && window.currentSlide) delete window.currentSlide;
+      } catch (e) {}
+    };
 
   }, []);
  

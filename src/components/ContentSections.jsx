@@ -369,9 +369,9 @@ export default function ContentSections() {
           <img
             className="iiim"
             src={AI}
-            alt="image"
-            width="400px"
-            height="224px"
+            alt="Artificial Intelligence illustration"
+            width={400}
+            height={224}
           />{" "}
         </a>{" "}
         <div className="container010101 loadicon010101">
@@ -573,7 +573,12 @@ export default function ContentSections() {
 
     function setCookie(name, value, days) {
       const maxAge = days * 24 * 60 * 60;
-      document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; SameSite=Lax; Secure`;
+      const isSecure =
+        typeof window !== "undefined" &&
+        window.location &&
+        window.location.protocol === "https:";
+      const secureAttr = isSecure ? "; Secure" : "";
+      document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAge}; path=/; SameSite=Lax${secureAttr}`;
     }
 
     if (cookieConsent && !getCookie("consent")) {
@@ -740,10 +745,14 @@ export default function ContentSections() {
       </div>
 
       <div id="cookie-consent" role="dialog" aria-live="polite">
-        <p id="cookie-message"></p>
+        <p id="cookie-message">This site uses cookies to enhance your experience.</p>
         <div style={{ textAlign: "center" }}>
-          <button type="button" id="accept" title="accept"></button>
-          <button type="button" id="decline" title="decline"></button>
+          <button type="button" id="accept" title="accept" aria-label="Accept cookies">
+            Accept
+          </button>
+          <button type="button" id="decline" title="decline" aria-label="Decline cookies">
+            Decline
+          </button>
         </div>
       </div>
 
