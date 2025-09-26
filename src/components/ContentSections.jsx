@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ChatWidget from "./ChatWidget";
 import Slideshow from "./Slideshow";
 import Videoshow from "./Videoshow";
+import TextDq from "./TextDq";
 
 import image1 from "/src/assets/images/d1.webp";
 import enrg from "/src/assets/images/enrg.webp";
@@ -818,8 +819,9 @@ export default function ContentSections() {
       </div> */}
 
      <Videoshow />
-
-      <div className="container">
+     <TextDq />
+      
+      {/* <div className="container">
         <div className="text1">
           <a
             className="b6"
@@ -833,7 +835,7 @@ export default function ContentSections() {
             {" "}
           </span>
         </div>
-      </div>
+      </div> */}
 
       <div className="f13">
         <div id="text1" className="ff13">
