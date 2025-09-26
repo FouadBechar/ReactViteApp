@@ -93,7 +93,7 @@ export default function Slideshow() {
   );
 
  
- 
+let cont = 0;
 useEffect(() => {
  
    let slideIndex = 1;
@@ -158,10 +158,10 @@ useEffect(() => {
     });
   });
 
-  }, []);
+  }, [cont]);
 
  document.addEventListener("DOMContentLoaded", (event) => {
-    slideIndex += 1;
+    cont += 1;
   });
 
   return (
