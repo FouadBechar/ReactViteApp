@@ -9,7 +9,7 @@ import React, {useEffect} from "react";
 export default function Slideshow() {
 
  const section8 = (
-    <>
+ 
       <div className="mySlides fade">
         <div className="numbertext">1 / 3</div>
         <img className="imgslideshow" src={image1ss} alt="image" />
@@ -72,11 +72,11 @@ export default function Slideshow() {
 
       <span className="prev"> &lt; </span>
       <span className="next"> &gt; </span>
-    </>
+  
   );
 
   const section9 = (
-    <>
+  
       <span
         className="dot"
         onClick={() => window.currentSlide && window.currentSlide(1)}
@@ -89,11 +89,12 @@ export default function Slideshow() {
         className="dot"
         onClick={() => window.currentSlide && window.currentSlide(3)}
       />
-    </>
+  
   );
 
  
 useEffect(() => {
+ 
    let slideIndex = 1;
   let slideInterval;
   let isPaused = false;
@@ -160,7 +161,7 @@ useEffect(() => {
 
   return (
     
-    <>
+ 
   <div id="text8" className="slideshow-container animate0110">
         {section8}
   </div>
@@ -169,7 +170,7 @@ useEffect(() => {
       <div id="text9" className="animate0110" style={{ textAlign: "center" }}>
         {section9}
       </div>
-    </>
+
     
   );
 }
