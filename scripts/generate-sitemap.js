@@ -4,6 +4,7 @@ const path = require('path');
 const SITE_URL = process.env.SITE_URL || 'https://fouadbechar.vercel.app/';
 const pagesPath = path.join(__dirname, '..', 'public', 'pages.json');
 const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+const privacyIndexPath = path.join(__dirname, '..', 'public', 'privacy', 'index.html');
 
 function normalizeUrl(siteUrl, p) {
   const base = siteUrl.replace (/\/$/, '');
@@ -43,6 +44,29 @@ function main() {
     }
   } else {
     console.warn('pages.json not found at', pagesPath, '- generating sitemap with no pages');
+  }
+
+  // Normalize or add a clean /privacy/ URL when a privacy page exists in public/privacy/index.html
+  try {
+    const hasPrivacyIndex = fs.existsSync(privacyIndexPath);
+    if (hasPrivacyIndex) {
+      // replace any existing PrivacyPolicy.html entries
+      let found = false;
+      pages = pages.map((p) => {
+        if (p && p.url && (p.url === 'PrivacyPolicy.html' || p.url === '/PrivacyPolicy.html' || p.url === '/PrivacyPolicy')) {
+          found = true;
+          return Object.assign({}, p, { url: '/privacy/' });
+        }
+        return p;
+      }).filter(Boolean);
+
+      // ensure /privacy/ exists
+      if (!pages.some((p) => p && (p.url === '/privacy' || p.url === '/privacy/'))) {
+        pages.push({ title: 'Privacy Policy', url: '/privacy/' });
+      }
+    }
+  } catch (e) {
+    // non-fatal
   }
 
   const xml = buildSitemap(pages);
