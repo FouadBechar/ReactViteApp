@@ -4,6 +4,7 @@ export default function TextDq() {
   const typedRef = useRef(null);
   const containerRef = useRef(null);
   const textRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -13,16 +14,35 @@ export default function TextDq() {
       return;
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      try {
-        if (container.scrollHeight > container.clientHeight) {
-          container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
-        } else {
-          container.scrollTo({ top: 0, behavior: "smooth" });
+    let rafId = null;
+    const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const doScroll = (smooth = true) => {
+      if (!container) return;
+      const behavior = prefersReduced ? "auto" : (smooth ? "smooth" : "auto");
+
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        try {
+          if (container.scrollHeight > container.clientHeight) {
+            container.scrollTo({ top: container.scrollHeight, behavior });
+          } else {
+            container.scrollTo({ top: 0, behavior });
+          }
+        } catch (err) {
+          // ignore scrolling errors
+        } finally {
+          rafId = null;
         }
-      } catch (e) {
-        // ignore scrolling errors
-      }
+      });
+    };
+
+    // expose so Typed.js callbacks can trigger it
+    scrollRef.current = doScroll;
+
+    const resizeObserver = new ResizeObserver(() => {
+      // use smooth scrolling for ResizeObserver events if allowed
+      doScroll(true);
     });
 
     resizeObserver.observe(textElement);
@@ -33,6 +53,8 @@ export default function TextDq() {
       } catch (e) {
         /* ignore */
       }
+      if (rafId) cancelAnimationFrame(rafId);
+      scrollRef.current = null;
     };
   }, []);
 
@@ -61,6 +83,14 @@ export default function TextDq() {
           loop: true,
           fadeOut: true,
           fadeOutDelay: 0,
+          onStringTyped: () => {
+            // called each time a string finishes typing; prefer instant jump to keep up
+            if (scrollRef.current) scrollRef.current(false);
+          },
+          onComplete: () => {
+            // when cycle completes, do a smooth scroll if allowed
+            if (scrollRef.current) scrollRef.current(true);
+          },
         });
 
         typedRef.current = typed;
@@ -107,7 +137,7 @@ export default function TextDq() {
   return (
     <div className="container" ref={containerRef}>
       <div className="text1" ref={textRef} onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
-        <span className="p1">
+        <span  className="p1">
           The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961.
         </span>
       </div>
