@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: /sitemap.xml
-Host: https://react-vite-app-eight.vercel.app
+Host: https://fouadbechar.vercel.app
