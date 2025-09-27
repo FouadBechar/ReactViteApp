@@ -9,29 +9,25 @@ export default function Footer() {
   const footer = (
     <>
       <center>
-        {" "}
         <span>
-          {" "}
           <a
             className="loadicon010101"
             href="https://www.facebook.com/FouadBechar2"
             target="_parent"
           >
-            {" "}
             <img
               className="img321"
               src={image0104}
               alt="image0102"
               width="30px"
               height="30px"
-            />{" "}
-          </a>{" "}
+            />
+          </a>
           <a
             className="loadicon010101"
             href="https://x.com/FouadBechar"
             target="_parent"
           >
-            {" "}
             <img
               className="im0im1"
               src={image0105}
