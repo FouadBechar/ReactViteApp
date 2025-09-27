@@ -37,11 +37,18 @@ export default function TextDq() {
             try {
               container.scrollBy({ top: delta, behavior });
             } catch (err) {
-              // fallback
+              // fallback: jump to bottom
               container.scrollTo({ top: now, behavior });
             }
+          } else if (delta < 0) {
+            // content shrank (e.g. fade-out) -> return to top so the next content is visible
+            try {
+              container.scrollTo({ top: 0, behavior });
+            } catch (err) {
+              /* ignore */
+            }
           } else {
-            // fallback to scrollTo bottom or top depending on content
+            // no size change or useDelta=false: fallback to bottom/top depending on content
             if (now > container.clientHeight) {
               container.scrollTo({ top: now, behavior });
             } else {
