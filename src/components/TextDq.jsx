@@ -1,77 +1,33 @@
 import React, { useEffect, useRef } from "react";
+import Typed from "typed.js";
 
 export default function TextDq() {
   const typedRef = useRef(null);
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const scrollRef = useRef(null);
-  const prevScrollHeightRef = useRef(0);
-
   useEffect(() => {
-    const container = containerRef.current;
-    const textElement = textRef.current;
+    const container = document.querySelector(".container");
+    const textElement = document.querySelector(".text1");
 
-    if (!container || !textElement || typeof ResizeObserver === "undefined") {
+    if (!container || !textElement || typeof ResizeObserver === "undefined") {  
+      // Nothing to observe or environment doesn't support ResizeObserver       
       return;
     }
 
-    let rafId = null;
-    const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Scroll by the delta (amount the content grew). This keeps the
-    // viewport in sync with added lines and avoids jumping to the bottom
-    // which can obscure the currently-typed line.
-    const doScroll = (smooth = true, useDelta = true) => {
-      if (!container) return;
-      const behavior = prefersReduced ? "auto" : (smooth ? "smooth" : "auto");
-
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        try {
-          const prev = prevScrollHeightRef.current || 0;
-          const now = container.scrollHeight;
-          const delta = now - prev;
-
-          if (useDelta && delta > 0) {
-            // scroll just by the growth amount so the current typing line stays visible
-            try {
-              container.scrollBy({ top: delta, behavior });
-            } catch (err) {
-              // fallback: jump to bottom
-              container.scrollTo({ top: now, behavior });
-            }
-          } else if (delta < 0) {
-            // content shrank (e.g. fade-out) -> return to top so the next content is visible
-            try {
-              container.scrollTo({ top: 0, behavior });
-            } catch (err) {
-              /* ignore */
-            }
-          } else {
-            // no size change or useDelta=false: fallback to bottom/top depending on content
-            if (now > container.clientHeight) {
-              container.scrollTo({ top: now, behavior });
-            } else {
-              container.scrollTo({ top: 0, behavior });
-            }
-          }
-
-          // update previous height after scrolling
-          prevScrollHeightRef.current = container.scrollHeight;
-        } catch (err) {
-          // ignore scrolling errors
-        } finally {
-          rafId = null;
-        }
-      });
-    };
-
-    // expose so Typed.js callbacks can trigger it
-    scrollRef.current = doScroll;
-
     const resizeObserver = new ResizeObserver(() => {
-      // use delta-based scrolling for ResizeObserver events so we follow typed growth
-      doScroll(true, true);
+      try {
+        if (container.scrollHeight > container.clientHeight) {
+          container.scrollTo({
+            top: container.scrollHeight,
+            behavior: "smooth",
+          });
+        } else {
+          container.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      } catch (e) {
+        // ignore scrolling errors
+      }
     });
 
     resizeObserver.observe(textElement);
@@ -79,65 +35,37 @@ export default function TextDq() {
     return () => {
       try {
         resizeObserver.disconnect();
-      } catch (e) {
-        /* ignore */
-      }
-      if (rafId) cancelAnimationFrame(rafId);
-      scrollRef.current = null;
+  } catch (e) { console.debug(e); }
     };
   }, []);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion
-    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    let mounted = true;
-
-    // dynamic import so this runs only in the browser
-    import("typed.js")
-      .then(({ default: Typed }) => {
-        if (!mounted || !textRef.current) return;
-
-        const typed = new Typed(textRef.current, {
+    let typed = null;
+    try {
+      if (Typed) {
+        typed = new Typed("#p010101", {
           strings: [
             "\u00A0 The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961",
             "\u00A0 that works in the field of wilderness preservation and the reduction of human impact on the environment",
             "\u00A0 It was formerly named the World Wildlife Fund, which remains its official name in Canada and the United States.",
             "\u00A0 WWF is the world's largest conservation organization.",
           ],
-          typeSpeed: 50,
-          backSpeed: 40,
+          typeSpeed: 50, // faster typing
+          backSpeed: 40, // faster backspace (unused when fadeOut is true)      
           loop: true,
           fadeOut: true,
           fadeOutDelay: 0,
-          onStringTyped: () => {
-            // called each time a string finishes typing; scroll by delta so the typed line stays visible
-            if (scrollRef.current) scrollRef.current(false, true);
-          },
-          onComplete: () => {
-            // when cycle completes, perform a smooth scroll to bottom
-            if (scrollRef.current) scrollRef.current(true, false);
-          },
         });
-
         typedRef.current = typed;
-      })
-      .catch((err) => {
-        // If dynamic import or Typed initialization fails, fallback to static text.
-        console.warn("Failed to load typed.js", err);
-      });
+      }
+    } catch (e) {
+      console.warn("Error initializing Typed.js:", e);
+    }
 
     return () => {
-      mounted = false;
       try {
-        if (typedRef.current && typeof typedRef.current.destroy === "function") {
-          typedRef.current.destroy();
-        }
-      } catch (e) {
-        /* ignore */
-      }
+        if (typed && typeof typed.destroy === "function") typed.destroy();      
+      } catch (e) { console.debug(e); }
       typedRef.current = null;
     };
   }, []);
@@ -145,30 +73,34 @@ export default function TextDq() {
   // handlers for controls
   function pauseTyping() {
     try {
-      if (typedRef.current && typeof typedRef.current.stop === "function") {
+      if (typedRef.current && typeof typedRef.current.stop === "function") {    
         typedRef.current.stop();
       }
-    } catch (e) {
-      /* ignore */
-    }
+  } catch (e) { console.debug(e); }
   }
 
   function resumeTyping() {
     try {
-      if (typedRef.current && typeof typedRef.current.start === "function") {
+      if (typedRef.current && typeof typedRef.current.start === "function") {   
         typedRef.current.start();
       }
-    } catch (e) {
-      /* ignore */
-    }
+  } catch (e) { console.debug(e); }
   }
 
   return (
-    <div className="container" ref={containerRef}>
-      <div className="text1" ref={textRef} onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
-        <span  className="p1">
-        </span>
+    <>
+      <div className="container">
+        <div
+          className="text1"
+          onMouseEnter={pauseTyping}
+          onMouseLeave={resumeTyping}
+        >
+          {/* <span id="p010101" className="p1">
+            The World Wide Fund for Nature (WWF) is a Swiss-based international 
+            non-governmental organization founded in 1961.
+          </span> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
