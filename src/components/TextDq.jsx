@@ -5,6 +5,7 @@ export default function TextDq() {
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const scrollRef = useRef(null);
+  const prevScrollHeightRef = useRef(0);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -17,18 +18,39 @@ export default function TextDq() {
     let rafId = null;
     const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const doScroll = (smooth = true) => {
+    // Scroll by the delta (amount the content grew). This keeps the
+    // viewport in sync with added lines and avoids jumping to the bottom
+    // which can obscure the currently-typed line.
+    const doScroll = (smooth = true, useDelta = true) => {
       if (!container) return;
       const behavior = prefersReduced ? "auto" : (smooth ? "smooth" : "auto");
 
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         try {
-          if (container.scrollHeight > container.clientHeight) {
-            container.scrollTo({ top: container.scrollHeight, behavior });
+          const prev = prevScrollHeightRef.current || 0;
+          const now = container.scrollHeight;
+          const delta = now - prev;
+
+          if (useDelta && delta > 0) {
+            // scroll just by the growth amount so the current typing line stays visible
+            try {
+              container.scrollBy({ top: delta, behavior });
+            } catch (err) {
+              // fallback
+              container.scrollTo({ top: now, behavior });
+            }
           } else {
-            container.scrollTo({ top: 0, behavior });
+            // fallback to scrollTo bottom or top depending on content
+            if (now > container.clientHeight) {
+              container.scrollTo({ top: now, behavior });
+            } else {
+              container.scrollTo({ top: 0, behavior });
+            }
           }
+
+          // update previous height after scrolling
+          prevScrollHeightRef.current = container.scrollHeight;
         } catch (err) {
           // ignore scrolling errors
         } finally {
@@ -41,8 +63,8 @@ export default function TextDq() {
     scrollRef.current = doScroll;
 
     const resizeObserver = new ResizeObserver(() => {
-      // use smooth scrolling for ResizeObserver events if allowed
-      doScroll(true);
+      // use delta-based scrolling for ResizeObserver events so we follow typed growth
+      doScroll(true, true);
     });
 
     resizeObserver.observe(textElement);
@@ -84,12 +106,12 @@ export default function TextDq() {
           fadeOut: true,
           fadeOutDelay: 0,
           onStringTyped: () => {
-            // called each time a string finishes typing; prefer instant jump to keep up
-            if (scrollRef.current) scrollRef.current(false);
+            // called each time a string finishes typing; scroll by delta so the typed line stays visible
+            if (scrollRef.current) scrollRef.current(false, true);
           },
           onComplete: () => {
-            // when cycle completes, do a smooth scroll if allowed
-            if (scrollRef.current) scrollRef.current(true);
+            // when cycle completes, perform a smooth scroll to bottom
+            if (scrollRef.current) scrollRef.current(true, false);
           },
         });
 
@@ -138,7 +160,6 @@ export default function TextDq() {
     <div className="container" ref={containerRef}>
       <div className="text1" ref={textRef} onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
         <span  className="p1">
-          The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961.
         </span>
       </div>
     </div>
