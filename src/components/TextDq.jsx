@@ -90,19 +90,14 @@ export default function TextDq() {
   return (
     <>
       <div className="container">
-        <div className="text1" onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
-          <a
-            className="b6"
-            href="https://www.worldwildlife.org/"
-            target="_parent"
-            rel="noreferrer"
-          >
-            World Wide Fund for Nature
-          </a>
-
+        <div
+          className="text1"
+          onMouseEnter={pauseTyping}
+          onMouseLeave={resumeTyping}
+        >
           <span id="p010101" className="p1">
-            The World Wide Fund for Nature (WWF) is a global conservation
-            organization.
+            The World Wide Fund for Nature (WWF) is a Swiss-based international
+            non-governmental organization founded in 1961.
           </span>
         </div>
       </div>
