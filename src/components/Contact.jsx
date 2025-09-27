@@ -1,93 +1,114 @@
-import React, {useEffect} from "react";
-
-// import d1 from "/src/assets/images/d1.webp";
-// import image2ss from "/src/assets/images/image2ss.webp";
-// import image3ss from "/src/assets/images/image3ss.webp";
-
+import React, { useEffect } from "react";
 
 export default function Contact() {
+  useEffect(() => {
+    const formContainer = document.getElementById("form-container");
+    const form = document.getElementById("my-form");
+    const closeBtn2 = document.getElementById("close-btn2");
+    const openBtn = document.getElementById("open-btn");
+    const fileInput = document.getElementById("file-input");
+    const filePreview = document.getElementById("file-preview");
+    const responseMsg = document.getElementById("responseMessage");
 
-useEffect(() => {
-  
- 
-  const formContainer = document.getElementById("form-container");
-  const form = document.getElementById("my-form");
-  const closeBtn2 = document.getElementById("close-btn2");
-  const openBtn = document.getElementById("open-btn");
-  const fileInput = document.getElementById("file-input");
-  const filePreview = document.getElementById("file-preview");
-  const responseMsg = document.getElementById("responseMessage");
+    let isClosing = false;
 
-  let isClosing = false;
+    // If essential elements are missing, do not attach handlers
+    if (!formContainer || !form || !closeBtn2 || !openBtn || !fileInput || !filePreview || !responseMsg) {
+      console.warn('Contact form: some DOM elements are missing; skipping initialization.');
+      return;
+    }
 
-  openBtn.addEventListener("click", () => {
-    form.classList.remove("fade-out");
-    void form.offsetWidth;
-    form.classList.add("bounce-in");
-    formContainer.style.display = "flex";
-    openBtn.style.display = "none";
-  });
+    function handleOpen() {
+      form.classList.remove("fade-out");
+      // force reflow to restart animation
+      void form.offsetWidth;
+      form.classList.add("bounce-in");
+      formContainer.style.display = "flex";
+      openBtn.style.display = "none";
+    }
 
-  closeBtn2.addEventListener("click", () => {
-    if (isClosing) return;
-    isClosing = true;
-    form.classList.remove("bounce-in");
-    form.classList.add("fade-out");
-    setTimeout(() => {
-      formContainer.style.display = "none";
-      responseMsg.textContent = "";
-      responseMsg.style.padding = "0px";
-      openBtn.style.display = "inline-block";
-      isClosing = false;
-    }, 600);
-  });
+    function handleClose() {
+      if (isClosing) return;
+      isClosing = true;
+      form.classList.remove("bounce-in");
+      form.classList.add("fade-out");
+      setTimeout(() => {
+        formContainer.style.display = "none";
+        responseMsg.textContent = "";
+        responseMsg.style.padding = "0px";
+        openBtn.style.display = "inline-block";
+        isClosing = false;
+      }, 600);
+    }
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const res = await fetch("https://fouadbechar.x10.mx/p/api05", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json().catch(() => ({}));
+        const message = data && data.message ? data.message : 'Submission complete';
+        const status = data && data.status ? data.status : (res.ok ? 'success' : 'error');
+        responseMsg.textContent = message;
+        responseMsg.style.color = status === 'success' ? 'green' : 'red';
+        responseMsg.style.padding = '4px';
 
-    fetch("https://fouadbechar.x10.mx/p/api05", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        responseMsg.textContent = data.message;
-        responseMsg.style.color = data.status === "success" ? "green" : "red";
-        responseMsg.style.padding = data.status === "success" ? "4px" : "4px";
-
-        if (data.status === "success") {
+        if (status === 'success') {
           form.reset();
           filePreview.textContent = "";
         }
-      })
-      .catch((err) => {
-        responseMsg.textContent = "Error: " + err;
+      } catch (err) {
+        responseMsg.textContent = "Error: " + (err && err.message ? err.message : String(err));
         responseMsg.style.color = "red";
-      });
-  });
-fileInput.addEventListener("change", function () {
-    if (this.files[0] && this.files[0].size > 5 * 1024 * 1024) {
-      alert("File too large (max 5MB)");
-      this.value = "";
-      filePreview.textContent = "";
-    } else {
-      filePreview.textContent =
-        this.files.length > 0 ? "Selected: " + this.files[0].name : "";
+      }
     }
-  });
 
+    function handleFileChange() {
+      const files = fileInput.files;
+      if (files && files[0] && files[0].size > 5 * 1024 * 1024) {
+        // show message in response area instead of alert
+        responseMsg.textContent = 'File too large (max 5MB)';
+        responseMsg.style.color = 'red';
+        fileInput.value = "";
+        filePreview.textContent = "";
+      } else {
+        filePreview.textContent = files && files.length > 0 ? "Selected: " + files[0].name : "";
+        // clear any previous error
+        if (responseMsg.textContent && responseMsg.style.color === 'red') {
+          responseMsg.textContent = '';
+          responseMsg.style.padding = '0px';
+        }
+      }
+    }
 
+    openBtn.addEventListener("click", handleOpen);
+    closeBtn2.addEventListener("click", handleClose);
+    form.addEventListener("submit", handleSubmit);
+    fileInput.addEventListener("change", handleFileChange);
+
+    // cleanup
+    return () => {
+      try {
+        openBtn.removeEventListener("click", handleOpen);
+      } catch (e) {}
+      try {
+        closeBtn2.removeEventListener("click", handleClose);
+      } catch (e) {}
+      try {
+        form.removeEventListener("submit", handleSubmit);
+      } catch (e) {}
+      try {
+        fileInput.removeEventListener("change", handleFileChange);
+      } catch (e) {}
+    };
   }, []);
-  
- useEffect(() => {
 
-
-    }, []);
-  
   return (
     <>
-     <div id="form-container">
+      <div id="form-container">
         <form
           id="my-form"
           className="animated"
@@ -165,8 +186,7 @@ fileInput.addEventListener("change", function () {
             Send
           </button>
         </form>
-      </div>  
-  </>
-    
+      </div>
+    </>
   );
 }
