@@ -56,7 +56,7 @@ export default function Footer() {
           <img id="open-btn" src={ml} alt="email" width="30px" height="30px" />
         </span>
         <div className="pr0101">
-          <a href="/PrivacyPolicy.html" target="_parent">
+          <a href="/privacy/" target="_parent">
             Privacy Policy
           </a>
         </div>
