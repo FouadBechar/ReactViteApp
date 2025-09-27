@@ -43,9 +43,16 @@ export default function TextDq() {
 
   useEffect(() => {
     let typed = null;
+    // respect reduced-motion users: if they prefer reduced motion, don't init Typed
+    const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      // leave the static text in place for accessibility
+      return;
+    }
+
     try {
       if (Typed) {
-        typed = new Typed('#p010101', {
+        typed = new Typed("#p010101", {
           strings: [
             '\u00A0 The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961',
             '\u00A0 that works in the field of wilderness preservation and the reduction of human impact on the environment',
@@ -98,7 +105,13 @@ export default function TextDq() {
   return (
     <>
       <div className="container">
-        <div className="text1" onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
+        <div
+          className="text1"
+          aria-live="polite"
+          aria-atomic="true"
+          onMouseEnter={pauseTyping}
+          onMouseLeave={resumeTyping}
+        >
           <span id="p010101" className="p1">
             The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental
             organization founded in 1961.
