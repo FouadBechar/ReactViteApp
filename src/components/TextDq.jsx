@@ -51,8 +51,10 @@ export default function TextDq() {
             "\u00A0 WWF is the world's largest conservation organization.",
           ],
           typeSpeed: 50, // faster typing
-          backSpeed: 40, // faster backspace
+          backSpeed: 40, // faster backspace (unused when fadeOut is true)
           loop: true,
+          fadeOut: true,
+          fadeOutDelay: 0,
         });
         typedRef.current = typed;
       }

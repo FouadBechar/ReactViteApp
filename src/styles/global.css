@@ -400,6 +400,22 @@ li.open > .dropdown {
   display: none;
 }
 
+/* Typed.js fade-out immediate (remove letter-by-letter backspace) */
+.typed-fade-out {
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+/* Respect reduced motion: disable typed animations */
+@media (prefers-reduced-motion: reduce) {
+  .p1 {
+    animation: none !important;
+  }
+  .typed-cursor {
+    display: none !important;
+  }
+}
+
 @media (min-width: 768px) {
   .menu-btn,
   .close-btn,
