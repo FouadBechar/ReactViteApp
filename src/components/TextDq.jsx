@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Typed from 'typed.js';
 
 export default function TextDq() {
+  const typedRef = useRef(null);
   useEffect(() => {
     const container = document.querySelector(".container");
     const textElement = document.querySelector(".text1");
@@ -45,14 +46,15 @@ export default function TextDq() {
         typed = new Typed("#p010101", {
           strings: [
             "\u00A0 The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961",
-            "\u00A0 that works in the field of wilderness preservation  and the reduction of human impact on the environment",
-            "\u00A0 It was formerly named the World Wildlife Fund,  which remains its official name in Canada and the United States.",
+            "\u00A0 that works in the field of wilderness preservation and the reduction of human impact on the environment",
+            "\u00A0 It was formerly named the World Wildlife Fund, which remains its official name in Canada and the United States.",
             "\u00A0 WWF is the world's largest conservation organization.",
           ],
-          typeSpeed: 100,
-          backSpeed: 100,
+          typeSpeed: 50, // faster typing
+          backSpeed: 40, // faster backspace
           loop: true,
         });
+        typedRef.current = typed;
       }
     } catch (e) {
       console.warn("Error initializing Typed.js:", e);
@@ -62,8 +64,26 @@ export default function TextDq() {
       try {
         if (typed && typeof typed.destroy === "function") typed.destroy();
       } catch (e) {}
+      typedRef.current = null;
     };
   }, []);
+
+  // handlers for controls
+  function pauseTyping() {
+    try {
+      if (typedRef.current && typeof typedRef.current.stop === 'function') {
+        typedRef.current.stop();
+      }
+    } catch (e) {}
+  }
+
+  function resumeTyping() {
+    try {
+      if (typedRef.current && typeof typedRef.current.start === 'function') {
+        typedRef.current.start();
+      }
+    } catch (e) {}
+  }
 
   return (
     <>
@@ -77,7 +97,11 @@ export default function TextDq() {
             World Wide Fund for Nature
           </a>
 
-          <span id="p010101" className="p1"></span>
+          <span id="p010101" className="p1">The World Wide Fund for Nature (WWF) is a global conservation organization.</span>
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={pauseTyping} aria-label="Pause typing">Pause</button>
+            <button type="button" onClick={resumeTyping} aria-label="Resume typing" style={{ marginLeft: 6 }}>Resume</button>
+          </div>
         </div>
       </div>
     </>
