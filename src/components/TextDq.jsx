@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Typed from 'typed.js';
+import Typed from "typed.js";
 
 export default function TextDq() {
   const typedRef = useRef(null);
@@ -71,7 +71,7 @@ export default function TextDq() {
   // handlers for controls
   function pauseTyping() {
     try {
-      if (typedRef.current && typeof typedRef.current.stop === 'function') {
+      if (typedRef.current && typeof typedRef.current.stop === "function") {
         typedRef.current.stop();
       }
     } catch (e) {}
@@ -79,7 +79,7 @@ export default function TextDq() {
 
   function resumeTyping() {
     try {
-      if (typedRef.current && typeof typedRef.current.start === 'function') {
+      if (typedRef.current && typeof typedRef.current.start === "function") {
         typedRef.current.start();
       }
     } catch (e) {}
@@ -88,20 +88,20 @@ export default function TextDq() {
   return (
     <>
       <div className="container">
-        <div className="text1">
+        <div className="text1" onMouseEnter={pauseTyping} onMouseLeave={resumeTyping}>
           <a
             className="b6"
             href="https://www.worldwildlife.org/"
             target="_parent"
+            rel="noreferrer"
           >
             World Wide Fund for Nature
           </a>
 
-          <span id="p010101" className="p1">The World Wide Fund for Nature (WWF) is a global conservation organization.</span>
-          <div style={{ marginTop: 6 }}>
-            <button type="button" onClick={pauseTyping} aria-label="Pause typing">Pause</button>
-            <button type="button" onClick={resumeTyping} aria-label="Resume typing" style={{ marginLeft: 6 }}>Resume</button>
-          </div>
+          <span id="p010101" className="p1">
+            The World Wide Fund for Nature (WWF) is a global conservation
+            organization.
+          </span>
         </div>
       </div>
     </>
