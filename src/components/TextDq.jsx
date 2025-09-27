@@ -1,48 +1,73 @@
-import React, {useEffect} from "react";
-
-// import d1 from "/src/assets/images/d1.webp";
-// import image2ss from "/src/assets/images/image2ss.webp";
-// import image3ss from "/src/assets/images/image3ss.webp";
-
+import React, { useEffect } from "react";
+import Typed from 'typed.js';
 
 export default function TextDq() {
+  useEffect(() => {
+    const container = document.querySelector(".container");
+    const textElement = document.querySelector(".text1");
 
-useEffect(() => {
-  
-  const container = document.querySelector(".container");
-const textElement = document.querySelector(".text1");
+    if (!container || !textElement || typeof ResizeObserver === "undefined") {
+      // Nothing to observe or environment doesn't support ResizeObserver
+      return;
+    }
 
-const resizeObserver = new ResizeObserver(() => {
-  if (container.scrollHeight > container.clientHeight) {
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: "smooth",
+    const resizeObserver = new ResizeObserver(() => {
+      try {
+        if (container.scrollHeight > container.clientHeight) {
+          container.scrollTo({
+            top: container.scrollHeight,
+            behavior: "smooth",
+          });
+        } else {
+          container.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      } catch (e) {
+        // ignore scrolling errors
+      }
     });
-  } else {
-    container.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-});
 
-resizeObserver.observe(textElement);
+    resizeObserver.observe(textElement);
 
+    return () => {
+      try {
+        resizeObserver.disconnect();
+      } catch (e) {}
+    };
   }, []);
-  
- useEffect(() => {
 
-var typed = new Typed("#p010101", {
-  strings: ["&nbsp; The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961", "&nbsp; that works in the field of wilderness preservation  and the reduction of human impact on the environment", "&nbsp; It was formerly named the World Wildlife Fund,  which remains its official name in Canada and the United States.", "&nbsp; WWF is the world's largest conservation organization."],
-  typeSpeed: 100,
-  backSpeed: 100,
-  loop: true,
-});
-    }, []);
-  
+  useEffect(() => {
+    let typed = null;
+    try {
+      if (Typed) {
+        typed = new Typed("#p010101", {
+          strings: [
+            "\u00A0 The World Wide Fund for Nature (WWF) is a Swiss-based international non-governmental organization founded in 1961",
+            "\u00A0 that works in the field of wilderness preservation  and the reduction of human impact on the environment",
+            "\u00A0 It was formerly named the World Wildlife Fund,  which remains its official name in Canada and the United States.",
+            "\u00A0 WWF is the world's largest conservation organization.",
+          ],
+          typeSpeed: 100,
+          backSpeed: 100,
+          loop: true,
+        });
+      }
+    } catch (e) {
+      console.warn("Error initializing Typed.js:", e);
+    }
+
+    return () => {
+      try {
+        if (typed && typeof typed.destroy === "function") typed.destroy();
+      } catch (e) {}
+    };
+  }, []);
+
   return (
     <>
-        <div className="container">
+      <div className="container">
         <div className="text1">
           <a
             className="b6"
@@ -52,12 +77,9 @@ var typed = new Typed("#p010101", {
             World Wide Fund for Nature
           </a>
 
-          <span id="p010101" className="p1">
-            {" "}
-          </span>
+          <span id="p010101" className="p1"></span>
         </div>
       </div>
-  </>
-    
+    </>
   );
 }
