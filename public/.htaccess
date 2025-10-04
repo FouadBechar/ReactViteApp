@@ -1,0 +1,142 @@
+# public/.htaccess - SPA rewrite + security headers + caching + compression
+# Place this in your site root (or keep in public/ so Vite copies it to dist).
+
+# -------------------------
+# Basic rewrite for SPA
+# -------------------------
+RewriteEngine On
+
+# Serve existing files / directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Fallback to index.html for client-side routing (exclude API routes if any)
+# Example: to exclude /api you could add "RewriteCond %{REQUEST_URI} !^/api/"
+RewriteRule ^ index.html [L]
+
+# -------------------------
+# Security headers (mod_headers)
+# -------------------------
+<IfModule mod_headers.c>
+  # Prevent MIME sniffing
+  Header set X-Content-Type-Options "nosniff"
+
+  # Prevent clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Modern referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Permissions-Policy (formerly Feature-Policy) — tighten as needed
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # HSTS - only enable when site is served over HTTPS (set includeSubDomains with care)
+  # Uncomment when serving over HTTPS:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Prevent sniffers from caching sensitive responses incorrectly
+  Header unset ETag
+</IfModule>
+
+# -------------------------
+# Content Security Policy (example)
+# -------------------------
+# IMPORTANT: CSP must be tuned to your app. The following is a conservative example.
+# If you use inline scripts or third-party widgets you'll need to relax this.
+<IfModule mod_headers.c>
+  # Tuned Content-Security-Policy (auto-generated):
+  # - default-src 'self' : allow resources from same origin
+  # - script-src 'self'  : app scripts and bundles served by Vite
+  # - style-src 'self' 'unsafe-inline' https: : allow inline styles (used by oldbrowser.js) and external style hosts if any
+  # - img-src 'self' data: https: : allow local images, data URLs and remote HTTPS images
+  # - connect-src 'self' https: : allow XHR/fetch to same origin and HTTPS APIs
+  # - font-src 'self' data: : allow bundled fonts and data URLs
+  # - frame-ancestors 'self' : only allow framing from same origin
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; connect-src 'self' https:; img-src 'self' data: https:; style-src 'self' https:; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+
+  # Enable HSTS (only enable when serving over HTTPS in production)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# -------------------------
+# Block access to sensitive files
+# -------------------------
+<FilesMatch "\.(env|git|htpasswd|htaccess|sql|bak|config|pem)$">
+  Require all denied
+</FilesMatch>
+
+# Prevent access to VCS folders (if accidentally deployed)
+RedirectMatch 404 /(?:\.git|composer\.json|composer\.lock|package-lock\.json|node_modules)(/|$)
+
+# -------------------------
+# Caching (mod_expires & Cache-Control)
+# -------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML: short/no cache so SPA shell is always fresh
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # Fonts & images & JS/CSS: long cache for fingerprinted files
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/* "access plus 1 month"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-font-woff2 "access plus 1 month"
+</IfModule>
+
+# Explicit Cache-Control for index.html to avoid stale SPA shell
+<Files "index.html">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+  </IfModule>
+</Files>
+
+# Be explicit for sitemap/robots
+<Files "sitemap.xml">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=86400"
+  </IfModule>
+</Files>
+<Files "robots.txt">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=86400"
+  </IfModule>
+</Files>
+
+# -------------------------
+# Compression (mod_deflate / mod_brotli)
+# -------------------------
+<IfModule mod_brotli.c>
+  # Brotli if available
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+  # Avoid compressing for old browsers that choke on compression
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# -------------------------
+# Misc: ETag and directory listing
+# -------------------------
+# Remove ETag to avoid cache validation issues
+FileETag None
+
+# Disable directory listing
+Options -Indexes
+
+# -------------------------
+# Optional: CORS for fonts or CDNs (if needed)
+# -------------------------
+# <IfModule mod_headers.c>
+#   <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2)$">
+#     Header set Access-Control-Allow-Origin "*"
+#   </FilesMatch>
+# </IfModule>
+
