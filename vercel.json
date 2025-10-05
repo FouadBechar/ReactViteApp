@@ -1,0 +1,15 @@
+
+
+{
+  "redirects": [
+    {
+      "source": "/PrivacyPolicy.html",
+      "destination": "/privacy/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

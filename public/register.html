@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .spinner {
+            border: 4px solid transparent;
+            border-top: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-inter py-8">
+
+    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-lg relative">
+        <button id="closeButton" class="absolute top-3 right-3 text-red-600 text-2xl leading-none">&times;</button>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
+
+        <div id="messageBox" role="alert" class="hidden mb-5 p-4 rounded text-sm" aria-live="polite">
+            <p id="messageText"></p>
+        </div>
+
+        <form id="registerForm" class="space-y-5" autocomplete="off">
+            <input type="text" name="hp_field" id="hp_field" class="hidden" tabindex="-1" autocomplete="off" />
+
+            <div>
+                <label class="block text-gray-700">Full Name</label>
+                <input id="fullname" type="text" placeholder="John Doe"
+                    class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring focus:border-blue-500" />
+                <p id="nameErr" class="hidden text-red-600 text-sm mt-1">
+                    Letters (Arabic or Latin), numbers, spaces, hyphens, apostrophes (max 100).
+                </p>
+            </div>
+            <div>
+                <label class="block text-gray-700">Email</label>
+                <input id="email" type="email" placeholder="you@example.com"
+                    class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring focus:border-blue-500" />
+                <p id="emailErr" class="hidden text-red-600 text-sm mt-1">Invalid email address.</p>
+            </div>
+            <div class="relative">
+                <label class="block text-gray-700">Password</label>
+                <input id="password" type="password" placeholder="Create password"
+                    class="w-full mt-1 p-2 border rounded pr-10 focus:outline-none focus:ring focus:border-blue-500" />
+                <i class='bx bx-hide absolute right-3 top-9 cursor-pointer text-gray-500 show-hide'></i>
+                <p id="passErr" class="hidden text-red-600 text-sm mt-1">
+                    Must include uppercase, lowercase, number, and special character.
+                </p>
+            </div>
+            <div class="relative">
+                <label class="block text-gray-700">Confirm Password</label>
+                <input id="confirm" type="password" placeholder="Repeat password"
+                    class="w-full mt-1 p-2 border rounded pr-10 focus:outline-none focus:ring focus:border-blue-500" />
+                <i class='bx bx-hide absolute right-3 top-9 cursor-pointer text-gray-500 show-hide'></i>
+                <p id="confErr" class="hidden text-red-600 text-sm mt-1">Passwords do not match.</p>
+            </div>
+            <button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded text-white font-semibold">Create Account</button>
+            <p class="text-center text-sm text-gray-600">Already have an account?
+                <a href="i" class="text-blue-600 hover:underline">Log in</a></p>
+        </form>
+    </div>
+
+    <div id="loadingOverlay" class="fixed inset-0 flex items-center justify-center bg-white/40 backdrop-blur-sm hidden z-50">
+        <div class="spinner border-4 border-gray-200 border-t-blue-600 h-12 w-12 rounded-full animate-spin"></div>
+    </div>
+
+    <script>
+        const reName = /^[\p{L}\p{N}\s'-]{1,100}$/u;
+        const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const rePass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+
+        const f = document.getElementById('registerForm');
+        const nameInp = document.getElementById('fullname');
+        const emailInp = document.getElementById('email');
+        const passInp = document.getElementById('password');
+        const confInp = document.getElementById('confirm');
+        const nameErr = document.getElementById('nameErr');
+        const emailErr = document.getElementById('emailErr');
+        const passErr = document.getElementById('passErr');
+        const confErr = document.getElementById('confErr');
+        const msgBox = document.getElementById('messageBox');
+        const msgTxt = document.getElementById('messageText');
+        const overlay = document.getElementById('loadingOverlay');
+
+        document.querySelectorAll('.show-hide').forEach(i => i.addEventListener('click', () => {
+            const input = i.parentElement.querySelector('input');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            i.classList.toggle('bx-show', show);
+            i.classList.toggle('bx-hide', !show);
+        }));
+
+        const flash = (m, ok = false) => {
+            msgTxt.textContent = m; 
+            msgBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700');
+            msgBox.classList.add(ok ? 'bg-green-100' : 'bg-red-100', ok ? 'text-green-700' : 'text-red-700');
+        };
+
+        const showLoad = () => overlay.classList.remove('hidden');
+        const hideLoad = () => overlay.classList.add('hidden');
+
+        f.addEventListener('submit', async e => {
+            e.preventDefault();
+
+            if (document.getElementById('hp_field').value.trim() !== "") {
+                flash('Bot detected. Request blocked.');
+                return;
+            }
+
+            [nameErr, emailErr, passErr, confErr].forEach(el => el.classList.add('hidden'));
+            let bad = false;
+            if (!reName.test(nameInp.value)) { nameErr.classList.remove('hidden'); bad = true; }
+            if (!reEmail.test(emailInp.value)) { emailErr.classList.remove('hidden'); bad = true; }
+            if (!rePass.test(passInp.value)) { passErr.classList.remove('hidden'); bad = true; }
+            if (passInp.value !== confInp.value) { confErr.classList.remove('hidden'); bad = true; }
+            if (bad) return;
+
+            showLoad();
+            try {
+                const res = await fetch('/api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        full_name: nameInp.value,
+                        email: emailInp.value,
+                        password: passInp.value,
+                        confirm_password: confInp.value
+                    })
+                });
+                const json = await res.json();
+                flash(json.message, res.ok);
+                
+                sessionStorage.setItem('user_token', json.user_token);
+
+                
+                if (res.ok) setTimeout(() => location.href = 'g', 2000);
+
+
+            } catch (err) {
+                console.error(err);
+                flash('Unexpected error. Try again.');
+            } finally {
+                hideLoad();
+            }
+        });
+
+        document.getElementById('closeButton').onclick = () => {
+            if (confirm('Are you sure you want to exit registration?')) {
+                location.href = '/';
+            }
+        };
+    </script>
+
+</body>
+</html>
