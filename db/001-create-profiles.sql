@@ -9,12 +9,8 @@
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
-  -- email provided at signup (client sends `email`). Keep nullable when migrating existing data,
-  -- then make NOT NULL after you've backfilled existing rows if desired.
-  email text,
-  -- user-friendly full name sent in `data.full_name`
   full_name text,
-  -- some systems expect a `name` column; keep it for compatibility with common triggers
+  email text,
   name text,
   avatar_url text,
   website text,

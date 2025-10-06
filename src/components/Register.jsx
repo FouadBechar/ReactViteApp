@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+// URL to redirect users to after they verify their email
+// const REDIRECT_URL = 'https://fouadbechar.vercel.app/account';
+const REDIRECT_URL = import.meta.env.VITE_AUTH_REDIRECT_URL || 'https://fouadbechar.vercel.app/account';
 
 function loadRecaptcha(siteKey) {
   return new Promise((resolve, reject) => {
@@ -44,7 +47,6 @@ export default function Register() {
     setMessage(m);
     setOk(!!success);
   }
-
   async function handleSubmit(e) {
     e.preventDefault();
     // honeypot
@@ -56,10 +58,22 @@ export default function Register() {
 
     const newErr = { name: false, email: false, pass: false, conf: false };
     let bad = false;
-    if (!reName.test(fullName)) { newErr.name = true; bad = true; }
-    if (!reEmail.test(email)) { newErr.email = true; bad = true; }
-    if (!rePass.test(password)) { newErr.pass = true; bad = true; }
-    if (password !== confirm) { newErr.conf = true; bad = true; }
+    if (!reName.test(fullName)) {
+      newErr.name = true;
+      bad = true;
+    }
+    if (!reEmail.test(email)) {
+      newErr.email = true;
+      bad = true;
+    }
+    if (!rePass.test(password)) {
+      newErr.pass = true;
+      bad = true;
+    }
+    if (password !== confirm) {
+      newErr.conf = true;
+      bad = true;
+    }
     setErrors(newErr);
     if (bad) return;
 
@@ -70,20 +84,29 @@ export default function Register() {
         if (RECAPTCHA_SITE_KEY) {
           try {
             await loadRecaptcha(RECAPTCHA_SITE_KEY);
-            const token = await new Promise((resolve) => {
+            const token = await new Promise(resolve => {
               window.grecaptcha.ready(() => {
                 window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'signup' }).then(resolve);
               });
             });
 
-            const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/signup`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                apikey: import.meta.env.VITE_SUPABASE_ANON_KEY
-              },
-              body: JSON.stringify({ email, password, data: { full_name: fullName }, captcha_token: token })
-            });
+            const resp = await fetch(
+              `${import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/signup`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+                },
+                body: JSON.stringify({
+                  email,
+                  password,
+                  data: { full_name: fullName },
+                  captcha_token: token,
+                  redirect_to: REDIRECT_URL,
+                }),
+              }
+            );
             const json = await resp.json().catch(() => ({}));
             if (!resp.ok) {
               flash(json?.message || 'Registration failed');
@@ -95,7 +118,10 @@ export default function Register() {
             flash('Captcha verification failed.');
           }
         } else {
-          const { data, error } = await supabase.auth.signUp({ email, password }, { data: { full_name: fullName } });
+          const { data, error } = await supabase.auth.signUp(
+            { email, password },
+            { data: { full_name: fullName }, emailRedirectTo: REDIRECT_URL }
+          );
           if (error) {
             flash(error.message || 'Registration failed');
           } else {
@@ -106,12 +132,12 @@ export default function Register() {
         const res = await fetch('/api', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm })
+          body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm }),
         });
         const json = await res.json().catch(() => ({}));
         flash(json.message || (res.ok ? 'Account created' : 'Error'), res.ok);
         if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
-        if (res.ok) setTimeout(() => location.href = '/profile', 1500);
+        if (res.ok) setTimeout(() => (location.href = '/profile'), 1500);
       }
     } catch (err) {
       console.error(err);
@@ -124,21 +150,44 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg relative">
-  <button type="button" id="closeButton" onClick={() => (location.href = '/')} className="absolute top-3 right-3 text-red-600 text-2xl leading-none">&times;</button>
+        <button
+          type="button"
+          id="closeButton"
+          onClick={() => (location.href = '/')}
+          className="absolute top-3 right-3 text-red-600 text-2xl leading-none"
+        >
+          &times;
+        </button>
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
 
-        <div id="messageBox" role="alert" className={`${message ? 'block' : 'hidden'} mb-5 p-4 rounded text-sm ${ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`} aria-live="polite">
+        <div
+          id="messageBox"
+          role="alert"
+          className={`${message ? 'block' : 'hidden'} mb-5 p-4 rounded text-sm ${
+            ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+          }`}
+          aria-live="polite"
+        >
           <p id="messageText">{message}</p>
         </div>
 
-  <form id="registerForm" className="space-y-6" autoComplete="off" onSubmit={handleSubmit}>
-          <input type="text" name="hp_field" id="hp_field" className="hidden" tabIndex={-1} autoComplete="off" />
+        <form id="registerForm" className="space-y-6" autoComplete="off" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="hp_field"
+            id="hp_field"
+            className="hidden"
+            tabIndex={-1}
+            autoComplete="off"
+          />
 
           <div>
-            <label htmlFor="fullname" className="block text-gray-700">Full Name</label>
+            <label htmlFor="fullName" className="block text-gray-700">
+              Full Name
+            </label>
             <input
-              name="fullname"
-              id="fullname"
+              name="fullName"
+              id="fullName"
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               type="text"
@@ -148,10 +197,18 @@ export default function Register() {
               aria-invalid={errors.name ? 'true' : 'false'}
               className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring focus:border-blue-500 form-input"
             />
-            <p role="alert" id="nameErr" className={`${errors.name ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}>Letters (Arabic or Latin), numbers, spaces, hyphens, apostrophes (max 100).</p>
+            <p
+              role="alert"
+              id="nameErr"
+              className={`${errors.name ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}
+            >
+              Letters (Arabic or Latin), numbers, spaces, hyphens, apostrophes (max 100).
+            </p>
           </div>
           <div>
-            <label htmlFor="email" className="block text-gray-700">Email</label>
+            <label htmlFor="email" className="block text-gray-700">
+              Email
+            </label>
             <input
               name="email"
               id="email"
@@ -164,10 +221,18 @@ export default function Register() {
               aria-invalid={errors.email ? 'true' : 'false'}
               className="w-full mt-1 p-2 border rounded focus:outline-none focus:ring focus:border-blue-500 form-input"
             />
-            <p role="alert" id="emailErr" className={`${errors.email ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}>Invalid email address.</p>
+            <p
+              role="alert"
+              id="emailErr"
+              className={`${errors.email ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}
+            >
+              Invalid email address.
+            </p>
           </div>
           <div className="relative">
-            <label htmlFor="password" className="block text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-gray-700">
+              Password
+            </label>
             <input
               name="password"
               id="password"
@@ -185,12 +250,22 @@ export default function Register() {
               aria-label={showPass ? 'Hide password' : 'Show password'}
               aria-pressed={showPass}
               onClick={() => setShowPass(s => !s)}
-              className={`bx ${showPass ? 'bx-show' : 'bx-hide'} absolute right-3 top-9 text-gray-500`}
+              className={`bx ${
+                showPass ? 'bx-show' : 'bx-hide'
+              } absolute right-3 top-9 text-gray-500`}
             ></button>
-            <p role="alert" id="passErr" className={`${errors.pass ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}>Must include uppercase, lowercase, number, and special character.</p>
+            <p
+              role="alert"
+              id="passErr"
+              className={`${errors.pass ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}
+            >
+              Must include uppercase, lowercase, number, and special character.
+            </p>
           </div>
           <div className="relative">
-            <label htmlFor="confirm" className="block text-gray-700">Confirm Password</label>
+            <label htmlFor="confirm" className="block text-gray-700">
+              Confirm Password
+            </label>
             <input
               name="confirm"
               id="confirm"
@@ -208,17 +283,38 @@ export default function Register() {
               aria-label={showConfirm ? 'Hide confirm password' : 'Show confirm password'}
               aria-pressed={showConfirm}
               onClick={() => setShowConfirm(s => !s)}
-              className={`bx ${showConfirm ? 'bx-show' : 'bx-hide'} absolute right-3 top-9 text-gray-500`}
+              className={`bx ${
+                showConfirm ? 'bx-show' : 'bx-hide'
+              } absolute right-3 top-9 text-gray-500`}
             ></button>
-            <p role="alert" id="confErr" className={`${errors.conf ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}>Passwords do not match.</p>
+            <p
+              role="alert"
+              id="confErr"
+              className={`${errors.conf ? 'block' : 'hidden'} text-red-600 text-sm mt-1`}
+            >
+              Passwords do not match.
+            </p>
           </div>
-          <button className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded text-white font-semibold" type="submit">Create Account</button>
-          <p className="text-center text-sm text-gray-600">Already have an account? <a href="/" className="text-blue-600 hover:underline">Log in</a></p>
+          <button
+            className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded text-white font-semibold"
+            type="submit"
+          >
+            Create Account
+          </button>
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <a href="/" className="text-blue-600 hover:underline">
+              Log in
+            </a>
+          </p>
         </form>
 
         {loading && (
           <div className="fixed inset-0 flex items-center justify-center bg-white/40 backdrop-blur-sm z-50">
-            <div className="border-4 border-gray-200 border-t-blue-600 h-12 w-12 rounded-full animate-spin" aria-hidden="true" />
+            <div
+              className="border-4 border-gray-200 border-t-blue-600 h-12 w-12 rounded-full animate-spin"
+              aria-hidden="true"
+            />
           </div>
         )}
       </div>
