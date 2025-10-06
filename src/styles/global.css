@@ -595,6 +595,8 @@ h1 {
 }
 
 .ai-card img {
+  margin-right: auto;
+  margin-left: auto;
   width: 50px;
   margin-bottom: 15px;
 }
@@ -1613,6 +1615,7 @@ a:active {
 }
 
 .footer01sp {
+  justify-content: center;
   display: flex;
   align-items: center;
 }

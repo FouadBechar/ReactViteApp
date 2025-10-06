@@ -5,106 +5,96 @@ A small Vite + React app that was created by converting an existing static `inde
 ## Status
 - Basic site layout, components, and styles are implemented. A few interactive features were ported (slideshow, typed text, contact form UI). Some original inline scripts and backend integrations (search suggestions, chat backend) are intentionally left as follow-ups.
 
-## Prerequisites
+# React Vite App
+
+A compact Vite + React app which converts an existing static site into a component-based frontend. The project preserves the original assets and layout while providing React components that are easier to extend.
+
+## Status
+- Core pages, components and styling are implemented. Basic auth wiring to Supabase (Auth + Postgres) is available but optional.
+
+## Requirements
 - Node.js (LTS recommended)
-- npm (comes with Node) or your preferred package manager
+- npm (bundled with Node) or another package manager
 
-## Quick start (PowerShell)
+## Quick start
+Clone, install dependencies, and run the dev server:
 
 ```powershell
-cd '\ReactViteApp'
+git clone https://github.com/FouadBechar/ReactViteApp.git
+cd ReactViteApp
 npm install
-npm run dev      # start dev server
-npm run build    # production build
-npm run preview  # preview production build locally
+npm run dev   # start Vite dev server (http://localhost:5173)
 ```
 
-## Useful scripts
-- `dev` — run Vite dev server
-- `build` — produce production `dist/` via Vite
-- `preview` — preview the production build locally
-- `generate-sitemap` — helper script that writes `public/sitemap.xml` from `public/pages.json`
-
-## Deployment
-- This project has a `vercel.json` redirect configured to provide a clean `/privacy/` URL and redirect the legacy `PrivacyPolicy.html` to `/privacy/`.
-- To deploy to Vercel, connect the repository and deploy the `main` branch (the default build command is `npm run build`).
-
-## Project structure (high level)
-- `index.html` — app entry HTML
-- `src/` — React source code
-	- `main.jsx`, `App.jsx`
-	- `components/` — React components (NavBar, Footer, Slideshow, TextDq, Contact, etc.)
-	- `styles/global.css` — global styles
-- `public/` — static assets and additional pages (including `privacy/index.html`)
-- `scripts/generate-sitemap.js` — sitemap helper
-
-## Notes & troubleshooting
-- If you see a Vite build warning like:
-	> "../m/image00987.webp referenced ... didn't resolve at build time"
-
-	it's a runtime asset that will be resolved when the site is served. Inspect the referencing code if you want it pre-bundled.
-- Cookies with the `Secure` attribute won't be set on `http://` during local dev; production environments on `https://` will set them.
-- If you experience missing images or assets, ensure `public/` files are present and that any dynamic imports use correct relative paths.
-
-## Contributing
-- Create a branch from `main`, make changes, and open a pull request. For larger refactors (for example replacing imperative DOM queries with React refs), open an issue first so we can discuss scope and testing.
-
-## Author & Contact
-- Maintainer: Fouad
-- Repo: https://github.com/FouadBechar/ReactViteApp
-
-## License
-- MIT (or replace with your preferred license)
-
-If you want, I can update this README with screenshots, a short demo GIF, or automatic checklist items for common tasks (build, lint, test).
-
-## Supabase setup
-
-If you want to connect this app to Supabase Auth + Postgres:
-
-1. Create a Supabase project at https://app.supabase.com
-2. In the project settings, copy the Project URL and anon/public key.
-3. Create a local file `.env.local` (do NOT commit) and add:
-
-```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJ...your_anon_key...
-```
-
-4. Run the provided SQL migration in `db/001-create-profiles.sql` using the Supabase SQL editor or `psql`:
-
-	- Supabase SQL editor: Dashboard -> SQL -> New query -> paste the SQL -> Run
-	- Or using psql:
+Build for production and preview:
 
 ```powershell
-# Example (be careful with special chars in the connection string):
+npm run build
+npm run preview
+```
+
+## Environment variables
+- This project uses Vite env vars. Do not commit secrets to the repo.
+- Copy `.env.local.example` to `.env.local` and fill in your values locally (the `.env.local` file is ignored by git):
+
+```text
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=replace_with_your_anon_key
+# Optional:
+VITE_RECAPTCHA_SITE_KEY=replace_with_recaptcha_site_key
+```
+
+## Supabase (optional)
+The app can use Supabase Auth and a Postgres `profiles` table for registration and profiles.
+
+1. Create a Supabase project at https://app.supabase.com and copy the Project URL and anon/public key into `.env.local`.
+2. Apply the SQL migrations in the `db/` folder using the Supabase SQL editor or psql (order matters):
+
+```text
+# Recommended order:
+# 1) db/001-create-profiles.sql
+# 2) db/002-add-profiles-columns.sql (safe migration to add/backfill missing columns)
+```
+
+Run a single migration in the Supabase SQL editor:
+
+1. Dashboard → SQL → New query → paste the SQL → Run
+2. Or with psql:
+
+```powershell
 # psql "postgresql://user:pass@host:port/dbname" -f db/001-create-profiles.sql
 ```
 
-5. Start the dev server and test registration/login flows. When the `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` env vars are present, the app will use Supabase for auth.
-
-### reCAPTCHA (if Supabase requires CAPTCHA)
-
-If your Supabase project enforces CAPTCHA on signup, set the site key in `.env.local`:
-
-```
-VITE_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
-```
-
-Then enable reCAPTCHA in Supabase (Project → Auth → Settings → CAPTCHA) and add the same site key there. The registration form will load the reCAPTCHA script and include a `captcha_token` in the signup request.
-
-
-# React Vite App
-
-This folder contains a Vite + React (JSX) conversion of the original `index.html` page. It focuses on rendering the same layout and content and provides components that can be extended further.
-
-How to run (Windows PowerShell):
-
-```powershell
-npm install
-npm run dev
-```
-
 Notes:
-- Large inline scripts from the original site are not fully ported; key static content and styles were moved into React components and `global.css`.
-- If you want the original interactivity (search suggestions, chat backend, typed animations, etc.), I can port those into React hooks and components in a follow-up.
+- Do not store passwords in `public.profiles`. Supabase Auth manages credentials in the `auth` schema.
+- If signup fails with a 500 and an error_id, check Supabase Dashboard → Authentication → Logs for the error details (it will point to missing columns, triggers, or permission issues).
+
+## Scripts
+- `npm run dev` — Run the Vite dev server
+- `npm run build` — Build production bundle
+- `npm run preview` — Preview the production build locally
+- `npm run generate-sitemap` — Generate `public/sitemap.xml` from `public/pages.json`
+
+## Deployment
+- Vercel is supported (there is a `vercel.json` for redirects). Connect the repository and set the build command to `npm run build`.
+
+## Security & secrets (important)
+- `.env.local` is ignored by git. Keep real keys (Supabase anon/service-role keys, reCAPTCHA secrets) out of source control.
+- If you accidentally committed secrets, rotate those keys immediately and consider removing them from git history (BFG or git-filter-repo). I can provide a safe cleanup guide.
+
+## Troubleshooting
+- 500 on signup with message "Database error saving new user": check Supabase Auth logs for the returned `error_id` — the logs contain the underlying Postgres error and point to missing columns or trigger problems.
+- Asset resolution warnings from Vite: verify the import path or put runtime assets into `public/`.
+- Secure cookies won't work on `http://localhost`; use `https` in production to enable `Secure` cookies.
+
+## Contributing
+- Create a branch from `main`, add tests or a changelog entry where appropriate, and open a pull request. For large API or DB changes, open an issue first.
+
+## License
+- MIT (replace if you prefer a different license)
+
+## Maintainer
+- Fouad — https://github.com/FouadBechar/ReactViteApp
+
+If you'd like, I can add screenshots, a demo GIF, CI instructions, or an automated checklist for migrations and key rotation.
+
