@@ -58,6 +58,42 @@ npm run preview  # preview production build locally
 
 If you want, I can update this README with screenshots, a short demo GIF, or automatic checklist items for common tasks (build, lint, test).
 
+## Supabase setup
+
+If you want to connect this app to Supabase Auth + Postgres:
+
+1. Create a Supabase project at https://app.supabase.com
+2. In the project settings, copy the Project URL and anon/public key.
+3. Create a local file `.env.local` (do NOT commit) and add:
+
+```
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJ...your_anon_key...
+```
+
+4. Run the provided SQL migration in `db/001-create-profiles.sql` using the Supabase SQL editor or `psql`:
+
+	- Supabase SQL editor: Dashboard -> SQL -> New query -> paste the SQL -> Run
+	- Or using psql:
+
+```powershell
+# Example (be careful with special chars in the connection string):
+# psql "postgresql://user:pass@host:port/dbname" -f db/001-create-profiles.sql
+```
+
+5. Start the dev server and test registration/login flows. When the `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` env vars are present, the app will use Supabase for auth.
+
+### reCAPTCHA (if Supabase requires CAPTCHA)
+
+If your Supabase project enforces CAPTCHA on signup, set the site key in `.env.local`:
+
+```
+VITE_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+```
+
+Then enable reCAPTCHA in Supabase (Project → Auth → Settings → CAPTCHA) and add the same site key there. The registration form will load the reCAPTCHA script and include a `captcha_token` in the signup request.
+
+
 # React Vite App
 
 This folder contains a Vite + React (JSX) conversion of the original `index.html` page. It focuses on rendering the same layout and content and provides components that can be extended further.

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -31,18 +32,30 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const res = await fetch('/api', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, remember_me: remember })
-      });
-      const json = await res.json().catch(() => ({}));
-      if (res.ok) {
-        showMessage(json.message || 'Logged in', true);
-        if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
-        setTimeout(() => (location.href = '/'), 1000);
+      if (supabase) {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          showMessage(error.message || 'Login failed');
+        } else {
+          showMessage('Logged in', true);
+          // Save session if provided
+          if (data?.session?.access_token) sessionStorage.setItem('user_token', data.session.access_token);
+          setTimeout(() => (location.href = '/profile'), 800);
+        }
       } else {
-        showMessage(json.message || 'Login failed');
+        const res = await fetch('/api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, remember_me: remember })
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok) {
+          showMessage(json.message || 'Logged in', true);
+          if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
+          setTimeout(() => (location.href = '/profile'), 1000);
+        } else {
+          showMessage(json.message || 'Login failed');
+        }
       }
     } catch (err) {
       console.error(err);

@@ -1,4 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
+
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
+function loadRecaptcha(siteKey) {
+  return new Promise((resolve, reject) => {
+    if (!siteKey) return resolve(null);
+    if (window.grecaptcha) return resolve(window.grecaptcha);
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.onload = () => {
+      if (window.grecaptcha) resolve(window.grecaptcha);
+      else reject(new Error('grecaptcha not available'));
+    };
+    script.onerror = () => reject(new Error('Failed to load grecaptcha'));
+    document.head.appendChild(script);
+  });
+}
 
 export default function Register() {
   const [fullName, setFullName] = useState('');
@@ -46,15 +65,54 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const res = await fetch('/api', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm })
-      });
-      const json = await res.json().catch(() => ({}));
-      flash(json.message || (res.ok ? 'Account created' : 'Error'), res.ok);
-      if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
-      if (res.ok) setTimeout(() => location.href = '/profile', 1500);
+      if (supabase) {
+        // If reCAPTCHA site key is configured, use the REST signup endpoint and include captcha_token
+        if (RECAPTCHA_SITE_KEY) {
+          try {
+            await loadRecaptcha(RECAPTCHA_SITE_KEY);
+            const token = await new Promise((resolve) => {
+              window.grecaptcha.ready(() => {
+                window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'signup' }).then(resolve);
+              });
+            });
+
+            const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/signup`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                apikey: import.meta.env.VITE_SUPABASE_ANON_KEY
+              },
+              body: JSON.stringify({ email, password, data: { full_name: fullName }, captcha_token: token })
+            });
+            const json = await resp.json().catch(() => ({}));
+            if (!resp.ok) {
+              flash(json?.message || 'Registration failed');
+            } else {
+              flash(json?.message || 'Account created. Check your email to confirm.', true);
+            }
+          } catch (err) {
+            console.error(err);
+            flash('Captcha verification failed.');
+          }
+        } else {
+          const { data, error } = await supabase.auth.signUp({ email, password }, { data: { full_name: fullName } });
+          if (error) {
+            flash(error.message || 'Registration failed');
+          } else {
+            flash('Account created. Check your email to confirm.', true);
+          }
+        }
+      } else {
+        const res = await fetch('/api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm })
+        });
+        const json = await res.json().catch(() => ({}));
+        flash(json.message || (res.ok ? 'Account created' : 'Error'), res.ok);
+        if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
+        if (res.ok) setTimeout(() => location.href = '/profile', 1500);
+      }
     } catch (err) {
       console.error(err);
       flash('Unexpected error. Try again.');
