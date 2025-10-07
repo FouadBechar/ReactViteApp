@@ -78,18 +78,8 @@ export default function Register() {
     if (bad) return;
 
     setLoading(true);
-  // Temporary runtime check: confirm the redirect URL being used for auth flows
-  // (remove this log once you've verified the deployed env var)
-  console.log('Auth redirect URL:', REDIRECT_URL);
     try {
-      // Debug: report runtime environment so we can see which signup path will run
-
-      console.log ('signup runtime check', {
-        supabase: !!supabase,
-        VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || null,
-        VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'set' : null,
-        RECAPTCHA_SITE_KEY: RECAPTCHA_SITE_KEY || null,
-      });
+      
 
       if (supabase) {
         // If reCAPTCHA site key is configured, use the REST signup endpoint and include captcha_token
