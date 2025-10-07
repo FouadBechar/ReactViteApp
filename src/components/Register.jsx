@@ -4,7 +4,6 @@ import { supabase } from '../lib/supabaseClient';
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 // URL to redirect users to after they verify their email
-
 const REDIRECT_URL = import.meta.env.VITE_AUTH_REDIRECT_URL || 'https://fouadbechar.vercel.app/account';
 
 function loadRecaptcha(siteKey) {
@@ -79,7 +78,19 @@ export default function Register() {
     if (bad) return;
 
     setLoading(true);
+  // Temporary runtime check: confirm the redirect URL being used for auth flows
+  // (remove this log once you've verified the deployed env var)
+  console.log('Auth redirect URL:', REDIRECT_URL);
     try {
+      // Debug: report runtime environment so we can see which signup path will run
+
+      console.log ('signup runtime check', {
+        supabase: !!supabase,
+        VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || null,
+        VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'set' : null,
+        RECAPTCHA_SITE_KEY: RECAPTCHA_SITE_KEY || null,
+      });
+
       if (supabase) {
         // If reCAPTCHA site key is configured, use the REST signup endpoint and include captcha_token
         if (RECAPTCHA_SITE_KEY) {
@@ -91,26 +102,22 @@ export default function Register() {
               });
             });
 
-            const resp = await fetch(
-              `${import.meta.env.VITE_SUPABASE_URL.replace(/\/$/, '')}/auth/v1/signup`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-                },
-                body: JSON.stringify({
-                  email,
-                  password,
-                  data: { full_name: fullName },
-                  captcha_token: token,
-                  redirectTo: REDIRECT_URL,
-                }),
-              }
-            );
+            // Send captcha token + signup payload to our serverless endpoint which
+            // verifies the captcha secret-server-side and calls Supabase REST.
+            const resp = await fetch('/api/verify-signup', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email,
+                password,
+                full_name: fullName,
+                captcha_token: token,
+                redirect_to: REDIRECT_URL,
+              }),
+            });
             const json = await resp.json().catch(() => ({}));
             if (!resp.ok) {
-              flash(json?.message || 'Registration failed');
+              flash(json?.message || json?.error || 'Registration failed');
             } else {
               flash(json?.message || 'Account created. Check your email to confirm.', true);
             }
@@ -119,7 +126,7 @@ export default function Register() {
             flash('Captcha verification failed.');
           }
         } else {
-          const { data, error } = await supabase.auth.signUp(
+          const { error } = await supabase.auth.signUp(
             { email, password },
             { data: { full_name: fullName }, redirectTo: REDIRECT_URL }
           );
