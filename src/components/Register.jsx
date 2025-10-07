@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
 // URL to redirect users to after they verify their email
-// const REDIRECT_URL = 'https://fouadbechar.vercel.app/account';
+
 const REDIRECT_URL = import.meta.env.VITE_AUTH_REDIRECT_URL || 'https://fouadbechar.vercel.app/account';
 
 function loadRecaptcha(siteKey) {
@@ -103,7 +104,7 @@ export default function Register() {
                   password,
                   data: { full_name: fullName },
                   captcha_token: token,
-                  redirect_to: REDIRECT_URL,
+                  redirectTo: REDIRECT_URL,
                 }),
               }
             );
@@ -120,7 +121,7 @@ export default function Register() {
         } else {
           const { data, error } = await supabase.auth.signUp(
             { email, password },
-            { data: { full_name: fullName }, emailRedirectTo: REDIRECT_URL }
+            { data: { full_name: fullName }, redirectTo: REDIRECT_URL }
           );
           if (error) {
             flash(error.message || 'Registration failed');

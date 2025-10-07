@@ -1,3 +1,4 @@
+
 # public/.htaccess - SPA rewrite + security headers + caching + compression
 # Place this in your site root (or keep in public/ so Vite copies it to dist).
 
@@ -53,7 +54,7 @@ RewriteRule ^ index.html [L]
   # - connect-src 'self' https: : allow XHR/fetch to same origin and HTTPS APIs
   # - font-src 'self' data: : allow bundled fonts and data URLs
   # - frame-ancestors 'self' : only allow framing from same origin
-  Header set Content-Security-Policy "default-src 'self' https://supabase.com/; script-src 'self'; connect-src 'self' https:; img-src 'self' data: https:; style-src 'self' https:; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; connect-src 'self' https:; img-src 'self' data: https:; style-src 'self' https:; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
   # Enable HSTS (only enable when serving over HTTPS in production)
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
