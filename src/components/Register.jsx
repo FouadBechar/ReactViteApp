@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-
-// URL to redirect users to after they verify their email
 const REDIRECT_URL = import.meta.env.VITE_AUTH_REDIRECT_URL || 'https://fouadbechar.vercel.app/account';
 
 function loadRecaptcha(siteKey) {
@@ -47,6 +44,7 @@ export default function Register() {
     setMessage(m);
     setOk(!!success);
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
     // honeypot
@@ -79,63 +77,33 @@ export default function Register() {
 
     setLoading(true);
     try {
-      
-
-      if (supabase) {
-        // If reCAPTCHA site key is configured, use the REST signup endpoint and include captcha_token
-        if (RECAPTCHA_SITE_KEY) {
-          try {
-            await loadRecaptcha(RECAPTCHA_SITE_KEY);
-            const token = await new Promise(resolve => {
-              window.grecaptcha.ready(() => {
-                window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'signup' }).then(resolve);
-              });
+      let captchaToken = null;
+      if (RECAPTCHA_SITE_KEY) {
+        try {
+          await loadRecaptcha(RECAPTCHA_SITE_KEY);
+          captchaToken = await new Promise(resolve => {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'signup' }).then(resolve);
             });
-
-            // Send captcha token + signup payload to our serverless endpoint which
-            // verifies the captcha secret-server-side and calls Supabase REST.
-            const resp = await fetch('/api/verify-signup', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                email,
-                password,
-                full_name: fullName,
-                captcha_token: token,
-                redirect_to: REDIRECT_URL,
-              }),
-            });
-            const json = await resp.json().catch(() => ({}));
-            if (!resp.ok) {
-              flash(json?.message || json?.error || 'Registration failed');
-            } else {
-              flash(json?.message || 'Account created. Check your email to confirm.', true);
-            }
-          } catch (err) {
-            console.error(err);
-            flash('Captcha verification failed.');
-          }
-        } else {
-          const { error } = await supabase.auth.signUp(
-            { email, password },
-            { data: { full_name: fullName }, redirectTo: REDIRECT_URL }
-          );
-          if (error) {
-            flash(error.message || 'Registration failed');
-          } else {
-            flash('Account created. Check your email to confirm.', true);
-          }
+          });
+        } catch (err) {
+          console.error('Failed to load/execute reCAPTCHA', err);
+          flash('Captcha verification failed.');
+          setLoading(false);
+          return;
         }
-      } else {
-        const res = await fetch('/api', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm }),
-        });
-        const json = await res.json().catch(() => ({}));
-        flash(json.message || (res.ok ? 'Account created' : 'Error'), res.ok);
-        if (json.user_token) sessionStorage.setItem('user_token', json.user_token);
-        if (res.ok) setTimeout(() => (location.href = '/profile'), 1500);
+      }
+
+      const res = await fetch('https://fouadbechar.x10.mx/p/api2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name: fullName, email, password, confirm_password: confirm, captcha_token: captchaToken }),
+      });
+      const json = await res.json().catch(() => ({}));
+      flash(json.message || (res.ok ? 'Account created' : 'Error'), res.ok);
+      if (res.ok) {
+        const target = json.redirect || REDIRECT_URL;
+        setTimeout(() => (location.href = target), 1500);
       }
     } catch (err) {
       console.error(err);

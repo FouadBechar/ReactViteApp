@@ -24,7 +24,6 @@
     "format": "prettier --write \"src/**/*.{js,jsx,css,md}\""
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.58.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sitemap": "^8.0.0",
