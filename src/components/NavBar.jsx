@@ -984,7 +984,6 @@ export default function NavBar() {
 
             <li className="has-dropdown account-item">
               <div className="item-row">
-                <a href="https://fouadbechar-platform.vercel.app">
                   <button
                     type="button"
                     className="top-link"
@@ -1009,7 +1008,7 @@ export default function NavBar() {
                       </g>
                     </svg>
                   </button>
-                </a>
+             
                 <button
                   type="button"
                   className="submenu-toggle"
@@ -1020,7 +1019,7 @@ export default function NavBar() {
                 </button>
               </div>
 
-              {/* <div
+            <div
                 className="dropdown"
                 id="accountMenu"
                 role="group"
@@ -1034,7 +1033,7 @@ export default function NavBar() {
                     <a href="/register">Register</a>
                   </li>
                 </ul>
-              </div> */}
+              </div> 
             </li>
           </ul>
 
